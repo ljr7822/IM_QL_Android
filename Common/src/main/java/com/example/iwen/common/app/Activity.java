@@ -10,7 +10,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 
 /**
- * activity 基类
+ * activity基类
  * author : Iwen大大怪
  * create : 2020/11/11 14:35
  */
