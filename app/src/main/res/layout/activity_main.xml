@@ -10,8 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:background="@mipmap/bg_src_morning"
         android:layout_height="@dimen/actionBarWithStatusBarSize"
+        android:background="@mipmap/bg_src_morning"
         android:elevation="@dimen/len_2"
         android:outlineProvider="bounds"
         tools:targetApi="lollipop">
@@ -85,6 +85,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/len_52"
         android:layout_gravity="bottom"
-        android:background="@color/grey_200" />
+        android:background="@color/white"
+        android:elevation="@dimen/len_4"
+        android:outlineProvider="bounds"
+        android:translationZ="@dimen/len_8"
+        app:itemIconTint="@color/text_nav"
+        app:itemTextColor="@color/text_nav"
+        app:menu="@menu/navigation_items" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,3 +1,4 @@
+include ':Lang'
 include ':Common'
 include ':app'
 rootProject.name = "IMQingLiao"
