@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 图片选择器类
+ */
 public class GalleyView extends RecyclerView {
     private static final int LOADER_ID = 0x0100;
     private static final int MAX_IMAGE_COUNT = 3; // 最大选中图片大小
@@ -98,6 +102,12 @@ public class GalleyView extends RecyclerView {
         } else {
             if (mSelectedImages.size() >= MAX_IMAGE_COUNT) {
                 // Toast 一个提示
+                // 得到提示文字
+                String str = getResources().getString(R.string.label_gallery_select_max_size);
+                // 格式化填充
+                str = String.format(str, MAX_IMAGE_COUNT);
+                // Toast提示
+                Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();
                 notifyRefresh = false;
             } else {
                 mSelectedImages.add(image);
@@ -278,8 +288,8 @@ public class GalleyView extends RecyclerView {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            mPic = (ImageView)itemView.findViewById(R.id.im_image);
-            mShade =itemView.findViewById(R.id.view_shade);
+            mPic = (ImageView) itemView.findViewById(R.id.im_image);
+            mShade = itemView.findViewById(R.id.view_shade);
             mSelected = (CheckBox) itemView.findViewById(R.id.cb_select);
         }
 
@@ -294,7 +304,7 @@ public class GalleyView extends RecyclerView {
 
             mShade.setVisibility(image.isSelect ? VISIBLE : INVISIBLE);
             mSelected.setChecked(image.isSelect);
-
+            mSelected.setVisibility(VISIBLE);
         }
     }
 
