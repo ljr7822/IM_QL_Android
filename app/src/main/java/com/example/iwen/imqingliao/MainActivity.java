@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.imqingliao.activities.AccountActivity;
 import com.example.iwen.imqingliao.fragments.main.ActiveFragment;
 import com.example.iwen.imqingliao.fragments.main.ContactFragment;
 import com.example.iwen.imqingliao.fragments.main.GroupFragment;
@@ -84,7 +85,7 @@ public class MainActivity extends Activity
 
     @OnClick(R.id.btn_action)
     void onActionClick() {
-
+        AccountActivity.show(this);
     }
 
     boolean isFirst = true;
