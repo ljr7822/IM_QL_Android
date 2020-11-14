@@ -17,6 +17,15 @@ public class Application extends android.app.Application {
     }
 
     /**
+     * 外部获取单例
+     *
+     * @return Application
+     */
+    public static Application getInstance() {
+        return instance;
+    }
+
+    /**
      * 获取缓存文件夹地址
      * @return 当前App的缓存文件夹地址
      */

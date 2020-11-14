@@ -44,8 +44,14 @@
 
 **第八次提交 2020.11.15**
 - 初步实现了头像图片的剪裁
-- 
+
 **第九次提交 2020.11.15**
 - 剪裁完成后对图片加载
-- 
 
+**第十次提交 2020.11.15**
+- 添加了 集合工具类 CollectionUtil
+- 添加了 对文件流的操作工具类 StreamUtil
+- 添加了 对文件或者字符串进行Hash算法，返回MD5值 HashUtil
+- 添加了 Bitmap 工具类 BitmapUtil
+- 添加了 时间工具类 DateTimeUtil
+- 添加了 PicturesCompressor
