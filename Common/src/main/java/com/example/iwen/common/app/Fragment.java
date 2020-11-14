@@ -74,16 +74,11 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      */
     protected abstract int getContentLayoutId();
 
-//    //初始化UI
-//    protected void initView(View view) {
-//        unbinder = ButterKnife.bind(this, view);
-//    }
-
     /**
      * 初始化控件
      */
     protected void initWidget(View view) {
-        mRootUnBinder = ButterKnife.bind(this,mRoot);
+        mRootUnBinder = ButterKnife.bind(this,view);
     }
     //初始化数据
     protected void initData() {

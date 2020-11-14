@@ -20,7 +20,6 @@ public abstract class Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //在界面未初始化之前初始化窗口
         initWidows();
-
         if (initArgs(getIntent().getExtras())) {
             int layId = getContentLayoutId();
             setContentView(layId);
@@ -30,6 +29,11 @@ public abstract class Activity extends AppCompatActivity {
             finish();
         }
     }
+
+    /**
+     * 动态获取权限
+     */
+
 
     /**
      * 初始化控件调用之前
