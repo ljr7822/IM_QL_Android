@@ -45,9 +45,14 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"
     // 图片剪切
     implementation "com.github.yalantis:ucrop:2.2.3"
+    // 动态权限-对Android M或更高版本的基本系统权限逻辑
+    implementation "pub.devrel:easypermissions:3.0.0"
 
     // 视图绑定
     implementation 'com.jakewharton:butterknife:10.2.3'
+    implementation project(path: ':Factory')
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

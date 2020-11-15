@@ -27,7 +27,6 @@ public class GalleryFragment extends BottomSheetDialogFragment implements Galler
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        // 先使用默认的
         return new BottomSheetDialog(getContext());
     }
 

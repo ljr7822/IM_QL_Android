@@ -12,6 +12,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Common" />
+            <option value="$PROJECT_DIR$/Factory" />
             <option value="$PROJECT_DIR$/Lang" />
             <option value="$PROJECT_DIR$/app" />
           </set>

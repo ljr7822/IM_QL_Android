@@ -1,5 +1,7 @@
-package com.example.iwen.imqingliao;
+package com.example.iwen.imqingliao.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.widget.PortraitView;
-import com.example.iwen.imqingliao.activities.AccountActivity;
+import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.fragments.main.ActiveFragment;
 import com.example.iwen.imqingliao.fragments.main.ContactFragment;
 import com.example.iwen.imqingliao.fragments.main.GroupFragment;
@@ -50,6 +52,14 @@ public class MainActivity extends Activity
     FloatActionButton mAction;
 
     private NavHelper<Integer> mNavHelper;
+
+    /**
+     * mainActivity显示入口
+     * @param context 上下文
+     */
+    public static void show(Context context){
+        context.startActivity(new Intent(context,MainActivity.class));
+    }
 
     @Override
     protected int getContentLayoutId() {

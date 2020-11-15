@@ -55,3 +55,8 @@
 - 添加了 Bitmap 工具类 BitmapUtil
 - 添加了 时间工具类 DateTimeUtil
 - 添加了 PicturesCompressor
+
+**第十一次提交 2020.11.15**
+- 添加动态权限类 PermissionsFragment
+- 完善申请权限逻辑
+- 添加启动页 判断是否获得权限；没有权限就弹出申请
