@@ -3,11 +3,14 @@ package com.example.iwen.imqingliao.fragments.account;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.iwen.common.app.Application;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.factory.Factory;
+import com.example.iwen.factory.net.UploadHelper;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.fragments.media.GalleryFragment;
 import com.yalantis.ucrop.UCrop;
@@ -90,5 +93,17 @@ public class UpdateInfoFragment extends Fragment {
                 .load(uri)
                 .centerCrop()
                 .into(mPortraitView);
+        // 拿到本地文件地址
+        final String localPath = uri.getPath();
+        Log.e("TAG","localPath"+localPath);
+
+        // 使用线程池，将图片上传到oss文件夹
+        Factory.runOnAsync(new Runnable() {
+            @Override
+            public void run() {
+                String url = UploadHelper.uploadAvatar(localPath);
+                Log.e("TAG","url"+url);
+            }
+        });
     }
 }

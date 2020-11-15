@@ -60,3 +60,7 @@
 - 添加动态权限类 PermissionsFragment
 - 完善申请权限逻辑
 - 添加启动页 判断是否获得权限；没有权限就弹出申请
+
+**第十二次提交 2020.11.15**
+- 配置阿里云oss存储
+- 修复了 “Android P系统限制了明文流量的网络请求”->在xml文件夹下新建一个 network_security_config.xml，并在Manifest.xml中添加配置
