@@ -6,6 +6,9 @@ buildscript {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        maven {
+            url "http://mvn.gt.getui.com/nexus/content/repositories/releases/"
+        }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.0.2"
@@ -22,6 +25,9 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        maven {
+            url "http://mvn.gt.getui.com/nexus/content/repositories/releases/"
+        }
     }
 }
 

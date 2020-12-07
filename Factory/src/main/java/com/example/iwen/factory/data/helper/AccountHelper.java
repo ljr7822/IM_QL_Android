@@ -3,6 +3,7 @@ package com.example.iwen.factory.data.helper;
 import android.util.Log;
 
 import com.example.iwen.common.factory.data.DataSource;
+import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.R;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
@@ -46,16 +47,15 @@ public class AccountHelper {
                     // 判断是否绑定设备
                     if (accountRspModel.isBind()){
                         User user = accountRspModel.getUser();
-                        // 进行数据库写入
+                        // TODO 进行数据库写入
                         callback.onDataLoad(user);
                     }else {
-                        callback.onDataLoad(accountRspModel.getUser());
                         // 进行绑定
-                        // bindPush(callback);
+                        bindPush(callback);
                     }
                 }else {
-                    // TODO 对返回的RspModel中的失败的Code进行解析，解析到对应的String资源中
-                    // callback.onDataNotAvailable();
+                    // 对返回的RspModel中的失败的Code进行解析，解析到对应的String资源中
+                    Factory.decodeRspCode(rspModel,callback);
                 }
             }
 
@@ -73,6 +73,7 @@ public class AccountHelper {
      * @param callback Callback
      */
     public static void bindPush(final DataSource.Callback<User> callback){
-
+        // TODO
+        callback.onDataNotAvailable(R.string.app_name);
     }
 }
