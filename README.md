@@ -67,3 +67,12 @@
 
 **第十三次提交 2020.12.7**
 - 登录、注册背景图着色
+
+**第十四次提交 2020.12.7**
+- 登录注册fragment在同一个activity切换
+- 注册界面布局
+- 登录界面布局
+- BasePresenter、BaseContract基类的封装
+- 添加NetWork类
+- 添加RemoteService接口：网络请求的所有接口都在里面
+- 实现注册功能、与接口互调

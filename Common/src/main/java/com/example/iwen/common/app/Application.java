@@ -4,9 +4,12 @@ import android.os.SystemClock;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
+
 import net.qiujuer.genius.kit.handler.Run;
 
 import java.io.File;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  *
@@ -94,7 +97,8 @@ public class Application extends android.app.Application {
         // 保证一定是在主线程进行的show操作
         Run.onUiAsync(() -> {
             // 这里进行回调的时候一定就是主线程状态了
-            Toast.makeText(instance, msg, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(instance, msg, Toast.LENGTH_SHORT).show();
+            Toasty.info(instance, msg, Toast.LENGTH_SHORT).show();
         });
 
     }
