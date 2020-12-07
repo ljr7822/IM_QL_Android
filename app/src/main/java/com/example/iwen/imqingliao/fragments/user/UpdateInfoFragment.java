@@ -1,4 +1,4 @@
-package com.example.iwen.imqingliao.fragments.account;
+package com.example.iwen.imqingliao.fragments.user;
 
 import android.content.Intent;
 import android.graphics.Bitmap;

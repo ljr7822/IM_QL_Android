@@ -27,9 +27,6 @@ public class UploadHelper {
     // oss存储桶名字
     private static final String BUCKET_NAME = "imqingliao";
 
-    // secret: AYiuu0PhVjgXU5qIWAcYTPSG8l7WXN
-    // id:  LTAI4GEZaRvceAnaRYccDXBh
-
     private static OSS getClient() {
         // 在移动端建议使用STS的方式初始化OSSClient。
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(

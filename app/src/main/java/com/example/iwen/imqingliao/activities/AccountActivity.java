@@ -1,22 +1,37 @@
 package com.example.iwen.imqingliao.activities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.DrawableCompat;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.imqingliao.R;
-import com.example.iwen.imqingliao.fragments.account.UpdateInfoFragment;
+import com.example.iwen.imqingliao.fragments.account.AccountTrigger;
+import com.example.iwen.imqingliao.fragments.account.LoginFragment;
+import com.example.iwen.imqingliao.fragments.account.RegisterFragment;
+
+import net.qiujuer.genius.ui.compat.UiCompat;
 
 /**
- *
- * <p>
- * author : Iwen大大怪
+ * 账户
+ * @author : Iwen大大怪
  * create : 2020/11/14 18:20
  */
-public class AccountActivity extends Activity {
+public class AccountActivity extends Activity implements AccountTrigger {
     private Fragment mFragment;
+    private Fragment mLoginFragment;
+    private Fragment mRegisterFragment;
+    private ImageView mBg;
 
     /**
      * 账户Activity的显示入口
@@ -35,17 +50,66 @@ public class AccountActivity extends Activity {
     protected void initWidget() {
         super.initWidget();
         // 初始化Fragment
-        mFragment = new UpdateInfoFragment();
+        mFragment = mLoginFragment = new LoginFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.lay_container,mFragment)
                 .commit();
+        initView();
+        // 初始化背景
+        Glide.with(this)
+                .load(R.mipmap.bg_src_tianjin)
+                .centerCrop()
+                .into(new CustomViewTarget<ImageView, Drawable>(mBg) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        // 拿到当前的drawable
+                        Drawable drawable = resource.getCurrent();
+                        // 使用适配包进行包装
+                        drawable = DrawableCompat.wrap(drawable);
+                        // 设置着色颜色和效果、蒙版模式
+                        drawable.setColorFilter(UiCompat.getColor(getResources(),R.color.colorAccent),
+                                PorterDuff.Mode.SCREEN);
+                        this.view.setImageDrawable(drawable);
+                    }
+
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
     }
 
-    // 收到从Activity传过来的回调，取出其中的值进行图片加载
-    @SuppressLint("MissingSuperCall")
+    // 切换具体的fragment
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        mFragment.onActivityResult(requestCode,resultCode,data);
+    public void triggerView() {
+        Fragment fragment;
+        if (mFragment == mLoginFragment) {
+            if (mRegisterFragment == null){
+                // 默认情况下为null
+                // 第一次之后就不为null了
+                mRegisterFragment = new RegisterFragment();
+            }
+            fragment = mRegisterFragment;
+        }else {
+            // 因为默认情况已经赋值，不需要判空
+            fragment = mRegisterFragment;
+        }
+        // 重新赋值当前正在显示的fragment
+        mFragment = fragment;
+        // 切换显示
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.lay_container,fragment)
+                .commit();
+    }
+
+    private void initView(){
+        mBg = findViewById(R.id.im_bg);
     }
 }
