@@ -93,3 +93,8 @@
 - 创建 DBFlow的数据库过滤字段 DBFlowExclusionStrategy
 - 创建数据库基本信息类 AppDatabase
 - 保存用户信息到持久化xml文件中
+
+**第十八次提交 2020.12.8**
+- 绑定设备PushId
+- 完成数据持久化
+- token注入请求头

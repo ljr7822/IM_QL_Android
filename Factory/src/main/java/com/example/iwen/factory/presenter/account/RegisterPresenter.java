@@ -9,6 +9,7 @@ import com.example.iwen.factory.R;
 import com.example.iwen.factory.data.helper.AccountHelper;
 import com.example.iwen.factory.model.api.account.RegisterModel;
 import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.persistence.Account;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
@@ -44,7 +45,7 @@ public class RegisterPresenter
             view.showError(R.string.data_account_register_invalid_parameter_password);
         } else {
             // 开始请求调用
-            RegisterModel model = new RegisterModel(phone, password, name);
+            RegisterModel model = new RegisterModel(phone, password, name, Account.getPushId());
             // 进行网络请求并回送
             AccountHelper.register(model, this);
         }
