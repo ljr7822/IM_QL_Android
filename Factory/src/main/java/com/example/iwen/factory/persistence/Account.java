@@ -2,10 +2,14 @@ package com.example.iwen.factory.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.example.iwen.common.app.Application;
 import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
+import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.model.db.User_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 /**
  * 推送SDK的相关配置
@@ -88,6 +92,7 @@ public class Account {
 
     /**
      * s设置绑定状态
+     *
      * @param isBind boolean
      */
     public static void setIsBind(boolean isBind) {
@@ -101,30 +106,31 @@ public class Account {
      * @return true已登录
      */
     public static boolean isLogin() {
-        //return !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(token);
-        return true;
+        return !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(token);
     }
 
-//    /**
-//     * 是否已经完善了用户信息
-//     *
-//     * @return true 完善了
-//     */
-//    public static boolean isComplete() {
+    /**
+     * 是否已经完善了用户信息
+     *
+     * @return true 完善了
+     */
+    public static boolean isComplete() {
 //        //首先保证登录成功
 //        if (isLogin()) {
 //            User self = getUser();
 //            return !TextUtils.isEmpty(self.getDescription()) && !TextUtils.isEmpty(self.getAvatar()) && self.getSex() != 0;
 //        }
 //        return false;
-//    }
+        // TODO
+        return isLogin();
+
+    }
 
     /**
      * SharedPreferences 做数据持久化
      *
      * @param context Context
      */
-
     private static void save(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Account.class.getName(), Context.MODE_PRIVATE);
         preferences.edit()
@@ -156,23 +162,23 @@ public class Account {
      * @param model model
      */
     public static void login(AccountRspModel model) {
-        //存储当前登录的token 用户id，方便从数据库中查询我的信息
+        // 存储当前登录的token 用户id，方便从数据库中查询我的信息
         Account.token = model.getToken();
         Account.account = model.getAccount();
         Account.userId = model.getUser().getId();
         save(Application.getInstance());
     }
 
-//    /**
-//     * 获取当前登录的用户信息，如果为null 就new一个user 其次从数据库查询
-//     *
-//     * @return user
-//     */
-//    public static User getUser() {
-//        return TextUtils.isEmpty(userId) ? new User() :
-//                SQLite.select().from(User.class).where(User_Table.id.eq(userId)).querySingle();
-//    }
-
+    /**
+     * 获取当前登录的用户信息，如果为null 就new一个user 其次从数据库查询
+     *
+     * @return user
+     */
+    public static User getUser() {
+        return TextUtils.isEmpty(userId) ? new User() :
+                SQLite.select().from(User.class).where(User_Table.id.eq(userId)).querySingle();
+    }
+//
 //    /**
 //     * 返回用户id
 //     * @return userId

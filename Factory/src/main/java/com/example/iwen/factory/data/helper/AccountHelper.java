@@ -24,7 +24,6 @@ import retrofit2.Response;
  * create : 12-7 007 17:02
  */
 public class AccountHelper {
-
     /**
      * 注册接口
      *
@@ -43,20 +42,38 @@ public class AccountHelper {
                 // 请求成功
                 // 从返回中得到我们的全局Model，内部使用的是Gson进行解析
                 RspModel<AccountRspModel> rspModel = response.body();
-                if (rspModel.success()){
+                if (rspModel.success()) {
                     AccountRspModel accountRspModel = rspModel.getResult();
+                    // 获取我的信息
+                    User user = accountRspModel.getUser();
+                    // 进行数据库写入
+                    // 方法1.直接保存
+                    user.save();
+                        /*
+                        // 方法2.通过ModelAdapter
+                        FlowManager.getModelAdapter(User.class).save(user);
+                        // 方法3.通过事务
+                        DatabaseDefinition databaseDefinition = FlowManager.getDatabase(AppDatabase.class);
+                        databaseDefinition.beginTransactionAsync(new ITransaction() {
+                            @Override
+                            public void execute(DatabaseWrapper databaseWrapper) {
+                                FlowManager.getModelAdapter(User.class).save(user);
+                            }
+                        }).build().execute();
+                         */
+                    // 通过xml存储个人信息
+                    Account.login(accountRspModel);
                     // 判断是否绑定设备
-                    if (accountRspModel.isBind()){
-                        User user = accountRspModel.getUser();
-                        // TODO 进行数据库写入
+                    if (accountRspModel.isBind()) {
+                        // 回调
                         callback.onDataLoad(user);
-                    }else {
+                    } else {
                         // 进行绑定
                         bindPush(callback);
                     }
-                }else {
+                } else {
                     // 对返回的RspModel中的失败的Code进行解析，解析到对应的String资源中
-                    Factory.decodeRspCode(rspModel,callback);
+                    Factory.decodeRspCode(rspModel, callback);
                 }
             }
 
@@ -64,16 +81,17 @@ public class AccountHelper {
             public void onFailure(Call<RspModel<AccountRspModel>> call, Throwable t) {
                 // 请求失败
                 callback.onDataNotAvailable(R.string.data_network_error);
-                Log.e("ljr","111"+t);
+                Log.e("ljr", "111" + t);
             }
         });
     }
 
     /**
      * 对设备id绑定
+     *
      * @param callback Callback
      */
-    public static void bindPush(final DataSource.Callback<User> callback){
+    public static void bindPush(final DataSource.Callback<User> callback) {
         // TODO
         Account.setIsBind(true);
     }

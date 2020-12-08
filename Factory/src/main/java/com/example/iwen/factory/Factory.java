@@ -6,8 +6,11 @@ import com.example.iwen.common.app.Application;
 import com.example.iwen.common.factory.data.DataSource;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.persistence.Account;
+import com.example.iwen.factory.utils.DBFlowExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -34,14 +37,19 @@ public class Factory {
         gson = new GsonBuilder()
                 // 设置时间格式
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-                // TODO 设置过滤器，数据库级别的model不进行转换
+                // 设置过滤器，数据库级别的model不进行转换
+                .setExclusionStrategies(new DBFlowExclusionStrategy())
                 .create();
     }
 
     /**
      * Factory中的初始化
      */
-    public static void setup(){
+    public static void setup() {
+        // 初始化数据库
+        FlowManager.init(new FlowConfig.Builder(app())
+                .openDatabasesOnInit(true)
+                .build()); // 数据库初始化的时候就开始打开
         // 持久化的数据进行初始化
         Account.load(app());
     }

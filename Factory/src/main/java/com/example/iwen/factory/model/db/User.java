@@ -1,23 +1,44 @@
 package com.example.iwen.factory.model.db;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.Date;
 
 /**
  * 返回 bean user
+ *
  * @author : iwen大大怪
  * create : 12-7 007 17:15
  */
-public class User {
+@Table(database = AppDatabase.class)
+public class User extends BaseModel {
+    public static final int SEX_MAN = 1;
+    public static final int SEX_WOMAN = 2;
+
+    @PrimaryKey
     private String id;
+    @Column
     private String name;
+    @Column
     private String phone;
+    @Column
     private String portrait;
+    @Column
     private String desc;
-    private int sex=0;
+    @Column
+    private int sex = 0;
+    @Column
     private String alias; // 备注
+    @Column
     private int follows;
+    @Column
     private int following;
+    @Column
     private boolean isFollow;
+    @Column
     private Date modifyAt;
 
     public String getId() {
