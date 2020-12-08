@@ -15,5 +15,8 @@ public class Common {
         // 基础的网络请求地址
         // String API_URL = "https://www.easy-mock.com/mock/5fb4acf4bae16b281b2fdc76/";
         String API_URL = "http://192.168.43.174:8080/api/";
+
+        String AccessKey_ID ="LTAI4G7qeeWttgB6YC2KGXNf";
+        String AccessKey_Secret ="bCJ9ILXJtevcfLrTy5iY9aBE8R40e5";
     }
 }
