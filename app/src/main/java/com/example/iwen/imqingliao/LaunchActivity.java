@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.factory.persistence.Account;
+import com.example.iwen.imqingliao.activities.AccountActivity;
 import com.example.iwen.imqingliao.activities.MainActivity;
 import com.example.iwen.imqingliao.fragments.assist.PermissionsFragment;
 
@@ -55,11 +56,23 @@ public class LaunchActivity extends Activity {
      * 等待个推框架对我们的pushId设置好值
      */
     private void waitPushReceiverId(){
-        // 如果拿到了pushId
-        if (!TextUtils.isEmpty(Account.getPushId())){
-            skip();
-            return;
+        if (Account.isLogin()){
+            // 已经登录，判断是否绑定
+            // 如果没有绑定则等待广播接收器进行绑定
+            if (Account.isBind()){
+                // 已经绑定
+                skip();
+                return;
+            }
+        }else {
+            // 没有登录
+            // 如果拿到了pushId,没有登录不能绑定
+            if (!TextUtils.isEmpty(Account.getPushId())){
+                skip();
+                return;
+            }
         }
+
         // 循环等待
         getWindow().getDecorView().postDelayed(new Runnable() {
             @Override
@@ -87,7 +100,12 @@ public class LaunchActivity extends Activity {
     private void reallySkip(){
         // TODO 权限检查，跳转
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
-            MainActivity.show(this);
+            if (Account.isLogin()){
+                MainActivity.show(this);
+            }else {
+                AccountActivity.show(this);
+                //MainActivity.show(this);
+            }
             finish();
         }
     }

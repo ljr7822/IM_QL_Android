@@ -2,13 +2,14 @@ package com.example.iwen.factory.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.example.iwen.common.app.Application;
+import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
 
 /**
  * 推送SDK的相关配置
+ *
  * @author : iwen大大怪
  * create : 12-7 007 23:15
  */
@@ -19,8 +20,7 @@ public class Account {
     private static final String KEY_USER_ID = "KEY_USER_ID";
     private static final String KEY_ACCOUNT = "KEY_ACCOUNT";
     // 设备推送id
-    private static String pushId = "test";
-
+    private static String pushId;
     // 绑定状态,设备id是否绑定到了服务器
     private static boolean isBind;
     // 登录状态Token，用来获接口请求
@@ -46,6 +46,7 @@ public class Account {
      */
     public static void setPushId(String pushId) {
         Account.pushId = pushId;
+        Account.save(Factory.app());
         //save(Application.getInstance());
     }
 
@@ -54,7 +55,6 @@ public class Account {
      *
      * @return true是
      */
-
     public static boolean isBind() {
         return isBind;
     }
@@ -86,6 +86,10 @@ public class Account {
         save(Application.getInstance());
     }
 
+    /**
+     * s设置绑定状态
+     * @param isBind boolean
+     */
     public static void setIsBind(boolean isBind) {
         Account.isBind = isBind;
         save(Application.getInstance());
@@ -97,7 +101,8 @@ public class Account {
      * @return true已登录
      */
     public static boolean isLogin() {
-        return !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(token);
+        //return !TextUtils.isEmpty(userId) && !TextUtils.isEmpty(token);
+        return true;
     }
 
 //    /**
@@ -133,6 +138,8 @@ public class Account {
 
     /**
      * 进行数据加载
+     *
+     * @param context Context
      */
     public static void load(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Account.class.getName(), Context.MODE_PRIVATE);

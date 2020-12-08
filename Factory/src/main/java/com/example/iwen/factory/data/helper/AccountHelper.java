@@ -11,6 +11,7 @@ import com.example.iwen.factory.model.api.account.RegisterModel;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.net.NetWork;
 import com.example.iwen.factory.net.RemoteService;
+import com.example.iwen.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,6 +75,6 @@ public class AccountHelper {
      */
     public static void bindPush(final DataSource.Callback<User> callback){
         // TODO
-        callback.onDataNotAvailable(R.string.app_name);
+        Account.setIsBind(true);
     }
 }

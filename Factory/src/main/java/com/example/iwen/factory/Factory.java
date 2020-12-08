@@ -5,6 +5,7 @@ import androidx.annotation.StringRes;
 import com.example.iwen.common.app.Application;
 import com.example.iwen.common.factory.data.DataSource;
 import com.example.iwen.factory.model.api.RspModel;
+import com.example.iwen.factory.persistence.Account;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +36,14 @@ public class Factory {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
                 // TODO 设置过滤器，数据库级别的model不进行转换
                 .create();
+    }
+
+    /**
+     * Factory中的初始化
+     */
+    public static void setup(){
+        // 持久化的数据进行初始化
+        Account.load(app());
     }
 
     /**
@@ -129,8 +138,9 @@ public class Factory {
                 break;
         }
     }
+
     private static void decodeRspCode(@StringRes final int resId, final DataSource.FailedCallback callback) {
-        if (callback != null){
+        if (callback != null) {
             callback.onDataNotAvailable(resId);
         }
     }
@@ -139,6 +149,16 @@ public class Factory {
      * 收到账户退出的消息需要进行账户退出重新登录
      */
     private void logout() {
+
+    }
+
+    /**
+     * 处理推送来的消息
+     *
+     * @param message String
+     */
+    public static void dispatchPush(String message) {
+        // TODO
 
     }
 }
