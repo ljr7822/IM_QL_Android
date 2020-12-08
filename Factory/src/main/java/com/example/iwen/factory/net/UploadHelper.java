@@ -8,6 +8,7 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.example.iwen.common.Common;
 import com.example.iwen.common.utils.HashUtil;
 import com.example.iwen.factory.Factory;
 
@@ -30,8 +31,8 @@ public class UploadHelper {
     private static OSS getClient() {
         // 在移动端建议使用STS的方式初始化OSSClient。
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(
-                "LTAI4GEZaRvceAnaRYccDXBh",
-                "AYiuu0PhVjgXU5qIWAcYTPSG8l7WXN");
+                Common.Constance.AccessKey_ID,
+                Common.Constance.AccessKey_Secret);
         return new OSSClient(Factory.app(), ENDPOINT, credentialProvider);
     }
 

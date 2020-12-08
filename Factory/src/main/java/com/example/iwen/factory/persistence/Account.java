@@ -72,14 +72,10 @@ public class Account {
         save(Application.getInstance());
     }
 
-//    public static String getUserId() {
-//        return userId;
-//    }
-//
-//    public static void setUserId(String userId) {
-//        Account.userId = userId;
-//        save(Application.getInstance());
-//    }
+    public static void setUserId(String userId) {
+        Account.userId = userId;
+        save(Application.getInstance());
+    }
 
     public static String getAccount() {
         return account;
@@ -115,15 +111,14 @@ public class Account {
      * @return true 完善了
      */
     public static boolean isComplete() {
-//        //首先保证登录成功
-//        if (isLogin()) {
-//            User self = getUser();
-//            return !TextUtils.isEmpty(self.getDescription()) && !TextUtils.isEmpty(self.getAvatar()) && self.getSex() != 0;
-//        }
-//        return false;
-        // TODO
-        return isLogin();
-
+        // 首先保证登录成功
+        if (isLogin()) {
+            User self = getUser();
+            return !TextUtils.isEmpty(self.getDesc())
+                    && !TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex() != 0;
+        }
+        return false;
     }
 
     /**
@@ -178,12 +173,12 @@ public class Account {
         return TextUtils.isEmpty(userId) ? new User() :
                 SQLite.select().from(User.class).where(User_Table.id.eq(userId)).querySingle();
     }
-//
-//    /**
-//     * 返回用户id
-//     * @return userId
-//     */
-//    public static String getUserId() {
-//        return getUser().getId();
-//    }
+
+    /**
+     * 返回用户id
+     * @return userId
+     */
+    public static String getUserId() {
+        return getUser().getId();
+    }
 }

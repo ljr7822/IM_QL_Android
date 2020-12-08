@@ -2,6 +2,7 @@ package com.example.iwen.imqingliao.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.fragments.main.ActiveFragment;
 import com.example.iwen.imqingliao.fragments.main.ContactFragment;
@@ -55,10 +57,23 @@ public class MainActivity extends Activity
 
     /**
      * mainActivity显示入口
+     *
      * @param context 上下文
      */
-    public static void show(Context context){
-        context.startActivity(new Intent(context,MainActivity.class));
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
+
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        if (Account.isComplete()) {
+            // 判断用户信息是否完善，完成则走正常流程
+            return super.initArgs(bundle);
+        } else {
+            // 没有完善，就要更新
+            UserActivity.show(this);
+            return false;
+        }
     }
 
     @Override
@@ -71,9 +86,9 @@ public class MainActivity extends Activity
         super.initWidget();
         // 初始化底部辅助工具类
         mNavHelper = new NavHelper<Integer>(this, R.id.lay_container, getSupportFragmentManager(), this);
-        mNavHelper.add(R.id.action_home,new NavHelper.Tab<>(ActiveFragment.class,R.string.title_home))
-                .add(R.id.action_group,new NavHelper.Tab<>(GroupFragment.class,R.string.title_group))
-                .add(R.id.action_contact,new NavHelper.Tab<>(ContactFragment.class,R.string.title_contact));
+        mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(ActiveFragment.class, R.string.title_home))
+                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
+                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
         // 添加对底部导航按钮的监听
         mNavigation.setOnNavigationItemSelectedListener(this);
     }
@@ -85,7 +100,7 @@ public class MainActivity extends Activity
         // 从底部导航接管Menu，进行手动触发第一次点击
         Menu menu = mNavigation.getMenu();
         // 触发首次选中home
-        menu.performIdentifierAction(R.id.action_home,0);
+        menu.performIdentifierAction(R.id.action_home, 0);
     }
 
     @OnClick(R.id.im_search)
@@ -115,6 +130,7 @@ public class MainActivity extends Activity
 
     /**
      * navHelper处理后回调的方法
+     *
      * @param newTab 新Tab
      * @param oldTab 旧Tab
      */
@@ -126,15 +142,15 @@ public class MainActivity extends Activity
         // 对浮动按钮进行隐藏、显示
         float transY = 0;
         float rotation = 0;
-        if (Objects.equals(newTab.extra,R.string.title_home)){
+        if (Objects.equals(newTab.extra, R.string.title_home)) {
             // 主界面时隐藏
-            transY = Ui.dipToPx(getResources(),76);
-        }else {
+            transY = Ui.dipToPx(getResources(), 76);
+        } else {
             // 群
-            if (Objects.equals(newTab.extra,R.string.title_group)){
+            if (Objects.equals(newTab.extra, R.string.title_group)) {
                 mAction.setImageResource(R.drawable.ic_group_add);
                 rotation = -360;
-            }else{
+            } else {
                 // 联系人
                 mAction.setImageResource(R.drawable.ic_contact_add);
                 rotation = 360;
