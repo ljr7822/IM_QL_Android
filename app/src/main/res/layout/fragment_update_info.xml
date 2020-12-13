@@ -25,7 +25,7 @@
             app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="@dimen/len_36" />
 
         <com.example.iwen.common.widget.PortraitView
             android:id="@+id/im_portrait"

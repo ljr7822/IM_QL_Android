@@ -3,6 +3,7 @@ package com.example.iwen.factory.persistence;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.iwen.common.app.Application;
 import com.example.iwen.factory.Factory;
@@ -114,6 +115,7 @@ public class Account {
         // 首先保证登录成功
         if (isLogin()) {
             User self = getUser();
+            Log.e("TAG",self.toString());
             return !TextUtils.isEmpty(self.getDesc())
                     && !TextUtils.isEmpty(self.getPortrait())
                     && self.getSex() != 0;
