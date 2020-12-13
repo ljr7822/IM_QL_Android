@@ -39,8 +39,8 @@ public class UploadHelper {
     /**
      * 上传文件，成功后返回一个路径
      *
-     * @param objKey  上传后在服务器上独立的key
-     * @param path 需要上传的文件的路径
+     * @param objKey 上传后在服务器上独立的key
+     * @param path   需要上传的文件的路径
      * @return 存储的地址
      */
     private static String upload(String objKey, String path) {
