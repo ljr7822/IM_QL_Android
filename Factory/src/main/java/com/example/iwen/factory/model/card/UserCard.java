@@ -1,5 +1,6 @@
 package com.example.iwen.factory.model.card;
 
+import com.example.iwen.common.factory.model.Author;
 import com.example.iwen.factory.model.db.User;
 
 import java.util.Date;
@@ -9,11 +10,11 @@ import java.util.Date;
  * @author : iwen大大怪
  * create : 12-13 013 20:43
  */
-public class UserCard {
+public class UserCard implements Author {
     private String id;
     private String name;
     private String phone;
-    private String avatar;
+    private String portrait;
     private String description;
     private int sex = 0;
     // 用户关注人的数量
@@ -52,12 +53,12 @@ public class UserCard {
         this.phone = phone;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getPortrait() {
+        return portrait;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 
     public String getDescription() {
@@ -116,7 +117,7 @@ public class UserCard {
             User user = new User();
             user.setId(id);
             user.setName(name);
-            user.setPortrait(avatar);
+            user.setPortrait(portrait);
             user.setPhone(phone);
             user.setDesc(description);
             user.setSex(sex);

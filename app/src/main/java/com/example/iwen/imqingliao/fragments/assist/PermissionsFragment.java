@@ -18,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
+import java.util.Objects;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -25,6 +26,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 动态获取权限的fragment
+ *
+ * @author : Iwen大大怪
+ * create : 2020/11/15 2:38
  */
 public class PermissionsFragment extends BottomSheetDialogFragment implements EasyPermissions.PermissionCallbacks {
     // 权限回调标识
@@ -141,7 +145,7 @@ public class PermissionsFragment extends BottomSheetDialogFragment implements Ea
     /**
      * 私有的show方法
      *
-     * @param manager
+     * @param manager FragmentManager
      */
     private static void show(FragmentManager manager) {
         // 调用 BottomSheetDialogFragment
@@ -208,9 +212,9 @@ public class PermissionsFragment extends BottomSheetDialogFragment implements Ea
 
     /**
      * 权限申请回调的方法，这个方法中把对应权限申请状态交给EasyPermissions框架
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode int
+     * @param permissions String[]
+     * @param grantResults int[]
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

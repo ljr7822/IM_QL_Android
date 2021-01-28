@@ -18,7 +18,8 @@ import java.util.Date;
 /**
  * 上传工具类
  * 上传任意文件到阿里云oss存储
- * author : Iwen大大怪
+ *
+ * @author : Iwen大大怪
  * create : 2020/11/15 13:37
  */
 public class UploadHelper {

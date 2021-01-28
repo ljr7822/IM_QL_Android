@@ -105,12 +105,26 @@ public class MainActivity extends Activity
 
     @OnClick(R.id.im_search)
     void onSearchMenuClick() {
-
+        // 在群界面的时候，点击顶部的搜索就进入群搜索界面
+        // 其他为人搜索界面
+        int type = Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)
+                ? SearchActivity.TYPE_GROUP : SearchActivity.TYPE_USER;
+        SearchActivity.show(this, type);
     }
 
+    /**
+     * 浮动按钮点击
+     */
     @OnClick(R.id.btn_action)
     void onActionClick() {
-        AccountActivity.show(this);
+        // 判断当前界面是群还是联系人
+        // 如果是群，则打开群创建的界面
+        if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
+            // TODO 打开群创建界面
+        } else {
+            // 如果是其他，都打开添加用户的界面
+            SearchActivity.show(this, SearchActivity.TYPE_USER);
+        }
     }
 
     boolean isFirst = true;

@@ -179,8 +179,7 @@ public class UpdateInfoFragment
     @OnClick(R.id.iv_sex_man)
     void onSexClick() {
         isMan = !isMan;
-        Drawable drawable = getResources().getDrawable(
-                isMan ? R.drawable.ic_sex_man : R.drawable.ic_sex_woman);
+        Drawable drawable = getResources().getDrawable(isMan ? R.drawable.ic_sex_man : R.drawable.ic_sex_woman);
         mSex.setImageDrawable(drawable);
         // 设置背景层级切换颜色
         mSex.getBackground().setLevel(isMan ? 0 : 1);

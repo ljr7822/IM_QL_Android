@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.iwen.common.widget.convention.PlaceHolderView;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -20,6 +22,7 @@ import butterknife.Unbinder;
 public abstract class Fragment extends androidx.fragment.app.Fragment {
     protected View mRoot;
     protected Unbinder mRootUnBinder;
+    protected PlaceHolderView mPlaceHolderView;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -31,16 +34,16 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mRoot == null){
+        if (mRoot == null) {
             // 初始化当前的根布局，但是不在创建时就添加到container里边
             int layId = getContentLayoutId();
-            View root = inflater.inflate(layId,container,false);
+            View root = inflater.inflate(layId, container, false);
             initWidget(root);
             mRoot = root;
-        }else {
-            if (mRoot.getParent() !=null){
+        } else {
+            if (mRoot.getParent() != null) {
                 // 把当前root从其父控件中移除
-                ((ViewGroup)mRoot.getParent()).removeView(mRoot);
+                ((ViewGroup) mRoot.getParent()).removeView(mRoot);
             }
         }
         return mRoot;
@@ -78,8 +81,9 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      * 初始化控件
      */
     protected void initWidget(View view) {
-        mRootUnBinder = ButterKnife.bind(this,view);
+        mRootUnBinder = ButterKnife.bind(this, view);
     }
+
     //初始化数据
     protected void initData() {
     }
@@ -92,5 +96,14 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
      */
     public boolean onBackPressed() {
         return false;
+    }
+
+    /**
+     * 设置占位符
+     *
+     * @param placeHolderView 继承了占位布局规范的view
+     */
+    public void setPlaceHolderView(PlaceHolderView placeHolderView) {
+        this.mPlaceHolderView = placeHolderView;
     }
 }

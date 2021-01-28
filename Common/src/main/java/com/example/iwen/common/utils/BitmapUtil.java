@@ -3,8 +3,8 @@ package com.example.iwen.common.utils;
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.graphics.Matrix;
+import android.os.Build;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -18,7 +18,9 @@ import java.io.InputStream;
 import static com.example.iwen.common.utils.StreamUtil.close;
 
 /**
- * author : Iwen大大怪
+ * Bitmap工具类
+ *
+ * @author : Iwen大大怪
  * create : 2020/11/15 2:38
  */
 public final class BitmapUtil {

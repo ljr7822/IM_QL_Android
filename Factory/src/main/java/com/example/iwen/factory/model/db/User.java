@@ -1,5 +1,6 @@
 package com.example.iwen.factory.model.db;
 
+import com.example.iwen.common.factory.model.Author;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -14,7 +15,7 @@ import java.util.Date;
  * create : 12-7 007 17:15
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel {
+public class User extends BaseModel implements Author {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 
@@ -25,7 +26,7 @@ public class User extends BaseModel {
     @Column
     private String phone;
     @Column
-    private String portrait;
+    private String portrait; // 头像
     @Column
     private String desc;
     @Column
