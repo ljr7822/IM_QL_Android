@@ -1,12 +1,14 @@
 package com.example.iwen.factory.model.db;
 
 import com.example.iwen.common.factory.model.Author;
+import com.example.iwen.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 返回 bean user
@@ -15,7 +17,7 @@ import java.util.Date;
  * create : 12-7 007 17:15
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author {
+public class User extends BaseModel implements Author, DiffUiDataCallback.UiDataDiffer<User> {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 
@@ -131,6 +133,11 @@ public class User extends BaseModel implements Author {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(id, name, phone, portrait, desc, sex, alias, follows, following, isFollow, modifyAt);
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
@@ -145,5 +152,22 @@ public class User extends BaseModel implements Author {
                 ", isFollow=" + isFollow +
                 ", modifyAt=" + modifyAt +
                 '}';
+    }
+
+    @Override
+    public boolean isSame(User old) {
+        // 主要关注id就可以
+        return this == old || Objects.equals(id, old.id);
+    }
+
+    @Override
+    public boolean isUiContentSame(User old) {
+        // 显示的内容是否一样，主要判断 名字，头像，性别，是否已经关注
+        return this == old || (
+                Objects.equals(name, old.name)
+                        && Objects.equals(portrait, old.portrait)
+                        && Objects.equals(sex, old.sex)
+                        && Objects.equals(isFollow, old.isFollow)
+        );
     }
 }

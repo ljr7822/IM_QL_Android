@@ -115,10 +115,8 @@ public class Account {
         // 首先保证登录成功
         if (isLogin()) {
             User self = getUser();
-            Log.e("TAG",self.toString());
-            return !TextUtils.isEmpty(self.getDesc())
-                    && !TextUtils.isEmpty(self.getPortrait())
-                    && self.getSex() != 0;
+            Log.e("TAG", self.toString());
+            return !TextUtils.isEmpty(self.getDesc()) && !TextUtils.isEmpty(self.getPortrait());
         }
         return false;
     }
@@ -178,6 +176,7 @@ public class Account {
 
     /**
      * 返回用户id
+     *
      * @return userId
      */
     public static String getUserId() {

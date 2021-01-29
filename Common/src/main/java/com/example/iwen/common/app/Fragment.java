@@ -23,6 +23,8 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     protected View mRoot;
     protected Unbinder mRootUnBinder;
     protected PlaceHolderView mPlaceHolderView;
+    // 标记是否第一次初始化数据
+    protected boolean mIsFirstInitData = true;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -52,6 +54,11 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mIsFirstInitData){
+            // 触发一次后就不触发
+            mIsFirstInitData = false;
+            onFirstInitData();
+        }
         // 当view创建完成后初始化数据
         initData();
     }
@@ -84,8 +91,16 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
         mRootUnBinder = ButterKnife.bind(this, view);
     }
 
-    //初始化数据
+    /**
+     * 初始化数据
+     */
     protected void initData() {
+    }
+
+    /**
+     * 首次初始化数据时调用
+     */
+    protected void onFirstInitData() {
     }
 
     /**

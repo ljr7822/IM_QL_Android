@@ -134,4 +134,34 @@ public class UserHelper {
             }
         });
     }
+
+    /**
+     * 刷新联系人列表方法
+     *
+     * @param callback DataSource.Callback<List<UserCard>>
+     */
+    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback) {
+        // 调用Retrofit对我们的网络请求接口做代理
+        RemoteService service = Network.mRemoteService();
+        // 得到一个call进行注册
+        Call<RspModel<List<UserCard>>> call = service.userContacts();
+        // 进行异步请求
+        call.enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> rspModel = response.body();
+                if (rspModel.success()) {
+                    callback.onDataLoad(rspModel.getResult());
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+                Log.e("ljr", "onFailure message: " + t);
+            }
+        });
+    }
 }

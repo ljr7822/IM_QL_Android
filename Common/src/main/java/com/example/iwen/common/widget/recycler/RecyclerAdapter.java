@@ -20,13 +20,15 @@ import butterknife.Unbinder;
 
 /**
  * RecyclerView.Adapter
- * author : Iwen大大怪
+ *
+ * @author : Iwen大大怪
  * create : 2020/11/11 17:00
  */
 @SuppressWarnings("unused")
 public abstract class RecyclerAdapter<Data>
         extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder<Data>>
         implements View.OnClickListener, View.OnLongClickListener, AdapterCallback<Data> {
+
     private final List<Data> mDataList;
     private AdapterListener<Data> mListener;
 
@@ -130,6 +132,14 @@ public abstract class RecyclerAdapter<Data>
     }
 
     /**
+     * 返回整个集合
+     * @return List<Data>
+     */
+    public List<Data> getItems(){
+        return mDataList;
+    }
+
+    /**
      * 插入一条数据并通知插入
      *
      * @param data Data
@@ -191,10 +201,10 @@ public abstract class RecyclerAdapter<Data>
     public void update(Data date, ViewHolder<Data> holder) {
         // 得到当前viewHolder坐标
         int pos = holder.getAdapterPosition();
-        if (pos>=0){
+        if (pos >= 0) {
             // 进行数据移除与更新
             mDataList.remove(pos);
-            mDataList.add(pos,date);
+            mDataList.add(pos, date);
             // 通知刷新
             notifyItemChanged(pos);
         }
@@ -291,9 +301,10 @@ public abstract class RecyclerAdapter<Data>
 
     /**
      * 对回调接口做一次实现AdapterListener
+     *
      * @param <Data>
      */
-    public static abstract class AdapterListenerImpl<Data> implements AdapterListener<Data>{
+    public static abstract class AdapterListenerImpl<Data> implements AdapterListener<Data> {
         @Override
         public void onItemClick(ViewHolder holder, Data data) {
 

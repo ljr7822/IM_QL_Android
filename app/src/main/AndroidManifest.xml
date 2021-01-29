@@ -40,11 +40,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".activities.SearchActivity"
-            android:theme="@style/AppTheme.TransStatusBar"
+        <activity android:name=".activities.MessageActivity"></activity>
+        <activity
+            android:name=".activities.SearchActivity"
             android:label="@string/title_search"
-            android:screenOrientation="portrait"/>
-        <!-- 配置的第三方参数属性 -->
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar" /> <!-- 配置的第三方参数属性 -->
         <meta-data
             android:name="PUSH_APPID"
             android:value="${GETUI_APP_ID}" />
@@ -84,7 +85,7 @@
             android:exported="false"
             android:process=":pushservice"
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.igexin.sdk.GActivity"
             android:excludeFromRecents="true"
@@ -94,7 +95,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".activities.UserActivity"
-            android:theme="@style/AppTheme.TransStatusBar"></activity>
+            android:theme="@style/AppTheme.TransStatusBar" />
         <activity
             android:name=".LaunchActivity"
             android:label="@string/title_activity_launch"
@@ -108,7 +109,7 @@
         <activity
             android:name=".activities.AccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Account"></activity>
+            android:theme="@style/AppTheme.Account" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
@@ -116,7 +117,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"></activity>
+            android:theme="@style/AppTheme.Main" />
     </application>
 
 </manifest>

@@ -24,6 +24,7 @@ import net.qiujuer.genius.ui.compat.UiCompat;
 
 /**
  * 账户
+ *
  * @author : Iwen大大怪
  * create : 2020/11/14 18:20
  */
@@ -35,10 +36,11 @@ public class AccountActivity extends Activity implements AccountTrigger {
 
     /**
      * 账户Activity的显示入口
+     *
      * @param context 上下文
      */
-    public static void show(Context context){
-        context.startActivity(new Intent(context,AccountActivity.class));
+    public static void show(Context context) {
+        context.startActivity(new Intent(context, AccountActivity.class));
     }
 
     @Override
@@ -53,7 +55,7 @@ public class AccountActivity extends Activity implements AccountTrigger {
         mFragment = mLoginFragment = new LoginFragment();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.lay_container,mFragment)
+                .add(R.id.lay_container, mFragment)
                 .commit();
         initView();
         // 初始化背景
@@ -73,7 +75,7 @@ public class AccountActivity extends Activity implements AccountTrigger {
                         // 使用适配包进行包装
                         drawable = DrawableCompat.wrap(drawable);
                         // 设置着色颜色和效果、蒙版模式
-                        drawable.setColorFilter(UiCompat.getColor(getResources(),R.color.colorAccent),
+                        drawable.setColorFilter(UiCompat.getColor(getResources(), R.color.colorAccent),
                                 PorterDuff.Mode.SCREEN);
                         this.view.setImageDrawable(drawable);
                     }
@@ -90,13 +92,13 @@ public class AccountActivity extends Activity implements AccountTrigger {
     public void triggerView() {
         Fragment fragment;
         if (mFragment == mLoginFragment) {
-            if (mRegisterFragment == null){
+            if (mRegisterFragment == null) {
                 // 默认情况下为null
                 // 第一次之后就不为null了
                 mRegisterFragment = new RegisterFragment();
             }
             fragment = mRegisterFragment;
-        }else {
+        } else {
             // 因为默认情况已经赋值，不需要判空
             fragment = mRegisterFragment;
         }
@@ -105,11 +107,11 @@ public class AccountActivity extends Activity implements AccountTrigger {
         // 切换显示
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.lay_container,fragment)
+                .replace(R.id.lay_container, fragment)
                 .commit();
     }
 
-    private void initView(){
+    private void initView() {
         mBg = findViewById(R.id.im_bg);
     }
 }

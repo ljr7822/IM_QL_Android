@@ -15,7 +15,7 @@ public class UserCard implements Author {
     private String name;
     private String phone;
     private String portrait;
-    private String description;
+    private String desc;
     private int sex = 0;
     // 用户关注人的数量
     private int follows;
@@ -61,12 +61,12 @@ public class UserCard implements Author {
         this.portrait = portrait;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public int getSex() {
@@ -119,7 +119,7 @@ public class UserCard implements Author {
             user.setName(name);
             user.setPortrait(portrait);
             user.setPhone(phone);
-            user.setDesc(description);
+            user.setDesc(desc);
             user.setSex(sex);
             user.setFollow(isFollow);
             user.setFollows(follows);

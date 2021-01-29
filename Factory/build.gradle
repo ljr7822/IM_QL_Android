@@ -38,6 +38,7 @@ dependencies {
     implementation "net.qiujuer.genius:ui:2.1.1"
     implementation "net.qiujuer.genius:res:2.1.1"
     implementation "net.qiujuer.genius:kit-handler:2.1.1"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
     // 数据库
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:4.0.4"
     api "com.github.Raizlabs.DBFlow:dbflow-core:4.0.4"
