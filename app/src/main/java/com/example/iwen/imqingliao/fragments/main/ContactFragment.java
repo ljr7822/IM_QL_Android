@@ -20,10 +20,10 @@ import com.example.iwen.imqingliao.activities.MessageActivity;
 import butterknife.BindView;
 
 public class ContactFragment extends PresenterFragment<ContactContract.Presenter> implements ContactContract.View {
-
+    // 空布局
     @BindView(R.id.empty)
     EmptyView mEmptyView;
-
+    // 列表recycler
     @BindView(R.id.recycler)
     RecyclerView mRecyclerView;
     // 适配器

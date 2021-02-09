@@ -29,20 +29,20 @@ public class PortraitView extends CircleImageView {
     }
 
     public void setup(RequestManager manager, Author author) {
-        if (author==null){
+        if (author == null) {
             return;
         }
         // 进行显示
-        setup(manager,author.getPortrait());
+        setup(manager, author.getPortrait());
     }
 
     public void setup(RequestManager manager, String url) {
-        setup(manager, R.drawable.default_portrait,url);
+        setup(manager, R.drawable.default_portrait, url);
     }
 
     public void setup(RequestManager manager, int resourceId, String url) {
-        if (url==null){
-            url="";
+        if (url == null) {
+            url = "";
         }
         manager.load(url)
                 .placeholder(resourceId)
@@ -50,5 +50,4 @@ public class PortraitView extends CircleImageView {
                 .dontAnimate() // 不能使用渐变动画，会导致延迟
                 .into(this);
     }
-
 }
