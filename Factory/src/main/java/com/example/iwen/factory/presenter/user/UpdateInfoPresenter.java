@@ -21,7 +21,8 @@ import net.qiujuer.genius.kit.handler.runable.Action;
  * @author : iwen大大怪
  * create : 12-13 013 20:26
  */
-public class UpdateInfoPresenter extends BasePresenter<UpdateInfoContract.View>
+public class UpdateInfoPresenter
+        extends BasePresenter<UpdateInfoContract.View>
         implements UpdateInfoContract.Presenter, DataSource.Callback<UserCard> {
     public UpdateInfoPresenter(UpdateInfoContract.View mView) {
         super(mView);
@@ -47,7 +48,7 @@ public class UpdateInfoPresenter extends BasePresenter<UpdateInfoContract.View>
                         // 构建model
                         UserUpdateModel model = new UserUpdateModel("", url, desc,
                                 isMan ? User.SEX_MAN : User.SEX_WOMAN);
-                        // 调取网络请求，上传头像
+                        // 进行网络请求，上传头像
                         UserHelper.update(model,UpdateInfoPresenter.this);
                     }
                 }
@@ -57,7 +58,7 @@ public class UpdateInfoPresenter extends BasePresenter<UpdateInfoContract.View>
 
     @Override
     public void onDataLoad(UserCard userCard) {
-        //告知界面更新成功
+        // 告知界面更新成功
         final UpdateInfoContract.View view = getView();
         if (view == null)
             return;

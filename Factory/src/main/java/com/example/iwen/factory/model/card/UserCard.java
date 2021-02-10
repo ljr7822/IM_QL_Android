@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * 用户卡片，用于接收服务器返回
+ *
  * @author : iwen大大怪
  * create : 12-13 013 20:43
  */

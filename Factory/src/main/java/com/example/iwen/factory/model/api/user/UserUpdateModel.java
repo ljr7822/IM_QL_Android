@@ -5,14 +5,14 @@ package com.example.iwen.factory.model.api.user;
  */
 public class UserUpdateModel {
     private String name;
-    private String avatar;
-    private String description;
+    private String portrait;
+    private String desc;
     private int sex;
 
     public UserUpdateModel(String name, String avatar, String desc, int sex) {
         this.name = name;
-        this.avatar = avatar;
-        this.description = desc;
+        this.portrait = avatar;
+        this.desc = desc;
         this.sex = sex;
     }
 
@@ -24,21 +24,20 @@ public class UserUpdateModel {
         this.name = name;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getPortrait() {
+        return portrait;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
     }
 
-
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public int getSex() {
@@ -53,8 +52,8 @@ public class UserUpdateModel {
     public String toString() {
         return "UserUpdateModel{" +
                 "name='" + name + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", desc='" + description + '\'' +
+                ", avatar='" + portrait + '\'' +
+                ", desc='" + desc + '\'' +
                 ", sex=" + sex +
                 '}';
     }

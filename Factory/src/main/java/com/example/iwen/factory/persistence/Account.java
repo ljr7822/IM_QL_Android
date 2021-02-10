@@ -116,7 +116,9 @@ public class Account {
         if (isLogin()) {
             User self = getUser();
             Log.e("TAG", self.toString());
-            return !TextUtils.isEmpty(self.getDesc()) && !TextUtils.isEmpty(self.getPortrait());
+            return !TextUtils.isEmpty(self.getDesc())
+                    && !TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex()!=0;
         }
         return false;
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,7 +52,7 @@ public class UpdateInfoFragment
     Button mSubmit;
     // 存储头像本地路径
     private String mPortraitPath;
-    //
+    // 是否是男生
     private boolean isMan = true;
 
     public UpdateInfoFragment() {
@@ -117,10 +118,10 @@ public class UpdateInfoFragment
                 .load(uri)
                 .centerCrop()
                 .into(mPortraitView);
-//        // 拿到本地文件地址
-//        final String localPath = uri.getPath();
-//        Log.e("TAG", "localPath" + localPath);
-//
+        // 拿到本地文件地址
+        final String localPath = uri.getPath();
+        Log.e("TAG", "localPath" + localPath);
+
 //        // 使用线程池，将图片上传到oss文件夹
 //        Factory.runOnAsync(new Runnable() {
 //            @Override
