@@ -16,8 +16,10 @@ import com.example.iwen.factory.presenter.contace.ContactContract;
 import com.example.iwen.factory.presenter.contace.ContactPresenter;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.activities.MessageActivity;
+import com.example.iwen.imqingliao.activities.PersonalActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ContactFragment
         extends PresenterFragment<ContactContract.Presenter>
@@ -119,6 +121,12 @@ public class ContactFragment
             mName.setText(user.getName());
             // 简介加载
             mDesc.setText(user.getDesc());
+        }
+
+        // 进入个人界面
+        @OnClick(R.id.im_portrait)
+        void onPortraitClick() {
+            PersonalActivity.show(getContext(),mData.getId());
         }
     }
 }

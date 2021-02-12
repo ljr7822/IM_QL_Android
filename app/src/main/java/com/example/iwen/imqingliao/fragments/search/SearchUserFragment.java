@@ -19,6 +19,7 @@ import com.example.iwen.factory.presenter.contace.FollowPresenter;
 import com.example.iwen.factory.presenter.search.SearchContract;
 import com.example.iwen.factory.presenter.search.SearchUserPresenter;
 import com.example.iwen.imqingliao.R;
+import com.example.iwen.imqingliao.activities.PersonalActivity;
 import com.example.iwen.imqingliao.activities.SearchActivity;
 
 import net.qiujuer.genius.ui.Ui;
@@ -143,6 +144,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             mPortraitView.setup(Glide.with(SearchUserFragment.this), userCard);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
+        }
+
+        // 进入个人界面
+        @OnClick(R.id.iv_avatar)
+        void onPortraitClick() {
+            PersonalActivity.show(getContext(),mData.getId());
         }
 
         // 发起关注

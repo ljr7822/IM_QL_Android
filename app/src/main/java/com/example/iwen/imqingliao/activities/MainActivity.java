@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.factory.persistence.Account;
@@ -101,8 +102,21 @@ public class MainActivity extends Activity
         Menu menu = mNavigation.getMenu();
         // 触发首次选中home
         menu.performIdentifierAction(R.id.action_home, 0);
+        // 初始化头像加载
+        mPortrait.setup(Glide.with(this),Account.getUser());
     }
 
+    /**
+     * 头像点击进入个人信息界面
+     */
+    @OnClick(R.id.im_portrait)
+    void onPortraitClick(){
+        PersonalActivity.show(this,Account.getUserId());
+    }
+
+    /**
+     * 搜索按钮
+     */
     @OnClick(R.id.im_search)
     void onSearchMenuClick() {
         // 在群界面的时候，点击顶部的搜索就进入群搜索界面
