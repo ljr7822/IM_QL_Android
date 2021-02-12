@@ -19,13 +19,15 @@ import com.example.iwen.imqingliao.activities.MessageActivity;
 
 import butterknife.BindView;
 
-public class ContactFragment extends PresenterFragment<ContactContract.Presenter> implements ContactContract.View {
+public class ContactFragment
+        extends PresenterFragment<ContactContract.Presenter>
+        implements ContactContract.View {
     // 空布局
     @BindView(R.id.empty)
     EmptyView mEmptyView;
     // 列表recycler
     @BindView(R.id.recycler)
-    RecyclerView mRecyclerView;
+    RecyclerView mRecycler;
     // 适配器
     private RecyclerAdapter<User> mAdapter;
 
@@ -42,8 +44,8 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
     protected void initWidget(View view) {
         super.initWidget(view);
         // 初始化recycler
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(mAdapter = new RecyclerAdapter<User>() {
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.setAdapter(mAdapter = new RecyclerAdapter<User>() {
             @Override
             protected int getItemViewType(int position, User user) {
                 // 返回cell布局
@@ -66,7 +68,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
         });
 
         // 初始化空布局
-        mEmptyView.bind(mRecyclerView);
+        mEmptyView.bind(mRecycler);
         setPlaceHolderView(mEmptyView);
     }
 
@@ -96,13 +98,13 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
         // 头像
-        @BindView(R.id.iv_avatar)
+        @BindView(R.id.im_portrait)
         PortraitView mPortraitView;
         // 名字
-        @BindView(R.id.tv_name)
+        @BindView(R.id.txt_name)
         TextView mName;
         // 描述
-        @BindView(R.id.tv_desc)
+        @BindView(R.id.txt_desc)
         TextView mDesc;
 
         public ViewHolder(View itemView) {

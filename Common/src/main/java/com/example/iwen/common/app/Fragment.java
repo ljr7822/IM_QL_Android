@@ -16,7 +16,8 @@ import butterknife.Unbinder;
 
 /**
  * Fragment基类
- * author : Iwen大大怪
+ *
+ * @author : iwen大大怪
  * create : 2020/11/11 14:35
  */
 public abstract class Fragment extends androidx.fragment.app.Fragment {
@@ -54,10 +55,11 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mIsFirstInitData){
+        if (mIsFirstInitData) {
             // 触发一次后就不触发
             mIsFirstInitData = false;
-            onFirstInitData();
+            // 首次初始化调用
+            onFirstInit();
         }
         // 当view创建完成后初始化数据
         initData();
@@ -70,12 +72,12 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
 
     }
 
-    /**
-     * 首次初始化数据的时候会调用
-     */
-    protected void onFirstInit() {
-
-    }
+//    /**
+//     * 首次初始化数据的时候会调用
+//     */
+//    protected void onFirstInit() {
+//
+//    }
 
     /**
      * 得到当前资源文件id
@@ -100,7 +102,7 @@ public abstract class Fragment extends androidx.fragment.app.Fragment {
     /**
      * 首次初始化数据时调用
      */
-    protected void onFirstInitData() {
+    protected void onFirstInit() {
     }
 
     /**

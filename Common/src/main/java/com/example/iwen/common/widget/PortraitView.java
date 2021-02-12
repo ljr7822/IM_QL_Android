@@ -10,12 +10,12 @@ import com.example.iwen.common.factory.model.Author;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * 头像的view
+ * 头像控件
  *
  * @author : Iwen大大怪
  * create : 2020/11/12 15:05
  */
-public class PortraitView extends CircleImageView {
+public class  PortraitView extends CircleImageView {
     public PortraitView(Context context) {
         super(context);
     }
@@ -29,9 +29,8 @@ public class PortraitView extends CircleImageView {
     }
 
     public void setup(RequestManager manager, Author author) {
-        if (author == null) {
+        if (author == null)
             return;
-        }
         // 进行显示
         setup(manager, author.getPortrait());
     }
@@ -41,9 +40,8 @@ public class PortraitView extends CircleImageView {
     }
 
     public void setup(RequestManager manager, int resourceId, String url) {
-        if (url == null) {
+        if (url == null)
             url = "";
-        }
         manager.load(url)
                 .placeholder(resourceId)
                 .centerCrop()

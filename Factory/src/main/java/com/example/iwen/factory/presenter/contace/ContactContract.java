@@ -16,7 +16,7 @@ public interface ContactContract {
     }
 
     // 都在基类完成了
-    interface View extends BaseContract.RecyclerView<User,Presenter> {
+    interface View extends BaseContract.RecyclerView<User, Presenter> {
 
     }
 }
