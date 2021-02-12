@@ -2,24 +2,35 @@ package com.example.iwen.imqingliao.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.iwen.common.app.ToolbarActivity;
+import androidx.core.graphics.drawable.DrawableCompat;
+
+import com.bumptech.glide.Glide;
+import com.example.iwen.common.app.PresenterToolbarActivity;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.presenter.contace.PersonalContract;
+import com.example.iwen.factory.presenter.contace.PersonalPresenter;
 import com.example.iwen.imqingliao.R;
 
+import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.widget.Button;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PersonalActivity extends ToolbarActivity {
+public class PersonalActivity
+        extends PresenterToolbarActivity<PersonalContract.Presenter>
+        implements PersonalContract.View{
     private static final String BOUND_KEY_ID = "BOUND_KEY_ID";
     private String userId;
 
@@ -80,6 +91,12 @@ public class PersonalActivity extends ToolbarActivity {
         setTitle("");
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.start();
+    }
+
     /**
      * 初始化菜单
      *
@@ -91,7 +108,7 @@ public class PersonalActivity extends ToolbarActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.personal, menu);
         mFollowItem = menu.findItem(R.id.action_follow);
-        //changeFollowItemStatus();
+        changeFollowItemStatus();
         return true;
     }
 
@@ -106,57 +123,60 @@ public class PersonalActivity extends ToolbarActivity {
 
     @OnClick(R.id.btn_say_hello)
     void onSayHelloClick() {
-        // TODO 发起聊天的点击
+        // 发起聊天的点击
+        User user = mPresenter.getUserPersonal();
+        if (user == null)
+            return;
+        MessageActivity.show(this, user);
 
     }
 
 
-//    /**
-//     * 更改关注菜单状态
-//     */
-//    private void changeFollowItemStatus() {
-//        if (mFollowItem == null)
-//            return;
-//
-//        // 根据状态设置颜色
-//        Drawable drawable = mIsFollowUser ? getResources()
-//                .getDrawable(R.drawable.ic_favorite) :
-//                getResources().getDrawable(R.drawable.ic_favorite_border);
-//        drawable = DrawableCompat.wrap(drawable);
-//        DrawableCompat.setTint(drawable, Resource.Color.WHITE);
-//        mFollowItem.setIcon(drawable);
-//    }
-//
-//    @Override
-//    public String getUserId() {
-//        return userId;
-//    }
-//
-//    @Override
-//    public void onLoadDone(User user) {
-//        if (user == null)
-//            return;
-//        mPortrait.setup(Glide.with(this), user);
-//        mName.setText(user.getName());
-//        mDesc.setText(user.getDesc());
-//        mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
-//        mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
-//        hideLoading();
-//    }
-//
-//    @Override
-//    public void allowSayHello(boolean isAllow) {
-//        mSayHello.setVisibility(isAllow ? View.VISIBLE : View.GONE);
-//    }
-//
-//    @Override
-//    public void setFollowStatus(boolean isFollow) {
-//        mIsFollowUser = isFollow;
-//        changeFollowItemStatus();
-//    }
-//
-//    @Override
-//    protected PersonalContract.Presenter initPresenter() {
-//        return new PersonalPresenter(this);
-//    }
+    /**
+     * 更改关注菜单点击后的状态
+     */
+    private void changeFollowItemStatus() {
+        if (mFollowItem == null)
+            return;
+        // 根据状态设置颜色
+        Drawable drawable = mIsFollowUser ? getResources()
+                .getDrawable(R.drawable.ic_favorite) :
+                getResources().getDrawable(R.drawable.ic_favorite_border);
+        drawable = DrawableCompat.wrap(drawable);
+        DrawableCompat.setTint(drawable, Resource.Color.WHITE);
+        mFollowItem.setIcon(drawable);
+    }
+
+    @Override
+    public String getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void onLoadDone(User user) {
+        if (user == null)
+            return;
+        mPortrait.setup(Glide.with(this), user);
+        mName.setText(user.getName());
+        mDesc.setText(user.getDesc());
+        mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
+        mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
+        hideLoading();
+    }
+
+    @Override
+    public void allowSayHello(boolean isAllow) {
+        mSayHello.setVisibility(isAllow ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void setFollowStatus(boolean isFollow) {
+        mIsFollowUser = isFollow;
+        changeFollowItemStatus();
+    }
+
+    @Override
+    protected PersonalContract.Presenter initPresenter() {
+        return new PersonalPresenter(this);
+    }
 }

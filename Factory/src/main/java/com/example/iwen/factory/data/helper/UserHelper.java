@@ -9,9 +9,12 @@ import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.user.UserUpdateModel;
 import com.example.iwen.factory.model.card.UserCard;
 import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.model.db.User_Table;
 import com.example.iwen.factory.net.Network;
 import com.example.iwen.factory.net.RemoteService;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -114,7 +117,7 @@ public class UserHelper {
             @Override
             public void onResponse(Call<RspModel<UserCard>> call, Response<RspModel<UserCard>> response) {
                 RspModel<UserCard> rspModel = response.body();
-                if (rspModel.success()){
+                if (rspModel.success()) {
                     // 保存用户信息
                     UserCard userCard = rspModel.getResult();
                     User user = userCard.build();
@@ -123,8 +126,8 @@ public class UserHelper {
 
                     // 返回数据
                     callback.onDataLoad(rspModel.getResult());
-                }else {
-                    Factory.decodeRspCode(rspModel,callback);
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
                 }
             }
 
@@ -163,5 +166,67 @@ public class UserHelper {
                 Log.e("ljr", "onFailure message: " + t);
             }
         });
+    }
+
+    /**
+     * 从本地查询一个用户的信息
+     *
+     * @param id 用户id
+     * @return User
+     */
+    public static User findFromLocal(String id){
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.id.eq(id))
+                .querySingle();
+    }
+
+    /**
+     * 从网络查询某用户的信息
+     *
+     * @param id 用户id
+     * @return User
+     */
+    public static User findFromNet(String id) {
+        RemoteService remoteService = Network.mRemoteService();
+        try {
+            Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
+            UserCard card = response.body().getResult();
+            if (card != null) {
+                User user = card.build();
+                // 数据库的存储并通知
+                user.save();
+                return user;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 搜索一个用户，优先本地缓存，没有用然后再从网络拉取
+     * @param id 用户id
+     * @return User
+     */
+    public static User search(String id) {
+        User user = findFromLocal(id);
+        if (user == null) {
+            return findFromNet(id);
+        }
+        return user;
+    }
+    /**
+     * 搜索一个用户，优先网络查询，没有用然后再从本地缓存拉取
+     *
+     * @param id 用户id
+     * @return User
+     */
+    public static User searchFirstOfNet(String id) {
+        User user = findFromNet(id);
+        if (user == null) {
+            return findFromLocal(id);
+        }
+        return user;
     }
 }

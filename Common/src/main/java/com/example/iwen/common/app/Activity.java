@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
  */
 public abstract class Activity extends AppCompatActivity {
 
-    protected PlaceHolderView placeHolderView;
+    protected PlaceHolderView mPlaceHolderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,17 +28,13 @@ public abstract class Activity extends AppCompatActivity {
         if (initArgs(getIntent().getExtras())) {
             int layId = getContentLayoutId();
             setContentView(layId);
+            initBefore();
             initWidget();
             initData();
         } else {
             finish();
         }
     }
-
-    /**
-     * 动态获取权限
-     */
-
 
     /**
      * 初始化控件调用之前
@@ -116,6 +112,6 @@ public abstract class Activity extends AppCompatActivity {
      * @param placeHolderView 继承了占位布局规范的View
      */
     public void setPlaceHolderView(PlaceHolderView placeHolderView) {
-        this.placeHolderView = placeHolderView;
+        this.mPlaceHolderView = placeHolderView;
     }
 }

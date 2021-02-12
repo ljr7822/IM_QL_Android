@@ -1,9 +1,7 @@
 package com.example.iwen.common.app;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 
-import com.example.iwen.common.R;
 import com.example.iwen.common.factory.presenter.BaseContract;
 
 /**
@@ -40,12 +38,9 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Pr
 
     @Override
     public void showError(int str) {
-        // 不管你怎么样，我先隐藏我
-        hideDialogLoading();
-
         // 显示错误, 优先使用占位布局
-        if (placeHolderView != null) {
-            placeHolderView.triggerError(str);
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerError(str);
         } else {
             Application.showToast(str);
         }
@@ -53,44 +48,25 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Pr
 
     @Override
     public void showLoading() {
-        if (placeHolderView != null) {
-            placeHolderView.triggerLoading();
-        } else {
-            ProgressDialog dialog = mLoadingDialog;
-            if (dialog == null) {
-                dialog = new ProgressDialog(this, R.style.AppTheme_Dialog_Alert_Light);
-                // 不可触摸取消
-                dialog.setCanceledOnTouchOutside(false);
-                // 强制取消关闭界面
-                dialog.setCancelable(true);
-                dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        finish();
-                    }
-                });
-                mLoadingDialog = dialog;
-            }
-
-            dialog.setMessage(getText(R.string.prompt_loading));
-            dialog.show();
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerLoading();
         }
     }
 
-    protected void hideDialogLoading() {
-        ProgressDialog dialog = mLoadingDialog;
-        if (dialog != null) {
-            mLoadingDialog = null;
-            dialog.dismiss();
-        }
-    }
+//    protected void hideDialogLoading() {
+//        ProgressDialog dialog = mLoadingDialog;
+//        if (dialog != null) {
+//            mLoadingDialog = null;
+//            dialog.dismiss();
+//        }
+//    }
 
     protected void hideLoading() {
         // 不管你怎么样，我先隐藏我
-        hideDialogLoading();
+        //hideDialogLoading();
 
-        if (placeHolderView != null) {
-            placeHolderView.triggerOk();
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerOk();
         }
     }
 
