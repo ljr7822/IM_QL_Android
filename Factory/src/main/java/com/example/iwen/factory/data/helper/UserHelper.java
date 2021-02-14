@@ -51,7 +51,7 @@ public class UserHelper {
                     // 数据库存储，需要把userCard装换成user
                     User user = userCard.build();
                     // 保存用户信息
-                    user.save();
+                    DbHelper.save(User.class,user);
                     // callabck返回
                     callback.onDataLoad(userCard);
                 } else {
@@ -121,9 +121,7 @@ public class UserHelper {
                     // 保存用户信息
                     UserCard userCard = rspModel.getResult();
                     User user = userCard.build();
-                    user.save();
-                    // TODO 通知联系人列表刷新
-
+                    DbHelper.save(User.class,user);
                     // 返回数据
                     callback.onDataLoad(rspModel.getResult());
                 } else {
@@ -195,7 +193,7 @@ public class UserHelper {
             if (card != null) {
                 User user = card.build();
                 // 数据库的存储并通知
-                user.save();
+                DbHelper.save(User.class,user);
                 return user;
             }
         } catch (IOException e) {

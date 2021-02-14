@@ -93,9 +93,11 @@ public class AccountHelper {
                 AccountRspModel accountRspModel = rspModel.getResult();
                 // 获取我的信息
                 User user = accountRspModel.getUser();
+                // 使用自定義的存儲管理器進行存儲
+                DbHelper.save(User.class,user);
                 // 进行数据库写入
                 // 方法1.直接保存
-                user.save();
+                //user.save();
                         /*
                         // 方法2.通过ModelAdapter
                         FlowManager.getModelAdapter(User.class).save(user);

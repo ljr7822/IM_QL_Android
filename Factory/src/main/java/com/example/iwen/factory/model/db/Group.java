@@ -33,7 +33,6 @@ public class Group extends BaseDbModel<Group> implements Serializable {
     @ForeignKey(tableClass = User.class, stubbedRelationship = true)
     private User owner;// 创建者外键
 
-
     public Object holder; // 预留字段，用于界面显示
 
     public String getId() {
@@ -139,7 +138,7 @@ public class Group extends BaseDbModel<Group> implements Serializable {
                 && Objects.equals(this.holder, oldT.holder);
     }
 
-    private long groupMemberCount = -1;
+//    private long groupMemberCount = -1;
 
 //    // 获取当前群的成员数量，使用内存缓存
 //    public long getGroupMemberCount() {
