@@ -88,6 +88,8 @@ public interface RemoteService {
 
     /**
      * 查询某人的信息
+     *
+     * @return UserCard
      */
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userFind(@Path("userId") String userId);

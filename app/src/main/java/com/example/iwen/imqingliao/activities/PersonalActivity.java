@@ -30,7 +30,7 @@ import butterknife.OnClick;
 
 public class PersonalActivity
         extends PresenterToolbarActivity<PersonalContract.Presenter>
-        implements PersonalContract.View{
+        implements PersonalContract.View {
     private static final String BOUND_KEY_ID = "BOUND_KEY_ID";
     private String userId;
 
@@ -69,7 +69,7 @@ public class PersonalActivity
      * 初始化参数
      *
      * @param bundle 参数bundle
-     * @return
+     * @return boolean
      */
     @Override
     protected boolean initArgs(Bundle bundle) {
@@ -91,6 +91,9 @@ public class PersonalActivity
         setTitle("");
     }
 
+    /**
+     * 初始化数据，从网络拉取联系人信息
+     */
     @Override
     protected void initData() {
         super.initData();
@@ -101,13 +104,14 @@ public class PersonalActivity
      * 初始化菜单
      *
      * @param menu 菜单布局
-     * @return
+     * @return boolean
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.personal, menu);
         mFollowItem = menu.findItem(R.id.action_follow);
+        // 更改关注菜单点击后的状态
         changeFollowItemStatus();
         return true;
     }
@@ -121,14 +125,15 @@ public class PersonalActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 发起聊天的点击事件
+     */
     @OnClick(R.id.btn_say_hello)
     void onSayHelloClick() {
-        // 发起聊天的点击
         User user = mPresenter.getUserPersonal();
         if (user == null)
             return;
         MessageActivity.show(this, user);
-
     }
 
 
@@ -139,19 +144,29 @@ public class PersonalActivity
         if (mFollowItem == null)
             return;
         // 根据状态设置颜色
-        Drawable drawable = mIsFollowUser ? getResources()
-                .getDrawable(R.drawable.ic_favorite) :
+        Drawable drawable = mIsFollowUser ?
+                getResources().getDrawable(R.drawable.ic_favorite) :
                 getResources().getDrawable(R.drawable.ic_favorite_border);
         drawable = DrawableCompat.wrap(drawable);
         DrawableCompat.setTint(drawable, Resource.Color.WHITE);
         mFollowItem.setIcon(drawable);
     }
 
+    /**
+     * 复写获取用户id的方法
+     *
+     * @return 用户id
+     */
     @Override
     public String getUserId() {
         return userId;
     }
 
+    /**
+     * 加载完成后展示用户信息
+     *
+     * @param user 传进来的用户信息
+     */
     @Override
     public void onLoadDone(User user) {
         if (user == null)
