@@ -4,6 +4,8 @@ import androidx.annotation.StringRes;
 
 import com.example.iwen.common.app.Application;
 import com.example.iwen.common.factory.data.DataSource;
+import com.example.iwen.factory.data.message.MessageCenter;
+import com.example.iwen.factory.data.message.MessageDispatcher;
 import com.example.iwen.factory.data.user.UserCenter;
 import com.example.iwen.factory.data.user.UserDispatcher;
 import com.example.iwen.factory.model.api.RspModel;
@@ -179,5 +181,14 @@ public class Factory {
      */
     public static UserCenter getUserCenter() {
         return UserDispatcher.getInstance();
+    }
+
+    /**
+     * 獲取一個消息中心的實現類
+     *
+     * @return MessageDispatcher.getInstance()
+     */
+    public static MessageCenter getMessageCenter() {
+        return MessageDispatcher.getInstance();
     }
 }
