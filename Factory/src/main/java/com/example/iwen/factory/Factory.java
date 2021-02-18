@@ -4,6 +4,8 @@ import androidx.annotation.StringRes;
 
 import com.example.iwen.common.app.Application;
 import com.example.iwen.common.factory.data.DataSource;
+import com.example.iwen.factory.data.user.UserCenter;
+import com.example.iwen.factory.data.user.UserDispatcher;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.factory.utils.DBFlowExclusionStrategy;
@@ -16,7 +18,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * author : Iwen大大怪
+ * @author : Iwen大大怪
  * create : 2020/11/15 13:36
  */
 public class Factory {
@@ -168,5 +170,14 @@ public class Factory {
     public static void dispatchPush(String message) {
         // TODO
 
+    }
+
+    /**
+     * 獲取一個用戶中心的實現類
+     *
+     * @return UserDispatcher.getInstance()
+     */
+    public static UserCenter getUserCenter() {
+        return UserDispatcher.getInstance();
     }
 }
