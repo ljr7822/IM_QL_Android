@@ -1,8 +1,16 @@
 package com.example.iwen.factory.data.group;
 
+import com.example.iwen.factory.data.helper.DbHelper;
+import com.example.iwen.factory.data.helper.GroupHelper;
+import com.example.iwen.factory.data.helper.UserHelper;
 import com.example.iwen.factory.model.card.GroupCard;
 import com.example.iwen.factory.model.card.GroupMemberCard;
+import com.example.iwen.factory.model.db.Group;
+import com.example.iwen.factory.model.db.GroupMember;
+import com.example.iwen.factory.model.db.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -54,7 +62,18 @@ public class GroupDispatcher implements GroupCenter {
 
         @Override
         public void run() {
-
+            List<Group> groups = new ArrayList<>();
+            for (GroupCard card : cards) {
+                // 搜索管理员
+                User owner = UserHelper.search(card.getOwnerId());
+                if (owner != null) {
+                    Group group = card.build(owner);
+                    groups.add(group);
+                }
+            }
+            if (groups.size() > 0) {
+                DbHelper.save(Group.class, groups.toArray(new Group[0]));
+            }
         }
     }
 
@@ -70,7 +89,20 @@ public class GroupDispatcher implements GroupCenter {
 
         @Override
         public void run() {
-
+            List<GroupMember> members = new ArrayList<>();
+            for (GroupMemberCard model : cards) {
+                // 成员对应的人的信息
+                User user = UserHelper.search(model.getUserId());
+                // 成员对应的群的信息
+                Group group = GroupHelper.find(model.getGroupId());
+                if (user != null && group != null) {
+                    GroupMember member = model.build(group, user);
+                    members.add(member);
+                }
+            }
+            if (members.size() > 0){
+                DbHelper.save(GroupMember.class, members.toArray(new GroupMember[0]));
+            }
         }
     }
 }

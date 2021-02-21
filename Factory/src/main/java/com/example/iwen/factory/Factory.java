@@ -4,6 +4,8 @@ import androidx.annotation.StringRes;
 
 import com.example.iwen.common.app.Application;
 import com.example.iwen.common.factory.data.DataSource;
+import com.example.iwen.factory.data.group.GroupCenter;
+import com.example.iwen.factory.data.group.GroupDispatcher;
 import com.example.iwen.factory.data.message.MessageCenter;
 import com.example.iwen.factory.data.message.MessageDispatcher;
 import com.example.iwen.factory.data.user.UserCenter;
@@ -190,5 +192,14 @@ public class Factory {
      */
     public static MessageCenter getMessageCenter() {
         return MessageDispatcher.getInstance();
+    }
+
+    /**
+     * 獲取一個群中心的實現類
+     *
+     * @return GroupDispatcher.getInstance()
+     */
+    public static GroupCenter getGroupCenter() {
+        return GroupDispatcher.getInstance();
     }
 }
