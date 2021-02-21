@@ -262,17 +262,17 @@ public class DbHelper {
                 for (Session.Identify identify : identifies) {
                     Session session = SessionHelper.findFromLocal(identify.id);
                     if (session == null) {
-                        //第一次聊天，创建一个你和对方的一个会话
+                        // 第一次聊天，创建一个你和对方的一个会话
                         session = new Session(identify);
                     }
-                    //把会话刷新到当前Message的最新状态
+                    // 把会话刷新到当前Message的最新状态
                     session.refreshToNow();
-                    //数据存储
+                    // 数据存储
                     adapter.save(session);
-                    //添加到集合
+                    // 添加到集合
                     sessions[index++] = session;
                 }
-                //调用直接进行一次通知分发
+                // 调用直接进行一次通知分发
                 instance.notifySave(Session.class, sessions);
             }
         }).build().execute();

@@ -183,7 +183,7 @@ public class Session extends BaseDbModel<Session> {
     /**
      * 刷新会话对应的信息为当前Message的最新状态
      */
-//    public void refreshToNow() {
+    public void refreshToNow() {
 //        Message message;
 //        if (receiverType == Message.RECEIVER_TYPE_GROUP) {
 //            //刷新当前对应的群的相关信息
@@ -249,7 +249,7 @@ public class Session extends BaseDbModel<Session> {
 //
 //            }
 //        }
-//    }
+    }
 
 
     /**

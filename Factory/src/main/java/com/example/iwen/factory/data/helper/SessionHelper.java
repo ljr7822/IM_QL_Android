@@ -10,7 +10,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
  * Create to 2021/02/21 23:50
  */
 public class SessionHelper {
-    //从本地查询Session
+    // 从本地查询Session
     public static Session findFromLocal(String id) {
         return SQLite.select()
                 .from(Session.class)
