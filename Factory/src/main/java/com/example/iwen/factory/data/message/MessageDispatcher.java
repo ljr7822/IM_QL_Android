@@ -82,13 +82,15 @@ public class MessageDispatcher implements MessageCenter {
                     // 如果本地消息显示已经完成则不做处理
                     if (message.getStatus() == Message.STATUS_DONE)
                         continue;
+
                     // 新状态为完成才更新服务器时间，不然不做更新
                     if (card.getStatus() == Message.STATUS_DONE) {
                         // 代表网络发送成功，此时需要修改时间为服务器的时间
                         message.setCreateAt(card.getCreateAt());
                         // 如果没有进入判断，则代表这个消息是发送失败了，
-                        // 重新进行数据库更新而而已
+                        // 重新进行数据库更新而已
                     }
+
                     // 更新一些会变化的内容
                     message.setContent(card.getContent());
                     message.setAttach(card.getAttach());
@@ -104,6 +106,7 @@ public class MessageDispatcher implements MessageCenter {
                     } else if (!TextUtils.isEmpty(card.getGroupId())) {
                         group = GroupHelper.findFromLocal(card.getGroupId());
                     }
+
                     // 接收者总有一个
                     if (receiver == null && group == null && sender != null)
                         continue;

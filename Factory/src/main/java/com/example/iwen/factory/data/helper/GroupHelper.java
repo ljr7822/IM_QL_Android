@@ -14,4 +14,10 @@ public class GroupHelper {
         // TODO 查询群信息，先本地，后网络
         return null;
     }
+
+
+    public static Group findFromLocal(String groupId) {
+        // TODO 本地查询群信息
+        return null;
+    }
 }

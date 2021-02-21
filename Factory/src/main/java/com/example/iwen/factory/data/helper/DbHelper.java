@@ -135,6 +135,14 @@ public class DbHelper {
 //        }
     }
 
+    /**
+     * 通知监听器
+     */
+    public interface ChangedListener<Data extends BaseModel> {
+        @SuppressWarnings("unchecked")
+        void onDataSave(Data... list);
 
-
+        @SuppressWarnings("unchecked")
+        void onDataDelete(Data... list);
+    }
 }
