@@ -95,10 +95,10 @@ public class MessageActivity extends Activity {
         } else {
             fragment = new ChatUserFragment();
         }
-        //从Activity传递参数到Fragment中去
+        // 从Activity传递参数到Fragment中去
         Bundle bundle = new Bundle();
         bundle.putString(KEY_RECEIVER_ID, mReceiverId);
         fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_container, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.lay_container, fragment).commit();
     }
 }

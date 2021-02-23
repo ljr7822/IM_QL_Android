@@ -49,7 +49,7 @@
             android:name=".activities.MessageActivity"
             android:label="@string/title_activity_message"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.TransStatusBar" />
+            android:theme="@style/AppTheme.Message" />
         <activity
             android:name=".activities.SearchActivity"
             android:label="@string/title_search"
