@@ -3,12 +3,12 @@ package com.example.iwen.factory.presenter.contace;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.example.iwen.common.factory.data.DataSource;
-import com.example.iwen.common.factory.presenter.BaseRecyclerPresenter;
 import com.example.iwen.common.widget.recycler.RecyclerAdapter;
 import com.example.iwen.factory.data.helper.UserHelper;
 import com.example.iwen.factory.data.user.ContactDataSource;
 import com.example.iwen.factory.data.user.ContactRepository;
 import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.presenter.BaseSourcePresenter;
 import com.example.iwen.factory.utils.DiffUiDataCallback;
 
 import java.util.List;
@@ -19,22 +19,17 @@ import java.util.List;
  * @author : iwen大大怪
  * create : 2021/01/29 1:58
  */
-public class ContactPresenter extends BaseRecyclerPresenter<ContactContract.View,User>
+public class ContactPresenter extends BaseSourcePresenter<User,User,ContactDataSource,ContactContract.View>
         implements ContactContract.Presenter, DataSource.SuccessCallback<List<User>> {
-    private ContactDataSource mSource;
 
     public ContactPresenter(ContactContract.View mView) {
-        super(mView);
         // 初始化数据仓库
-        mSource = new ContactRepository();
+        super(new ContactRepository(),mView);
     }
 
     @Override
     public void start() {
         super.start();
-        // 进行本地数据加载，并添加监听
-        mSource.load(this);
-
         // 加载网络数据
         UserHelper.refreshContacts();
 
@@ -57,12 +52,5 @@ public class ContactPresenter extends BaseRecyclerPresenter<ContactContract.View
 
         // 调用基类方法进行界面更新
         refreshData(result,users);
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        // 界面销毁时，将数据销毁
-        mSource.dispose();
     }
 }
