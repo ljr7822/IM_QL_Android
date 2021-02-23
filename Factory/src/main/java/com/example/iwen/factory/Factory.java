@@ -1,5 +1,7 @@
 package com.example.iwen.factory;
 
+import android.util.Log;
+
 import androidx.annotation.StringRes;
 
 import com.example.iwen.common.app.Application;
@@ -10,14 +12,22 @@ import com.example.iwen.factory.data.message.MessageCenter;
 import com.example.iwen.factory.data.message.MessageDispatcher;
 import com.example.iwen.factory.data.user.UserCenter;
 import com.example.iwen.factory.data.user.UserDispatcher;
+import com.example.iwen.factory.model.api.PushModel;
 import com.example.iwen.factory.model.api.RspModel;
+import com.example.iwen.factory.model.card.GroupCard;
+import com.example.iwen.factory.model.card.GroupMemberCard;
+import com.example.iwen.factory.model.card.MessageCard;
+import com.example.iwen.factory.model.card.UserCard;
 import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.factory.utils.DBFlowExclusionStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -26,6 +36,7 @@ import java.util.concurrent.Executors;
  * create : 2020/11/15 13:36
  */
 public class Factory {
+    private static final String TAG = Factory.class.getCanonicalName();
     // 单例模式
     private static Factory instance;
     // 初始化线程池
@@ -169,11 +180,60 @@ public class Factory {
     /**
      * 处理推送来的消息
      *
-     * @param message String
+     * @param str String
      */
-    public static void dispatchPush(String message) {
-        // TODO
+    public static void dispatchPush(String str) {
+        // 首先检查登录状态
+        if (!Account.isLogin()) {
+            return;
+        }
+        PushModel model = PushModel.decode(str);
+        if (model==null){
+            return;
+        }
+        Log.e(TAG,model.toString());
+        // 对推送集合进行遍历
+        for (PushModel.Entity entity : model.getEntities()) {
+            Log.e(TAG, "dispatchPush-ENTITY: " + entity.toString());
+            switch (entity.type) {
+                case PushModel.ENTITY_TYPE_LOGOUT: {
+                    instance.logout();
+                    // 退出情况下直接返回，并且不可继续
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_MESSAGE: {
+                    // 普通消息
+                    MessageCard card = getGson().fromJson(entity.content, MessageCard.class);
+                    getMessageCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_ADD_FRIEND: {
+                    // 添加朋友
+                    UserCard card = getGson().fromJson(entity.content, UserCard.class);
+                    getUserCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_ADD_GROUP: {
+                    // 添加群
+                    GroupCard card = getGson().fromJson(entity.content, GroupCard.class);
+                    getGroupCenter().dispatch(card);
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_MODIFY_GROUP_MEMBERS:
+                case PushModel.ENTITY_TYPE_ADD_GROUP_MEMBERS: {
+                    // 群成员变更，回来的是一个群成员的列表
+                    Type type = new TypeToken<List<GroupMemberCard>>(){}.getType();
+                    List<GroupMemberCard> card = getGson().fromJson(entity.content, type);
+                    getGroupCenter().dispatch(card.toArray(new GroupMemberCard[0]));
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_EXIT_GROUP_MEMBERS: {
+                    // TODO 成员退出的推送
 
+                    break;
+                }
+            }
+        }
     }
 
     /**
