@@ -47,6 +47,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.aliyun.dpa:oss-android-sdk:2.9.5'
+
+    implementation "net.qiujuer.genius:kit-reflect:2.1.1"
     // 弹窗
     // implementation 'com.irozon.sneaker:sneaker:2.0.0'
     implementation 'com.tapadoo.android:alerter:3.0.0'

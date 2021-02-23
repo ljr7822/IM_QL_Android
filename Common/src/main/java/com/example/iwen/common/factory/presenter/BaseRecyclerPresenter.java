@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.example.iwen.common.widget.recycler.RecyclerAdapter;
 
 import net.qiujuer.genius.kit.handler.Run;
+import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.util.List;
 
@@ -25,15 +26,18 @@ public class BaseRecyclerPresenter<View extends BaseContract.RecyclerView, ViewM
      * @param dataList 新数据
      */
     protected void refreshData(final List<ViewModel> dataList) {
-        Run.onUiAsync(() -> {
-            View view = getView();
-            if (view == null) {
-                return;
+        Run.onUiAsync(new Action() {
+            @Override
+            public void call() {
+                View view = getView();
+                if (view == null) {
+                    return;
+                }
+                // 基本的更新数据并刷新界面
+                RecyclerAdapter<ViewModel> adapter = view.getRecyclerAdapter();
+                adapter.replace(dataList);
+                view.onAdapterDataChanged();
             }
-            // 基本的更新数据并刷新界面
-            RecyclerAdapter<ViewModel> adapter = view.getRecyclerAdapter();
-            adapter.replace(dataList);
-            view.onAdapterDataChanged();
         });
     }
 
@@ -44,9 +48,12 @@ public class BaseRecyclerPresenter<View extends BaseContract.RecyclerView, ViewM
      * @param dataList 具体的新数据
      */
     protected void refreshData(final DiffUtil.DiffResult result, final List<ViewModel> dataList) {
-        Run.onUiAsync(() -> {
-            // 主线程运行时
-            refreshDataOnUiThread(result, dataList);
+        Run.onUiAsync(new Action() {
+            @Override
+            public void call() {
+                // 主线程运行时
+                refreshDataOnUiThread(result, dataList);
+            }
         });
 
     }

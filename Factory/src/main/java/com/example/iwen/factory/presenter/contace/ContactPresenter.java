@@ -25,6 +25,7 @@ public class ContactPresenter extends BaseRecyclerPresenter<ContactContract.View
 
     public ContactPresenter(ContactContract.View mView) {
         super(mView);
+        // 初始化数据仓库
         mSource = new ContactRepository();
     }
 
@@ -43,11 +44,11 @@ public class ContactPresenter extends BaseRecyclerPresenter<ContactContract.View
     @Override
     public void onDataLoad(List<User> users) {
         // 无论怎么操作，数据变更，都会通知到这里
-        final ContactContract.View view = getView();
+        ContactContract.View view = getView();
         if (view==null){
             return;
         }
-        RecyclerAdapter<User> adapter =  view.getRecyclerAdapter();
+        RecyclerAdapter<User> adapter = view.getRecyclerAdapter();
         List<User> old = adapter.getItems();
 
         // 进行数据对比

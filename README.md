@@ -178,3 +178,6 @@
     - 对RecyclerView进行简单的Presenter封装
     - 添加 联系人仓库ContactRepository
     - 添加 联系人数据集合ContactDataSource
+    
+- 第三十八次提交 2021.2.23
+    - 修改bug 联系人页面不能展示联系人
