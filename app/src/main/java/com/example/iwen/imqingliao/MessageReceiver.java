@@ -19,7 +19,7 @@ import com.igexin.sdk.PushConsts;
  * create : 12-8 008 1:30
  */
 public class MessageReceiver extends BroadcastReceiver {
-    private static final String TAG = "MessageReceiver";
+    private static final String TAG = MessageReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -180,7 +180,7 @@ public class Factory {
     /**
      * 处理推送来的消息
      *
-     * @param str String
+     * @param str String 消息
      */
     public static void dispatchPush(String str) {
         // 首先检查登录状态
