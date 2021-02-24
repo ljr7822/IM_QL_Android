@@ -4,7 +4,9 @@ import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
 import com.example.iwen.factory.model.api.account.RegisterModel;
+import com.example.iwen.factory.model.api.message.MsgCreateModel;
 import com.example.iwen.factory.model.api.user.UserUpdateModel;
+import com.example.iwen.factory.model.card.MessageCard;
 import com.example.iwen.factory.model.card.UserCard;
 
 import java.util.List;
@@ -93,4 +95,14 @@ public interface RemoteService {
      */
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userFind(@Path("userId") String userId);
+
+    /**
+     * 发送消息的接口
+     *
+     * @param model 要发送的消息的model
+     * @return <RspModel<MessageCard>>
+     */
+    @POST("msg")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+
 }

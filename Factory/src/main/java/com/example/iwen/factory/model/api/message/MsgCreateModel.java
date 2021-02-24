@@ -57,9 +57,7 @@ public class MsgCreateModel {
         return receiverType;
     }
 
-
     // 当我们需要发送一个文件的时候，content刷新的问题
-
     private MessageCard card;
 
     // 返回一个Card
@@ -89,13 +87,13 @@ public class MsgCreateModel {
 
     // 同步到卡片的最新状态
     public void refreshByCard() {
-        if (card == null)
+        if (card == null) {
             return;
+        }
         // 刷新内容和附件信息
         this.content = card.getContent();
         this.attach = card.getAttach();
     }
-
 
     /**
      * 建造者模式，快速的建立一个发送Model
