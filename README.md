@@ -205,3 +205,8 @@
     - 实现 文字holder
     - 实现 语音holder
     - 实现 图片holder
+        
+- 第四十四次提交 2021.2.24
+    - 实现 客户端发送消息功能
+    - 添加 聊天契约接口ChatContact.java
+    

@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.iwen.common.app.Fragment;
+import com.example.iwen.common.app.PresenterFragment;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.common.widget.adapter.TextWatcherAdapter;
 import com.example.iwen.common.widget.recycler.RecyclerAdapter;
 import com.example.iwen.factory.model.db.Message;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.persistence.Account;
+import com.example.iwen.factory.presenter.message.ChatContact;
 import com.example.iwen.imqingliao.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -42,10 +43,12 @@ import static com.example.iwen.imqingliao.activities.MessageActivity.KEY_RECEIVE
  * @author iwen大大怪
  * Create to 2021/02/23 23:52
  */
-public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener{
+public abstract class ChatFragment<InitModel>
+        extends PresenterFragment<ChatContact.Presenter>
+        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel> {
 
     protected String mReceiverId;
-    protected Adapter adapter;
+    protected Adapter mAdapter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -74,11 +77,13 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         initEditContent();
         // RecyclerView基本设置
         rv_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv_recycler.setAdapter(adapter = new Adapter());
+        rv_recycler.setAdapter(mAdapter = new Adapter());
 
     }
 
-    // 初始化Toolbar
+    /**
+     * 初始化Toolbar
+     */
     protected void initToolbar() {
         Toolbar toolbar = this.toolbar;
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -90,11 +95,16 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         });
     }
 
-    // 给AppBar设置一个监听，得到关闭与打开时的进度
+    /**
+     * 给AppBar设置一个监听，得到关闭与打开时的进度
+     */
     private void initAppBar() {
         abl_app_bar.addOnOffsetChangedListener(this);
     }
 
+    /**
+     * 初始化输入框
+     */
     private void initEditContent() {
         edt_content.addTextChangedListener(new TextWatcherAdapter() {
             @Override
@@ -107,6 +117,9 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         });
     }
 
+    /**
+     * 复写layout布局，解决出现的软键盘弹出问题
+     */
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
     }
@@ -145,6 +158,20 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
      */
     private void onMoreActionClick() {
 
+    }
+
+    /**
+     * 复写获取RecyclerAdapter方法
+     * @return 我们自己写的mAdapter
+     */
+    @Override
+    public RecyclerAdapter<Message> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        // 界面没有占位布局，Recycler是一直显示的
     }
 
     /**
@@ -240,7 +267,7 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         // 重新发送
         @OnClick(R.id.iv_avatar)
         void onRePushClick() {
-            if (loading != null ) {
+            if (loading != null) {
                 // 必须是右边的才有可能重新发送
                 // 状态改变需要重新刷新当前界面的信息
                 // TODO updateData(mData);
@@ -269,7 +296,7 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         }
     }
 
-    //audio holder
+    // 语音audio holder
     class AudioHolder extends BaseHolder {
         @BindView(R.id.tv_content)
         TextView tv_content;
@@ -288,7 +315,6 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
             tv_content.setText(formatTime(attach));
 
         }
-
 
         // 当播放开始
         void onPlayStart() {
@@ -320,7 +346,7 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
 
     }
 
-    //图片holder
+    // 图片holder
     class PicHolder extends BaseHolder {
         @BindView(R.id.iv_image)
         ImageView iv_image;
