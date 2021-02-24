@@ -6,16 +6,30 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.iwen.common.app.Fragment;
+import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.common.widget.adapter.TextWatcherAdapter;
+import com.example.iwen.common.widget.recycler.RecyclerAdapter;
+import com.example.iwen.factory.model.db.Message;
+import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.imqingliao.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import net.qiujuer.genius.ui.compat.UiCompat;
+import net.qiujuer.genius.ui.widget.Loading;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,7 +45,7 @@ import static com.example.iwen.imqingliao.activities.MessageActivity.KEY_RECEIVE
 public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener{
 
     protected String mReceiverId;
-    //protected Adapter adapter;
+    protected Adapter adapter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -57,10 +71,11 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         super.initWidget(view);
         initToolbar();
         initAppBar();
+        initEditContent();
         // RecyclerView基本设置
         rv_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        //rv_recycler.setAdapter(adapter = new Adapter());
-        initEditContent();
+        rv_recycler.setAdapter(adapter = new Adapter());
+
     }
 
     // 初始化Toolbar
@@ -96,16 +111,25 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
     }
 
+    /**
+     * 表情点击
+     */
     @OnClick(R.id.iv_face)
     void onFaceClick() {
 
     }
 
+    /**
+     * 语音点击
+     */
     @OnClick(R.id.iv_record)
     void onRecordClick() {
 
     }
 
+    /**
+     * 发送按钮
+     */
     @OnClick(R.id.iv_submit)
     void onSubmitClick() {
         if (iv_submit.isActivated()) {
@@ -116,7 +140,132 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
         }
     }
 
+    /**
+     * 打开更多
+     */
     private void onMoreActionClick() {
 
+    }
+
+    /**
+     * 实现内容布局的Adapter适配器
+     */
+    private class Adapter extends RecyclerAdapter<Message> {
+
+        @Override
+        protected int getItemViewType(int position, Message message) {
+            boolean isRight = Objects.equals(message.getSender().getId(), Account.getUserId());
+            switch (message.getType()) {
+                case Message.TYPE_AUDIO:
+                    // 语音消息
+                    return isRight ? R.layout.cell_chat_audio_right : R.layout.cell_chat_audio_left;
+                case Message.TYPE_PIC:
+                    // 图片消息
+                    return isRight ? R.layout.cell_chat_pic_right : R.layout.cell_chat_pic_left;// 文件消息
+                default:
+                    // 默认文字内容,我发送的在右边，收到的在左边
+                    return isRight ? R.layout.cell_chat_text_right : R.layout.cell_chat_text_left;
+            }
+        }
+
+        @Override
+        protected ViewHolder<Message> onCreateViewHolder(View root, int viewType) {
+            switch (viewType) {
+                // 文字消息
+//                case R.layout.cell_chat_text_right:
+//                case R.layout.cell_chat_text_left:
+//                    return new TextHolder(root);
+                // 语音消息
+                case R.layout.cell_chat_audio_right:
+                case R.layout.cell_chat_audio_left:
+                    return new AudioHolder(root);
+                // 图片消息
+                case R.layout.cell_chat_pic_right:
+                case R.layout.cell_chat_pic_left:
+                    return new PicHolder(root);
+                default:
+                    // 默认情况下返回的就是Text类型的Holder进行处理
+                    return new TextHolder(root);
+            }
+        }
+    }
+
+    // holder 基类
+    class BaseHolder extends RecyclerAdapter.ViewHolder<Message> {
+        // 头像
+        @BindView(R.id.iv_avatar)
+        PortraitView iv_avatar;
+        // 发送状态，允许为空，左边没有，右边有
+        @Nullable
+        @BindView(R.id.loading)
+        Loading loading;
+
+
+        public BaseHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            User sender = message.getSender();
+            // 进行数据加载，因为user为懒加载
+            sender.load();
+            iv_avatar.setup(Glide.with(ChatFragment.this), sender);
+
+            if (loading != null) {
+                int status = message.getStatus();
+                // 当前布局应该是在右边
+                if (status == Message.STATUS_DONE) {
+                    // 正常状态，隐藏loading
+                    loading.stop();
+                    loading.setVisibility(View.GONE);
+                } else if (status == Message.STATUS_CREATED) {
+                    // 正在发送的状态
+                    loading.setVisibility(View.VISIBLE);
+                    loading.setProgress(0);
+                    loading.setForegroundColor(UiCompat.getColor(getResources(), R.color.colorAccent));
+                    loading.start();
+                } else if (status == Message.STATUS_FAILED) {
+                    // 发送失败,点击头像重新发送
+                    loading.setVisibility(View.VISIBLE);
+                    loading.stop();
+                    loading.setProgress(1);
+                    loading.setForegroundColor(UiCompat.getColor(getResources(), R.color.red_400));
+                }
+                // 只有当前状态是发送失败，才允许点击
+                iv_avatar.setEnabled(status == Message.STATUS_FAILED);
+            }
+        }
+
+        // 重新发送
+        @OnClick(R.id.iv_avatar)
+        void onRePushClick() {
+            if (loading != null ) {
+                // 必须是右边的才有可能重新发送
+                // 状态改变需要重新刷新当前界面的信息
+                // TODO updateData(mData);
+
+            }
+        }
+    }
+
+    // 文字holder基类
+    class TextHolder extends BaseHolder {
+        @BindView(R.id.tv_content)
+        TextView tv_content;
+
+        public TextHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            // Spannable spannable = new SpannableString(message.getContent());
+            //解析表情
+            //Face.decode(tv_content, spannable, (int) Ui.dipToPx(getResources(), 20f));
+            //内容设置到布局
+            tv_content.setText(message.getContent());
+        }
     }
 }
