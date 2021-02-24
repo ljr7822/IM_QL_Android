@@ -6,6 +6,8 @@ import android.view.View;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.presenter.message.ChatContact;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.activities.PersonalActivity;
 import com.google.android.material.appbar.AppBarLayout;
@@ -16,7 +18,7 @@ import butterknife.OnClick;
 /**
  * 用户聊天界面
  */
-public class ChatUserFragment extends ChatFragment {
+public class ChatUserFragment extends ChatFragment<User> implements ChatContact.UserView {
     private MenuItem menuItem;
 
     @BindView(R.id.iv_avatar)
@@ -99,5 +101,25 @@ public class ChatUserFragment extends ChatFragment {
     @OnClick(R.id.iv_avatar)
     void onAvatarClick() {
         PersonalActivity.show(getContext(), mReceiverId);
+    }
+
+    /**
+     * 初始化presenter
+     *
+     * @return ChatContact.Presenter
+     */
+    @Override
+    protected ChatContact.Presenter initPresenter() {
+        return null;
+    }
+
+    /**
+     * 初始化回调，对和你聊天的朋友的信息进行初始化操作
+     *
+     * @param user 用户
+     */
+    @Override
+    public void onInit(User user) {
+
     }
 }

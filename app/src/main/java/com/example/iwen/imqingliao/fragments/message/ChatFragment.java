@@ -78,7 +78,13 @@ public abstract class ChatFragment<InitModel>
         // RecyclerView基本设置
         rv_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_recycler.setAdapter(mAdapter = new Adapter());
+    }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        // 开始进行初始化操作
+        mPresenter.start();
     }
 
     /**
@@ -147,6 +153,9 @@ public abstract class ChatFragment<InitModel>
     void onSubmitClick() {
         if (iv_submit.isActivated()) {
             // 发送
+            String content = edt_content.getText().toString().trim();
+            edt_content.setText("");
+            mPresenter.pushText(content);
         } else {
             // 打开更多
             onMoreActionClick();
