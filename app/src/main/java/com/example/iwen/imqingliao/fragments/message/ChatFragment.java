@@ -268,4 +268,76 @@ public abstract class ChatFragment extends Fragment implements AppBarLayout.OnOf
             tv_content.setText(message.getContent());
         }
     }
+
+    //audio holder
+    class AudioHolder extends BaseHolder {
+        @BindView(R.id.tv_content)
+        TextView tv_content;
+        @BindView(R.id.iv_audio_track)
+        ImageView iv_audio_track;
+
+        public AudioHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            String attach = TextUtils.isEmpty(message.getAttach()) ? "0" :
+                    message.getAttach();
+            tv_content.setText(formatTime(attach));
+
+        }
+
+
+        // 当播放开始
+        void onPlayStart() {
+            // 显示
+            iv_audio_track.setVisibility(View.VISIBLE);
+        }
+
+        // 当播放停止
+        void onPlayStop() {
+            // 占位并隐藏
+            iv_audio_track.setVisibility(View.INVISIBLE);
+        }
+
+        private String formatTime(String attach) {
+            float time;
+            try {
+                // 毫秒转换为秒
+                time = Float.parseFloat(attach) / 1000f;
+            } catch (Exception e) {
+                time = 0;
+            }
+            // 12000/1000f = 12.0000000
+            // 取整一位小数点 1.234 -> 1.2 1.02 -> 1.0
+            String shortTime = String.valueOf(Math.round(time * 10f) / 10f);
+            // 1.0 -> 1     1.2000 -> 1.2
+            shortTime = shortTime.replaceAll("[.]0+?$|0+?$", "");
+            return String.format("%s″", shortTime);
+        }
+
+    }
+
+    //图片holder
+    class PicHolder extends BaseHolder {
+        @BindView(R.id.iv_image)
+        ImageView iv_image;
+
+        public PicHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            //当为图片类型的时候，content即为图片地址
+            String contentUrl = message.getContent();
+            Glide.with(getContext())
+                    .load(contentUrl)
+                    .fitCenter()
+                    .into(iv_image);
+        }
+    }
 }
