@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.presenter.message.ChatContact;
+import com.example.iwen.factory.presenter.message.ChatUserPresenter;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.activities.PersonalActivity;
 import com.google.android.material.appbar.AppBarLayout;
@@ -110,7 +111,8 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContact.
      */
     @Override
     protected ChatContact.Presenter initPresenter() {
-        return null;
+        // 初始化Presenter
+        return new ChatUserPresenter(this,mReceiverId);
     }
 
     /**
@@ -120,6 +122,8 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContact.
      */
     @Override
     public void onInit(User user) {
-
+        //对和你聊天的朋友进行的初始化操作
+//        iv_avatar.setup(Glide.with(getContext()), user);
+//        ctl_app_bar.setTitle(user.getName());
     }
 }

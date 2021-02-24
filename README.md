@@ -210,3 +210,11 @@
     - 实现 客户端发送消息功能
     - 添加 聊天契约接口ChatContact.java
     - 实现 单聊、群聊的接口对接
+    
+- 第四十五次提交 2021.2.24
+    - 实现 用户聊天 ChatUserPresenter.java
+    - 实现 群聊天 ChatGroupPresenter.java
+    - 实现 聊天基类 ChatPresenter.java
+    - 实现 消息的数据源定义 MessageDataSource
+    - 实现 跟某人聊天时的聊天记录列表 MessageRepository
+    - 添加 构建一个新消息的model
