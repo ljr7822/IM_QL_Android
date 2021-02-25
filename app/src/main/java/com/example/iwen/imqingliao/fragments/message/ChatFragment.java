@@ -47,7 +47,9 @@ public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContact.Presenter>
         implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel> {
 
+    // 接受者id
     protected String mReceiverId;
+    // 自定义适配器
     protected Adapter mAdapter;
 
     @BindView(R.id.toolbar)
@@ -72,6 +74,7 @@ public abstract class ChatFragment<InitModel>
     @Override
     protected void initWidget(View view) {
         super.initWidget(view);
+        // 初始化bar
         initToolbar();
         initAppBar();
         initEditContent();

@@ -1,11 +1,16 @@
 package com.example.iwen.imqingliao.fragments.message;
 
+import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.presenter.message.ChatContact;
@@ -13,6 +18,7 @@ import com.example.iwen.factory.presenter.message.ChatUserPresenter;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.activities.PersonalActivity;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,6 +39,29 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContact.
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_chat_user;
+    }
+
+    @Override
+    protected void initWidget(View view) {
+        super.initWidget(view);
+        Glide.with(getContext()).load(R.mipmap.default_banner_chat)
+                .centerCrop()
+                .into(new CustomViewTarget<CollapsingToolbarLayout,Drawable>(ctl_app_bar) {
+                    @Override
+                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                        this.view.setContentScrim(resource.getCurrent());
+                    }
+
+                    @Override
+                    protected void onResourceCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
     }
 
     @Override
