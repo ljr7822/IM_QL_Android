@@ -218,3 +218,7 @@
     - 实现 消息的数据源定义 MessageDataSource
     - 实现 跟某人聊天时的聊天记录列表 MessageRepository
     - 添加 构建一个新消息的model
+    
+- 第四十六次提交 2021.2.25
+    - 实现 消息发送失败重新发送
+    - 

@@ -236,7 +236,6 @@ public abstract class ChatFragment<InitModel>
         @BindView(R.id.loading)
         Loading loading;
 
-
         public BaseHolder(@NonNull View itemView) {
             super(itemView);
         }
@@ -273,14 +272,13 @@ public abstract class ChatFragment<InitModel>
             }
         }
 
-        // 重新发送
+        // 重新发送信息
         @OnClick(R.id.iv_avatar)
         void onRePushClick() {
-            if (loading != null) {
+            if (loading != null&&mPresenter.rePush(mData)) {
                 // 必须是右边的才有可能重新发送
                 // 状态改变需要重新刷新当前界面的信息
-                // TODO updateData(mData);
-
+                updateData(mData);
             }
         }
     }

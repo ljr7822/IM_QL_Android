@@ -123,11 +123,9 @@ public class MsgCreateModel {
             this.model.attach = attach;
             return this;
         }
-
         public MsgCreateModel build() {
             return this.model;
         }
-
     }
 
     /**
