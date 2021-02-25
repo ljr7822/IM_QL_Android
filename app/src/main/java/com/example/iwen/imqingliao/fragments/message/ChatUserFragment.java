@@ -5,6 +5,7 @@ import android.view.View;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.presenter.message.ChatContact;
@@ -122,8 +123,8 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContact.
      */
     @Override
     public void onInit(User user) {
-        //对和你聊天的朋友进行的初始化操作
-//        iv_avatar.setup(Glide.with(getContext()), user);
-//        ctl_app_bar.setTitle(user.getName());
+        // 对和你聊天的朋友进行的初始化操作
+        iv_avatar.setup(Glide.with(getContext()), user);
+        ctl_app_bar.setTitle(user.getName());
     }
 }
