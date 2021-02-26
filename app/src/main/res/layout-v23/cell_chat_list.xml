@@ -61,5 +61,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/textSecond"
         android:textSize="@dimen/font_12"
-        tools:text="19-09-24" />
+        tools:text="21-02-24" />
 </FrameLayout>
