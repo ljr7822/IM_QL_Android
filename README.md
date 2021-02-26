@@ -228,3 +228,4 @@
     - 实现 最近消息列表
     - 添加 消息列表契约 SessionContract.java
     - 添加 最近聊天列表的 SessionPresenter.java
+    
