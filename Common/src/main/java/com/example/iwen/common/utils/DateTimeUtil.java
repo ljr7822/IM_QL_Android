@@ -11,7 +11,7 @@ import java.util.Locale;
  * create : 2020/11/15 2:41
  */
 public class DateTimeUtil {
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yy-MM-dd", Locale.ENGLISH);
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 
     /**
      * 获取一个简单的时间字符串
