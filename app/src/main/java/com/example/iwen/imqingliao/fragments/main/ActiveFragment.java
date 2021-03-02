@@ -1,7 +1,5 @@
 package com.example.iwen.imqingliao.fragments.main;
 
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -69,7 +67,7 @@ public class ActiveFragment
                 MessageActivity.show(requireContext(), session);
             }
         });
-        //初始化占位布局
+        // 初始化占位布局
         ev_empty.bind(rv_session);
         setPlaceHolderView(ev_empty);
     }
@@ -98,7 +96,7 @@ public class ActiveFragment
 
     @Override
     public void onAdapterDataChanged() {
-
+        mPlaceHolderView.triggerOkOrEmpty(adapter.getItemCount()>0);
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<Session> {
@@ -117,14 +115,16 @@ public class ActiveFragment
 
         @Override
         protected void onBind(Session session) {
-            iv_avatar.setup(Glide.with(getContext()), session.getPicture());
+            // 绑定数据
+            iv_avatar.setup(Glide.with(ActiveFragment.this), session.getPicture());
             tv_name.setText(session.getTitle());
             String content = TextUtils.isEmpty(session.getContent()) ? "" : session.getContent();
             //Spannable spannable = new SpannableString(content);
-            //解析表情
+            // 解析表情
             //Face.decode(tv_content, spannable, (int) tv_content.getTextSize());
-            //内容设置到布局
+            // 内容设置到布局
             tv_content.setText(content);
+            // 绑定格式化后的时间
             tv_time.setText(DateTimeUtil.getSampleDate(session.getModifyAt()));
 
         }

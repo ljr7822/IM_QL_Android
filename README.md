@@ -229,5 +229,7 @@
     - 添加 消息列表契约 SessionContract.java
     - 添加 最近聊天列表的 SessionPresenter.java
     
-- 第四十八次提交 2021.2.28
-    - 
+- 第四十八次提交 2021.3.2
+    - 添加 获取一个简单的时间字符串 方法
+    - 添加 最近会话数据源定义接口 SessionDataSource
+    - 添加 最近聊天列表仓库，对SessionDataSource的实现 SessionRepository
