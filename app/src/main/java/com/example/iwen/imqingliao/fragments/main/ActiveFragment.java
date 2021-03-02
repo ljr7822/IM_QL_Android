@@ -126,7 +126,6 @@ public class ActiveFragment
             tv_content.setText(content);
             // 绑定格式化后的时间
             tv_time.setText(DateTimeUtil.getSampleDate(session.getModifyAt()));
-
         }
     }
 }

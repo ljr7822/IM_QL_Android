@@ -21,7 +21,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_launch_logo"
+            android:src="@mipmap/title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
         <!--        app:layout_constraintBottom_toTopOf="@+id/guide1"-->

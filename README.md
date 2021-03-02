@@ -233,3 +233,7 @@
     - 添加 获取一个简单的时间字符串 方法
     - 添加 最近会话数据源定义接口 SessionDataSource
     - 添加 最近聊天列表仓库，对SessionDataSource的实现 SessionRepository
+    
+- 第四十九次提交 2021.3.3
+    - 解决 Session.java类中的refreshToNow问题
+    - 修改 Logo
