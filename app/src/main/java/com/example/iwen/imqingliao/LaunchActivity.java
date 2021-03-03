@@ -19,6 +19,12 @@ import com.example.iwen.imqingliao.fragments.assist.PermissionsFragment;
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.compat.UiCompat;
 
+/**
+ * 启动页面的Activity
+ *
+ * @author : Iwen大大怪
+ * create : 2021/03/03
+ */
 public class LaunchActivity extends Activity {
     private ColorDrawable mBgDrawable;
     // 是否已经得到PushId
@@ -32,10 +38,14 @@ public class LaunchActivity extends Activity {
     @Override
     protected void initWidget() {
         super.initWidget();
-        View root = findViewById(R.id.activity_launch); // 拿到根布局
-        int color = UiCompat.getColor(getResources(), R.color.colorPrimary); // 获取颜色
-        ColorDrawable drawable = new ColorDrawable(color);// 创建一个Drawable
-        root.setBackground(drawable);// 设置给背景
+        // 拿到根布局
+        View root = findViewById(R.id.activity_launch);
+        // 获取颜色
+        int color = UiCompat.getColor(getResources(), R.color.colorPrimary);
+        // 创建一个Drawable
+        ColorDrawable drawable = new ColorDrawable(color);
+        // 设置给背景
+        root.setBackground(drawable);
         mBgDrawable = drawable;
     }
 
@@ -43,13 +53,17 @@ public class LaunchActivity extends Activity {
     protected void initData() {
         super.initData();
         // 动画进入到50%等待pushId获取到
-        startAnim(0.5f, new Runnable() {
-            @Override
-            public void run() {
-                // 检查等待
-                waitPushReceiverId();
-            }
-        });
+        startAnim(0.5f, this::waitPushReceiverId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 判断是否已经得到推送Id，如果已经得到则进行跳转操作，
+        // 在操作中检测权限状态
+        if (mAlreadyGotPushReceiverId){
+            realSkip();
+        }
     }
 
     /**
@@ -65,39 +79,37 @@ public class LaunchActivity extends Activity {
                 return;
             }
         }else {
-            // 没有登录
-            // 如果拿到了pushId,没有登录不能绑定
+            // 没有登录，如果拿到了PushId，没有登录是不能绑定PushId的
             if (!TextUtils.isEmpty(Account.getPushId())){
-                skip();
+                waitPushReceiverIdDone();
                 return;
             }
         }
 
         // 循环等待
-        getWindow().getDecorView().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                waitPushReceiverId();
-            }
-        },500);
+        getWindow().getDecorView().postDelayed(this::waitPushReceiverId,500);
     }
 
     /**
      * 跳转之前需要将剩下的50%进行完成
      */
     private void skip(){
-        startAnim(1f, new Runnable() {
-            @Override
-            public void run() {
-                reallySkip();
-            }
-        });
+        startAnim(1f, this::realSkip);
     }
 
     /**
-     * 跳转方法
+     * 在跳转之前需要把剩下的50%进行完成
      */
-    private void reallySkip(){
+    private void waitPushReceiverIdDone() {
+        // 标志已经得到PushId
+        mAlreadyGotPushReceiverId = true;
+        startAnim(1f, this::realSkip);
+    }
+
+    /**
+     * 如果都有权限就跳转MainActivity，自己finish
+     */
+    private void realSkip(){
         // TODO 权限检查，跳转
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
             if (Account.isLogin()){
@@ -140,8 +152,7 @@ public class LaunchActivity extends Activity {
     /**
      * 参数的变化
      */
-    private final Property<LaunchActivity, Object> property
-            = new Property<LaunchActivity, Object>(Object.class, "color") {
+    private final Property<LaunchActivity, Object> property = new Property<LaunchActivity, Object>(Object.class, "color") {
         @Override
         public Object get(LaunchActivity launchActivity) {
             return launchActivity.mBgDrawable.getColor();

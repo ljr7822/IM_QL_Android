@@ -18,7 +18,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
-import java.util.Objects;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -206,20 +205,24 @@ public class PermissionsFragment extends BottomSheetDialogFragment implements Ea
     public void onPermissionsDenied(int i, @NonNull List<String> list) {
         // 如果权限存在没有申请成功的，则弹出弹出框，用户点击后去到设置页面自己打开权限
         if (EasyPermissions.somePermissionPermanentlyDenied(this, list)) {
-            new AppSettingsDialog.Builder(this).build().show();
+            new AppSettingsDialog.Builder(this)
+                    .setTitle("未获取到权限")
+                    .setRationale("您可以到设置中手动配置权限,点击确定前往设置")
+                    .build().show();
         }
     }
 
     /**
      * 权限申请回调的方法，这个方法中把对应权限申请状态交给EasyPermissions框架
-     * @param requestCode int
-     * @param permissions String[]
+     *
+     * @param requestCode  int
+     * @param permissions  String[]
      * @param grantResults int[]
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // 传递对应参数，并告知处理接收权限的处理者是我自己
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

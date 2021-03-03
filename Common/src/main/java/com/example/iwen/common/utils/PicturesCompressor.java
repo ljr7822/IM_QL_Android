@@ -10,7 +10,7 @@ import com.example.iwen.common.app.Application;
 import java.io.File;
 
 /**
- * author : Iwen大大怪
+ * @author : Iwen大大怪
  * create : 2020/11/15 2:42
  */
 @SuppressWarnings("WeakerAccess")
