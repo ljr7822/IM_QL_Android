@@ -51,7 +51,6 @@ public class MessageRepository extends BaseDbRepository<Message> implements Mess
         // 如果这个"某个人"就是receiverId，那么就是我需要关注的信息
         return (receiverId.equalsIgnoreCase(message.getSender().getId()) && message.getGroup() == null)
                 || (message.getReceiver() != null && receiverId.equalsIgnoreCase(message.getReceiver().getId()));
-
     }
 
     @Override

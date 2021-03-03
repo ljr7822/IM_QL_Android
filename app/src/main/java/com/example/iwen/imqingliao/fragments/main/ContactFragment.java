@@ -56,6 +56,7 @@ public class ContactFragment
 
             @Override
             protected ViewHolder<User> onCreateViewHolder(View root, int viewType) {
+                // 初始化ViewHolder
                 return new ContactFragment.ViewHolder(root);
             }
         });

@@ -184,6 +184,9 @@ public abstract class ChatFragment<InitModel>
     @Override
     public void onAdapterDataChanged() {
         // 界面没有占位布局，Recycler是一直显示的
+        // 消息来了后自动滚到最后一行
+        if (mAdapter.getItemCount() > 0)
+            rv_recycler.smoothScrollToPosition(mAdapter.getItemCount() - 1);
     }
 
     /**
