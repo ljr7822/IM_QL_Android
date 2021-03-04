@@ -12,11 +12,11 @@
     <string name="label_permission_ok">授权成功！</string>
 
     <string name="label_update_info_tips">仅差一步了</string>
-    <string name="label_login_welcome">登录</string>
+    <string name="label_login_welcome">欢迎回来！</string>
     <string name="label_submit">提交</string>
     <string name="label_login">登录</string>
     <string name="label_phone">电话</string>
-    <string name="label_register_welcome">欢迎您!</string>
+    <string name="label_register_welcome">注册</string>
     <string name="label_register">注册</string>
     <string name="label_password">密码</string>
     <string name="label_portrait_tips">选择你的专属头像</string>
