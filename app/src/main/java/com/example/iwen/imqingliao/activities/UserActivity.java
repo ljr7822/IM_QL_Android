@@ -3,13 +3,11 @@ package com.example.iwen.imqingliao.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -18,8 +16,6 @@ import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.fragments.user.UpdateInfoFragment;
-
-import net.qiujuer.genius.ui.compat.UiCompat;
 
 /**
  * 用户的Activity
@@ -54,7 +50,7 @@ public class UserActivity extends Activity {
         initView();
         // 初始化背景
         Glide.with(this)
-                .load(R.mipmap.bg_src_tianjin)
+                .load(R.mipmap.ic_img3)
                 .centerCrop()
                 .into(new CustomViewTarget<ImageView, Drawable>(mBg) {
                     @Override
@@ -64,14 +60,16 @@ public class UserActivity extends Activity {
 
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        // 拿到当前的drawable
-                        Drawable drawable = resource.getCurrent();
-                        // 使用适配包进行包装
-                        drawable = DrawableCompat.wrap(drawable);
-                        // 设置着色颜色和效果、蒙版模式
-                        drawable.setColorFilter(UiCompat.getColor(getResources(),R.color.colorAccent),
-                                PorterDuff.Mode.SCREEN);
-                        this.view.setImageDrawable(drawable);
+//                        // 拿到当前的drawable
+//                        Drawable drawable = resource.getCurrent();
+//                        // 使用适配包进行包装
+//                        drawable = DrawableCompat.wrap(drawable);
+//                        // 设置着色颜色和效果、蒙版模式
+//                        drawable.setColorFilter(UiCompat.getColor(getResources(),R.color.colorAccent),
+//                                PorterDuff.Mode.SCREEN);
+//                        this.view.setImageDrawable(drawable);
+                        this.view.setImageDrawable(resource.getCurrent());
+
                     }
 
                     @Override

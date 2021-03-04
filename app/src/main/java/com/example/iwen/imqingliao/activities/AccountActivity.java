@@ -2,13 +2,11 @@ package com.example.iwen.imqingliao.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomViewTarget;
@@ -19,8 +17,6 @@ import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.fragments.account.AccountTrigger;
 import com.example.iwen.imqingliao.fragments.account.LoginFragment;
 import com.example.iwen.imqingliao.fragments.account.RegisterFragment;
-
-import net.qiujuer.genius.ui.compat.UiCompat;
 
 /**
  * 账户
@@ -60,7 +56,7 @@ public class AccountActivity extends Activity implements AccountTrigger {
         initView();
         // 初始化背景
         Glide.with(this)
-                .load(R.mipmap.bg_src_tianjin)
+                .load(R.mipmap.ic_img3)
                 .centerCrop()
                 .into(new CustomViewTarget<ImageView, Drawable>(mBg) {
                     @Override
@@ -70,14 +66,15 @@ public class AccountActivity extends Activity implements AccountTrigger {
 
                     @Override
                     public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        // 拿到当前的drawable
-                        Drawable drawable = resource.getCurrent();
-                        // 使用适配包进行包装
-                        drawable = DrawableCompat.wrap(drawable);
-                        // 设置着色颜色和效果、蒙版模式
-                        drawable.setColorFilter(UiCompat.getColor(getResources(), R.color.colorAccent),
-                                PorterDuff.Mode.SCREEN);
-                        this.view.setImageDrawable(drawable);
+//                        // 拿到当前的drawable
+//                        Drawable drawable = resource.getCurrent();
+//                        // 使用适配包进行包装
+//                        drawable = DrawableCompat.wrap(drawable);
+//                        // 设置着色颜色和效果、蒙版模式
+//                        drawable.setColorFilter(UiCompat.getColor(getResources(), R.color.colorAccent),
+//                                PorterDuff.Mode.SCREEN);
+//                        this.view.setImageDrawable(drawable);
+                        this.view.setImageDrawable(resource.getCurrent());
                     }
 
                     @Override
@@ -100,7 +97,7 @@ public class AccountActivity extends Activity implements AccountTrigger {
             fragment = mRegisterFragment;
         } else {
             // 因为默认情况已经赋值，不需要判空
-            fragment = mRegisterFragment;
+            fragment = mLoginFragment;
         }
         // 重新赋值当前正在显示的fragment
         mFragment = fragment;
