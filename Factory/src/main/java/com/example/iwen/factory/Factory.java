@@ -37,7 +37,7 @@ import java.util.concurrent.Executors;
  */
 public class Factory {
     private static final String TAG = Factory.class.getCanonicalName();
-    // 单例模式
+    // Factory单例模式
     private static Factory instance;
     // 初始化线程池
     private final Executor mExecutor;
@@ -51,6 +51,7 @@ public class Factory {
     private Factory() {
         // 新建一个4线程的线程池
         mExecutor = Executors.newFixedThreadPool(4);
+        // 配置全局gson格式
         gson = new GsonBuilder()
                 // 设置时间格式
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
@@ -63,7 +64,7 @@ public class Factory {
      * Factory中的初始化
      */
     public static void setup() {
-        // 初始化数据库
+        // 初始化 DbFlow数据库
         FlowManager.init(new FlowConfig.Builder(app())
                 .openDatabasesOnInit(true)
                 .build()); // 数据库初始化的时候就开始打开
@@ -81,7 +82,7 @@ public class Factory {
     }
 
     /**
-     * 异步允许方法
+     * 异步执行方法
      *
      * @param runnable Runnable
      */
@@ -174,7 +175,7 @@ public class Factory {
      * 收到账户退出的消息需要进行账户退出重新登录
      */
     private void logout() {
-
+        // TODO 退出登录
     }
 
     /**
@@ -187,6 +188,7 @@ public class Factory {
         if (!Account.isLogin()) {
             return;
         }
+        // 检查是否有返回
         PushModel model = PushModel.decode(str);
         if (model==null){
             return;
@@ -195,6 +197,7 @@ public class Factory {
         // 对推送集合进行遍历
         for (PushModel.Entity entity : model.getEntities()) {
             Log.e(TAG, "dispatchPush-ENTITY: " + entity.toString());
+            // 判断推送过来消息类型
             switch (entity.type) {
                 case PushModel.ENTITY_TYPE_LOGOUT: {
                     instance.logout();

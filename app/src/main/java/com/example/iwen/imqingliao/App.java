@@ -5,8 +5,8 @@ import com.example.iwen.factory.Factory;
 import com.igexin.sdk.PushManager;
 
 /**
- * author : Iwen大大怪
- * create : 2020/11/15 2:05
+ * @author : Iwen大大怪
+ * @create : 2020/11/15 2:05
  */
 public class App extends Application {
     @Override

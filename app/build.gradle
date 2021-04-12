@@ -53,11 +53,11 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:3.7.0"
     implementation "com.google.android.material:material:1.3.0-alpha03"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    // recyclerView
+    // recyclerView依赖
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     // For control over item selection of both touch and mouse driven selection
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0-rc03"
-    // 图片剪切
+    // 图片剪切库
     implementation "com.github.yalantis:ucrop:2.2.3"
     // 动态权限-对Android M或更高版本的基本系统权限逻辑
     implementation "pub.devrel:easypermissions:3.0.0"
@@ -65,6 +65,7 @@ dependencies {
     // 视图绑定
     implementation 'com.jakewharton:butterknife:10.2.3'
     implementation project(path: ':Factory')
+    // navigation依赖
     implementation 'androidx.navigation:navigation-fragment:2.3.1'
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'

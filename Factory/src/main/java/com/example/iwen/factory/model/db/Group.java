@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
+ * 群对应的数据库表
+ *
  * @author iwen大大怪
  * Create to 2021/02/14 21:44
  */
