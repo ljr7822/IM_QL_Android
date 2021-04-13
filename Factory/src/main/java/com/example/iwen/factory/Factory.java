@@ -188,7 +188,7 @@ public class Factory {
         if (!Account.isLogin()) {
             return;
         }
-        // 检查是否有返回
+        // 检查是否有返回的数据为空
         PushModel model = PushModel.decode(str);
         if (model==null){
             return;
@@ -249,7 +249,7 @@ public class Factory {
     }
 
     /**
-     * 獲取一個消息中心的實現類
+     * 获取一個消息中心的實現類
      *
      * @return MessageDispatcher.getInstance()
      */

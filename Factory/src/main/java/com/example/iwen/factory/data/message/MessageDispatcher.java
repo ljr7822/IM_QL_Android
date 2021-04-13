@@ -17,16 +17,17 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * 消息中心的实现类
+ * 消息中心的实现类：分发信息
  *
  * @author iwen大大怪
- * Create to 2021/02/18 12:52
+ * @Create to 2021/02/18 12:52
  */
 public class MessageDispatcher implements MessageCenter {
     private static MessageCenter instance;
-    //单线程池，处理卡片，一个个的进行消息处理
+    // 单线程池，处理卡片，一个个的进行消息处理
     private final Executor executor = Executors.newSingleThreadExecutor();
 
+    // DCL单例模式
     public static MessageCenter getInstance() {
         if (instance == null) {
             synchronized (MessageDispatcher.class) {
@@ -43,7 +44,7 @@ public class MessageDispatcher implements MessageCenter {
         if (cards == null || cards.length == 0) {
             return;
         }
-        //交给单线程池去处理
+        // 交给单线程池去处理
         executor.execute(new MessageCardHandler(cards));
     }
 
@@ -67,8 +68,9 @@ public class MessageDispatcher implements MessageCenter {
                 if (card == null || TextUtils.isEmpty(card.getId())
                         && TextUtils.isEmpty(card.getSenderId())
                         && TextUtils.isEmpty(card.getReceiverId())
-                        && TextUtils.isEmpty(card.getGroupId()))
+                        && TextUtils.isEmpty(card.getGroupId())) {
                     continue;
+                }
                 // 添加
                 // 消息卡片有可能是推送过来的，也有可能是自己造的
                 // 推送来的代表服务器一定有，我们可以查询到（本地有可能有，有可能没有）
@@ -80,9 +82,9 @@ public class MessageDispatcher implements MessageCenter {
                     // 本地有，同时本地显示消息状态为完成状态，则不必处理，
                     // 因为此时回来的消息和本地一定一摸一样
                     // 如果本地消息显示已经完成则不做处理
-                    if (message.getStatus() == Message.STATUS_DONE)
+                    if (message.getStatus() == Message.STATUS_DONE) {
                         continue;
-
+                    }
                     // 新状态为完成才更新服务器时间，不然不做更新
                     if (card.getStatus() == Message.STATUS_DONE) {
                         // 代表网络发送成功，此时需要修改时间为服务器的时间

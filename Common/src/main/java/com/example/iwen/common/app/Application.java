@@ -12,9 +12,8 @@ import java.io.File;
 import es.dmoral.toasty.Toasty;
 
 /**
- *
- * author : Iwen大大怪
- * create : 2020/11/15 1:44
+ * @author : Iwen大大怪
+ * @create : 2020/11/15 1:44
  */
 public class Application extends android.app.Application {
     private static Application instance;
@@ -36,9 +35,10 @@ public class Application extends android.app.Application {
 
     /**
      * 获取缓存文件夹地址
+     *
      * @return 当前App的缓存文件夹地址
      */
-    public static File getCacheDirFile(){
+    public static File getCacheDirFile() {
         return instance.getCacheDir();
     }
 

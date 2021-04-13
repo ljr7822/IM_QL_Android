@@ -22,13 +22,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 数据库的辅助工具类，完成增删改功能
+ * 数据库的辅助工具类，完成数据库增删改功能
  *
  * @author iwen大大怪
- * Create to 2021/02/14 22:55
+ * @Create to 2021/02/14 22:55
  */
 public class DbHelper {
 
+    // 单例模式
     private static final DbHelper instance;
 
     static {

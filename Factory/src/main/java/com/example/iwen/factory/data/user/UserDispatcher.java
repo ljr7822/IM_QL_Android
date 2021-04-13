@@ -12,10 +12,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 /**
- * 对UserCard的处理
+ * 对UserCard的处理、分发
  *
  * @author iwen大大怪
- * Create to 2021/02/18 11:03
+ * @Create to 2021/02/18 11:03
  */
 public class UserDispatcher implements UserCenter {
     private static UserCenter instance;
@@ -40,6 +40,7 @@ public class UserDispatcher implements UserCenter {
             return;
         }
         // 交给单线程池去处理
+        // 把工作任务添加到线程中
         executor.execute(new UserCardHandler(cards));
     }
 
@@ -59,8 +60,9 @@ public class UserDispatcher implements UserCenter {
             List<User> users = new ArrayList<>();
             for (UserCard card : cards) {
                 // 过滤空card
-                if (card == null || TextUtils.isEmpty(card.getId()))
+                if (card == null || TextUtils.isEmpty(card.getId())) {
                     continue;
+                }
                 // 添加
                 users.add(card.build());
             }

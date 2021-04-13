@@ -24,7 +24,7 @@ public class MessageCard {
 
     // 两个额外的本地字段
     // transient 不会被Gson序列化和反序列化
-    private transient int status = Message.STATUS_DONE; //当前消息状态
+    private transient int status = Message.STATUS_DONE; // 当前消息状态
     private transient boolean uploaded = false; // 上传是否完成（对应的是文件）
 
     public String getId() {
