@@ -7,7 +7,7 @@ import java.util.List;
  * 基础的数据库源接口定义
  *
  * @author iwen大大怪
- * Create to 2021/02/22 15:49
+ * @Create to 2021/02/22 15:49
  */
 public interface DbDataSource<Data> extends DataSource {
     /**

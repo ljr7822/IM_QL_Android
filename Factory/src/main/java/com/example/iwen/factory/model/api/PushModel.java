@@ -13,7 +13,7 @@ import java.util.List;
  * 推送消息的基础Model
  *
  * @author iwen大大怪
- * Create to 2021/02/14 21:25
+ * @Create to 2021/02/14 21:25
  */
 @SuppressWarnings("WeakerAccess")
 public class PushModel {

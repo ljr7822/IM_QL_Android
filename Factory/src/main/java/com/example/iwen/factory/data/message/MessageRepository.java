@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MessageRepository extends BaseDbRepository<Message> implements MessageDataSource {
 
-    //聊天的对象id
+    // 聊天的对象id
     private String receiverId;
 
     public MessageRepository(String receiverId) {

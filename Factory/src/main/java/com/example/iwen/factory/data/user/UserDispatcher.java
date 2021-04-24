@@ -20,6 +20,7 @@ import java.util.concurrent.Executors;
 public class UserDispatcher implements UserCenter {
     private static UserCenter instance;
     // 单线程池，处理卡片，一个个的进行消息处理
+    // 此线程池保证所有任务的执行顺序按照任务的提交顺序执行
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     // 單例模式
@@ -63,7 +64,7 @@ public class UserDispatcher implements UserCenter {
                 if (card == null || TextUtils.isEmpty(card.getId())) {
                     continue;
                 }
-                // 添加
+                // 添加一个user
                 users.add(card.build());
             }
             // 进行数据库存储，并分发通知，异步的操作

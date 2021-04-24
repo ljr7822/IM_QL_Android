@@ -155,6 +155,10 @@ public class UserHelper {
                     if (cards == null || cards.size() == 0) {
                         return;
                     }
+                    // 拿到用户中心进行数据存储与分发
+                    // 方法1：
+                    //Factory.getUserCenter().dispatch(cards.toArray(new UserCard[0]));
+                    // 方法2：
                     Factory.getUserCenter().dispatch(CollectionUtil.toArray(cards, UserCard.class));
                 } else {
                     Factory.decodeRspCode(rspModel, null);

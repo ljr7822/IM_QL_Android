@@ -16,11 +16,11 @@ import java.util.concurrent.Executors;
 
 /**
  * @author iwen大大怪
- * Create to 2021/02/18 13:07
+ * @Create to 2021/02/18 13:07
  */
 public class GroupDispatcher implements GroupCenter {
     private static GroupCenter instance;
-    //单线程池，处理卡片，一个个的进行消息处理
+    // 单线程池，处理卡片，一个个的进行消息处理
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public static GroupCenter getInstance() {

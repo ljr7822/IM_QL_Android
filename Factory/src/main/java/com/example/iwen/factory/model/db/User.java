@@ -16,6 +16,7 @@ import java.util.Objects;
  */
 @Table(database = AppDatabase.class)
 public class User extends BaseDbModel<User> implements Author {
+
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 

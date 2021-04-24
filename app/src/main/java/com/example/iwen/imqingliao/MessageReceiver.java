@@ -16,9 +16,10 @@ import com.igexin.sdk.PushConsts;
  * 广播接收器
  *
  * @author : iwen大大怪
- * create : 12-8 008 1:30
+ * @create : 12-8 008 1:30
  */
 public class MessageReceiver extends BroadcastReceiver {
+
     private static final String TAG = MessageReceiver.class.getSimpleName();
 
     @Override
@@ -52,9 +53,9 @@ public class MessageReceiver extends BroadcastReceiver {
     }
 
     /**
-     * 当Id初始化的时候
+     * 当Id初始化的时候,获取clientId
      *
-     * @param cid
+     * @param cid clientId
      */
     private void onClientInit(String cid) {
         // 设置设备ID

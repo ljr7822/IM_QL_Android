@@ -18,9 +18,10 @@ import java.util.List;
  * 基础的数据库仓库，实现对数据库基本的监听操作
  *
  * @author iwen大大怪
- * Create to 2021/02/22 15:47
+ * @Create to 2021/02/22 15:47
  */
-public abstract class BaseDbRepository<Data extends BaseDbModel<Data>> implements DbDataSource<Data>,
+public abstract class BaseDbRepository<Data extends BaseDbModel<Data>>
+        implements DbDataSource<Data>,
         DbHelper.ChangedListener<Data>,
         QueryTransaction.QueryResultListCallback<Data> {
 
@@ -88,6 +89,7 @@ public abstract class BaseDbRepository<Data extends BaseDbModel<Data>> implement
             notifyDataChange();
     }
 
+    // DbFlow 框架通知的回调
     @Override
     public void onListQueryResult(QueryTransaction transaction, @NonNull List<Data> tResult) {
         // 添加到当前的缓冲器

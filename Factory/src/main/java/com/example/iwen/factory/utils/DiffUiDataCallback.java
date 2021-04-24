@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author : iwen大大怪
- * create : 2021/01/29 13:15
+ * @create : 2021/01/29 13:15
  */
 public class DiffUiDataCallback<T extends DiffUiDataCallback.UiDataDiffer<T>> extends DiffUtil.Callback {
     private List<T> mOldList, mNewList;

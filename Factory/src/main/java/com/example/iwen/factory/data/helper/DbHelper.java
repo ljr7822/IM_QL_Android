@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 数据库的辅助工具类，完成数据库增删改功能
+ * 数据库的辅助工具类，辅助完成数据库增删改功能
  *
  * @author iwen大大怪
  * @Create to 2021/02/14 22:55
@@ -101,9 +101,9 @@ public class DbHelper {
     /**
      * 新增或者修改的统一方法
      *
-     * @param clazz   bean类
-     * @param models  bean类的实例数组
-     * @param <Model> 泛型，限定条件是继承自baseModel
+     * @param clazz   传递一个class信息
+     * @param models  这个class类对应的实例数组
+     * @param <Model> 泛型，限定条件是继承自 BaseModel
      */
     public static <Model extends BaseModel> void save(final Class<Model> clazz, final Model... models) {
         if (models == null || models.length == 0) {
@@ -117,7 +117,7 @@ public class DbHelper {
             public void execute(DatabaseWrapper databaseWrapper) {
                 // 执行
                 ModelAdapter<Model> adapter = FlowManager.getModelAdapter(clazz);
-                // 保存
+                // 保存，将数据转换成List进行保存
                 adapter.saveAll(Arrays.asList(models));
                 // 唤起通知
                 instance.notifySave(clazz, models);
@@ -128,9 +128,9 @@ public class DbHelper {
     /**
      * 数据库进行删除操作的统一封装
      *
-     * @param clazz   bean类
-     * @param models  bean类的实例数组
-     * @param <Model> 泛型，限定条件是继承自baseModel
+     * @param clazz   传递一个class信息
+     * @param models  这个class类对应的实例数组
+     * @param <Model> 泛型，限定条件是继承自 BaseModel
      */
     public static <Model extends BaseModel> void delete(final Class<Model> clazz, final Model... models) {
         if (models == null || models.length == 0) {
@@ -188,20 +188,20 @@ public class DbHelper {
      */
     @SuppressWarnings("unchecked")
     private final <Model extends BaseModel> void notifyDelete(final Class<Model> clazz, final Model... models) {
-        //找监听器
+        // 找监听器
         final Set<ChangedListener> listeners = instance.getListener(clazz);
         if (listeners != null && listeners.size() > 0) {
-            //通用通知
+            // 通用通知
             for (ChangedListener<Model> listener : listeners) {
                 listener.onDataDelete(models);
             }
         }
-        //列外情况
+        // 列外情况
         if (GroupMember.class.equals(clazz)) {
-            //群成员变更，需要通知对应群信息跟新
+            // 群成员变更，需要通知对应群信息跟新
             updateGroupMember((GroupMember[]) models);
         } else if (Message.class.equals(clazz)) {
-            //消息变化，应该通知会话列表更新
+            // 消息变化，应该通知会话列表更新
             updateSession((Message[]) models);
         }
     }

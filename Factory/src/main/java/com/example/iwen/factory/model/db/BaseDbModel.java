@@ -9,7 +9,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
  * 同时定义类我们需要的方发
  *
  * @author iwen大大怪
- * Create to 2021/02/14 21:52
+ * @Create to 2021/02/14 21:52
  */
 public abstract class BaseDbModel<Model> extends BaseModel
         implements DiffUiDataCallback.UiDataDiffer<Model> {

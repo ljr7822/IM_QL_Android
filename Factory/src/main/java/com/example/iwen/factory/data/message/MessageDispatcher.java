@@ -49,6 +49,7 @@ public class MessageDispatcher implements MessageCenter {
     }
 
     /**
+     * 消息卡片的消费
      * 线程调度时会触发run方法
      */
     private class MessageCardHandler implements Runnable {
@@ -60,7 +61,7 @@ public class MessageDispatcher implements MessageCenter {
 
         @Override
         public void run() {
-            //当被线程调度的时候触发
+            // 当被线程调度的时候触发
             List<Message> messages = new ArrayList<>();
             // 遍历card
             for (MessageCard card : cards) {
@@ -73,7 +74,7 @@ public class MessageDispatcher implements MessageCenter {
                 }
                 // 添加
                 // 消息卡片有可能是推送过来的，也有可能是自己造的
-                // 推送来的代表服务器一定有，我们可以查询到（本地有可能有，有可能没有）
+                // 推送来的代表服务器一定有这条记录，我们可以查询到（对于这条记录，本地有可能有，有可能没有）
                 // 如果是自己造的，那么先存储本地，后发送网络
                 // 发送消息流程：写消息->存储本地->发送网络->网络返回->刷新本地状态
                 Message message = MessageHelper.findFromLocal(card.getId());
@@ -81,6 +82,7 @@ public class MessageDispatcher implements MessageCenter {
                     // 消息本身字段从发送后就不变化了，如果收到了消息，
                     // 本地有，同时本地显示消息状态为完成状态，则不必处理，
                     // 因为此时回来的消息和本地一定一摸一样
+
                     // 如果本地消息显示已经完成则不做处理
                     if (message.getStatus() == Message.STATUS_DONE) {
                         continue;

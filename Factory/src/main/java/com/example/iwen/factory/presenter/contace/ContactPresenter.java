@@ -19,7 +19,8 @@ import java.util.List;
  * @author : iwen大大怪
  * create : 2021/01/29 1:58
  */
-public class ContactPresenter extends BaseSourcePresenter<User,User,ContactDataSource,ContactContract.View>
+public class ContactPresenter
+        extends BaseSourcePresenter<User,User,ContactDataSource,ContactContract.View>
         implements ContactContract.Presenter, DataSource.SuccessCallback<List<User>> {
 
     public ContactPresenter(ContactContract.View mView) {

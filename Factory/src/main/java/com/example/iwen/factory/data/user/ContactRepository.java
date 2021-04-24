@@ -14,7 +14,7 @@ import java.util.List;
  * 联系人仓库
  *
  * @author iwen大大怪
- * Create to 2021/02/22 13:18
+ * @Create to 2021/02/22 13:18
  */
 public class ContactRepository extends BaseDbRepository<User> implements ContactDataSource {
 
@@ -23,7 +23,7 @@ public class ContactRepository extends BaseDbRepository<User> implements Contact
         super.load(callback);
         // 对数据辅助工具类添加一个数据更新的监听
         DbHelper.addChangedListener(User.class, this);
-        //加载本地数据库数据
+        // 加载本地数据库数据
         SQLite.select().from(User.class)
                 .where(User_Table.isFollow.eq(true))
                 .and(User_Table.id.notEq(Account.getUserId()))

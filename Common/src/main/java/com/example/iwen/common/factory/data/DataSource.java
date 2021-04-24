@@ -6,7 +6,7 @@ import androidx.annotation.StringRes;
  * 数据源接口定义
  *
  * @author : iwen大大怪
- * create : 12-7 007 17:24
+ * @create : 12-7 007 17:24
  */
 public interface DataSource {
     /**
