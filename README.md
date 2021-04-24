@@ -245,6 +245,14 @@
     - 修复 用户授权后不能跳转到相关页面的bug
     - 修复 聊天列表始终滚动到最新一条 smoothScrollToPosition
     
-- 第五十二次提交 2021.3.4
+- 第五十二次提交 2021.3.4 
     - 重新布局登录注册界面
     - 修复 登录、注册Fragment切换
+    
+- 第五十三次提交 2021.04.24
+    - 创建群的界面布局
+    - 添加 GroupCreateContract
+    - 添加 GroupCreatePresenter
+    - 添加 cell布局文件
+    - 添加 头像点击选择图片
+    - 添加 软键盘隐藏

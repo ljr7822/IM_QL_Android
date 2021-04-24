@@ -34,7 +34,7 @@
 
     <string name="label_group_name">群名称</string>
     <string name="label_group_desc">群描述</string>
-    <string name="label_group_member_select">群成员</string>
+    <string name="label_group_member_select">请选择群聊成员</string>
 
     <string name="label_group_create_invalid">所有项都是必须，并且至少选择一名成员!</string>
     <string name="label_group_member_add_invalid">没有新增加的成员!</string>

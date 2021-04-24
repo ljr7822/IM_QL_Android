@@ -134,7 +134,8 @@ public class MainActivity extends Activity
         // 判断当前界面是群还是联系人
         // 如果是群，则打开群创建的界面
         if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
-            // TODO 打开群创建界面
+            // 打开群创建界面
+            GroupCreateActivity.show(this);
         } else {
             // 如果是其他，都打开添加用户的界面
             SearchActivity.show(this, SearchActivity.TYPE_USER);

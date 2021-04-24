@@ -41,6 +41,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
+            android:name=".activities.GroupCreateActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Group.Create"/>
+        <activity
             android:name=".activities.PersonalActivity"
             android:label="PersonalActivity"
             android:screenOrientation="portrait"
