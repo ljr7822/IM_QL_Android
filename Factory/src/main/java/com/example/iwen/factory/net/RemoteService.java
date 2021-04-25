@@ -4,8 +4,10 @@ import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
 import com.example.iwen.factory.model.api.account.RegisterModel;
+import com.example.iwen.factory.model.api.group.GroupCreateModel;
 import com.example.iwen.factory.model.api.message.MsgCreateModel;
 import com.example.iwen.factory.model.api.user.UserUpdateModel;
+import com.example.iwen.factory.model.card.GroupCard;
 import com.example.iwen.factory.model.card.MessageCard;
 import com.example.iwen.factory.model.card.UserCard;
 
@@ -104,5 +106,22 @@ public interface RemoteService {
      */
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+
+    /**
+     * 创建群的接口
+     *
+     * @param model 创建群的model
+     * @return <RspModel<GroupCard>>
+     */
+    @POST("group")
+    Call<RspModel<GroupCard>> groupCreate(@Body GroupCreateModel model);
+
+    /**
+     * 获取一个群信息的接口
+     *
+     * @return <RspModel<GroupCard>>
+     */
+    @GET("group/{groupId}")
+    Call<RspModel<GroupCard>> groupFind(@Path("groupId") String groupId);
 
 }

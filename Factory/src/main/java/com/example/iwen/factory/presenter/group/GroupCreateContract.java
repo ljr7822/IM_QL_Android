@@ -14,7 +14,7 @@ public interface GroupCreateContract {
         // 创建群的提交操作
         void create(String name, String desc, String picture);
         // 更改选中状态
-        void changeSelect(ViewModel model,boolean isSelected);
+        void changeSelect(ViewModel model, boolean isSelected);
     }
 
     interface View extends BaseContract.RecyclerView<ViewModel,Presenter>{
@@ -23,8 +23,8 @@ public interface GroupCreateContract {
     }
 
     class ViewModel{
-        Author author;
+        public Author author;
         // 是否选中
-        boolean isSelected;
+        public boolean isSelected;
     }
 }

@@ -10,7 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ import com.yalantis.ucrop.UCrop;
 import java.io.File;
 
 import butterknife.BindView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateContract.Presenter> implements GroupCreateContract.View{
@@ -65,7 +68,13 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
         setTitle("");
         // 初始化Recycler的布局
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.setAdapter(mAdapter);
+        mRecycler.setAdapter(mAdapter = new Adapter());
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.start();
     }
 
     /**
@@ -175,7 +184,10 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     @Override
     public void onCreateSuccess() {
-
+        // 提示成功
+        hideLoading();
+        Application.showToast(R.string.label_group_create_succeed);
+        finish();
     }
 
     @Override
@@ -185,7 +197,7 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     @Override
     public void onAdapterDataChanged() {
-
+        hideLoading();
     }
 
     private class Adapter extends RecyclerAdapter<GroupCreateContract.ViewModel>{
@@ -203,13 +215,28 @@ public class GroupCreateActivity extends PresenterToolbarActivity<GroupCreateCon
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<GroupCreateContract.ViewModel>{
 
+        @BindView(R.id.iv_avatar)
+        PortraitView mPortrait;
+        @BindView(R.id.tv_name)
+        TextView mName;
+        @BindView(R.id.cb_select)
+        CheckBox mSelect;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
         @Override
         protected void onBind(GroupCreateContract.ViewModel viewModel) {
+            mPortrait.setup(Glide.with(GroupCreateActivity.this), viewModel.author);
+            mName.setText(viewModel.author.getName());
+            mSelect.setChecked(viewModel.isSelected);
+        }
 
+        @OnCheckedChanged(R.id.cb_select)
+        void onCheckedChanged(boolean checked) {
+            // 进行状态更改
+            mPresenter.changeSelect(mData, checked);
         }
     }
 }

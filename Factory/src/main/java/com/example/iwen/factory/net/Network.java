@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * 网络请求的封装
  *
  * @author : iwen大大怪
- * create : 12-7 007 18:19
+ * @create : 12-7 007 18:19
  */
 public class Network {
     private static Network instance;
