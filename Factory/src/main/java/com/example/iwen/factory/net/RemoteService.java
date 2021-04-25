@@ -5,9 +5,11 @@ import com.example.iwen.factory.model.api.account.AccountRspModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
 import com.example.iwen.factory.model.api.account.RegisterModel;
 import com.example.iwen.factory.model.api.group.GroupCreateModel;
+import com.example.iwen.factory.model.api.group.GroupMemberAddModel;
 import com.example.iwen.factory.model.api.message.MsgCreateModel;
 import com.example.iwen.factory.model.api.user.UserUpdateModel;
 import com.example.iwen.factory.model.card.GroupCard;
+import com.example.iwen.factory.model.card.GroupMemberCard;
 import com.example.iwen.factory.model.card.MessageCard;
 import com.example.iwen.factory.model.card.UserCard;
 
@@ -123,5 +125,43 @@ public interface RemoteService {
      */
     @GET("group/{groupId}")
     Call<RspModel<GroupCard>> groupFind(@Path("groupId") String groupId);
+
+    /**
+     * 群搜索的接口
+     *
+     * @param name 名字
+     * @return List<GroupCard>
+     */
+    @GET("group/search/{name}")
+    Call<RspModel<List<GroupCard>>> groupSearch(@Path(value = "name", encoded = true) String name);
+
+    /**
+     * 我的群列表的接口
+     *
+     * @param date 时间
+     * @return List<GroupCard>
+     */
+    @GET("group/search/{date}")
+    Call<RspModel<List<GroupCard>>> groups(@Path(value = "date", encoded = true) String date);
+
+    /**
+     * 群成员列表的接口
+     *
+     * @param groupId 群id
+     * @return List<GroupMemberCard>
+     */
+    @GET("group/{groupId}/{member}")
+    Call<RspModel<List<GroupMemberCard>>> groupMembers(@Path("groupId") String groupId);
+
+
+    /**
+     * 给群添加成员的接口
+     *
+     * @param groupId 群id
+     * @return List<GroupMemberCard>
+     */
+    @POST("group/{groupId}/{member}")
+    Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Path("groupId") String groupId,
+                                                         @Body GroupMemberAddModel memberAddModel);
 
 }
