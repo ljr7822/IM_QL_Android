@@ -110,6 +110,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
      */
     @Override
     public void onSearchDone(List<UserCard> userCards) {
+        // 数据加载成功的情况返回的数据
         mAdapter.replace(userCards);
         // 如果有数据就ok，没有就空布局
         mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);

@@ -19,7 +19,7 @@
         android:layout_width="@dimen/portraitSize"
         android:layout_height="@dimen/portraitSize"
         android:layout_gravity="start|center_vertical"
-        tools:src="@mipmap/default_portrait" />
+        android:src="@mipmap/default_portrait" />
 
     <TextView
         android:id="@+id/tv_name"
@@ -38,9 +38,9 @@
 
 
     <ImageView
-        android:id="@+id/iv_follow"
+        android:id="@+id/iv_join"
         android:layout_width="@dimen/len_52"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/len_28"
         android:layout_gravity="end|center_vertical"
         android:background="@drawable/sel_btn_bg_accent_4"
         android:contentDescription="@string/app_name"

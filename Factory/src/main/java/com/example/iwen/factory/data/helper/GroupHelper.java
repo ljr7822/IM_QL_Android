@@ -1,5 +1,7 @@
 package com.example.iwen.factory.data.helper;
 
+import android.util.Log;
+
 import com.example.iwen.common.factory.data.DataSource;
 import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.R;
@@ -12,6 +14,8 @@ import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.net.Network;
 import com.example.iwen.factory.net.RemoteService;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -88,5 +92,38 @@ public class GroupHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
+
+    /**
+     * 搜索方法
+     *
+     * @param name     要搜索的用户名字
+     * @param callback DataSource.Callback<List<GroupCard>>
+     */
+    public static Call search(String name, final DataSource.Callback<List<GroupCard>> callback) {
+        // 调用Retrofit对我们的网络请求接口做代理
+        RemoteService service = Network.mRemoteService();
+        // 得到一个call进行注册
+        Call<RspModel<List<GroupCard>>> call = service.groupSearch(name);
+        // 进行异步请求
+        call.enqueue(new Callback<RspModel<List<GroupCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+                RspModel<List<GroupCard>> rspModel = response.body();
+                if (rspModel.success()) {
+                    callback.onDataLoad(rspModel.getResult());
+                } else {
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+                Log.e("ljr", "onFailure message: " + t);
+            }
+        });
+        // 把当前的调度者返回
+        return call;
     }
 }
