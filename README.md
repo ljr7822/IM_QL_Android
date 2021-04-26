@@ -265,3 +265,10 @@
 - 第五十五次提交 2021.04.25
     - 编写 群相关接口
     - 实现 群搜索相关
+    - 实现 个人的群列表
+    - 添加 MemberUserModel
+    - 完善 GroupFragment
+    - 完善 GroupHelper里面的 刷新我的群组列表 方法
+    - 添加 GroupHelper里面的 关联查询用户和群的表，返回一个 MemberUserModel 表的集合 方法
+    - 添加 GroupHelper里面的 从网络去刷新一个群的成员信息 方法
+    - 添加 GroupHelper里面的 获取一个群的成员数量 方法

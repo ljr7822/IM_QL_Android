@@ -1,6 +1,7 @@
-package com.example.iwen.factory.model.db;
+package com.example.iwen.factory.model.db.view;
 
 import com.example.iwen.common.factory.model.Author;
+import com.example.iwen.factory.model.db.AppDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.QueryModel;
 

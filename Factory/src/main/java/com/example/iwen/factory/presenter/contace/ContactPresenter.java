@@ -48,7 +48,7 @@ public class ContactPresenter
         List<User> old = adapter.getItems();
 
         // 进行数据对比
-        DiffUtil.Callback callback = new DiffUiDataCallback<>(old,users);
+        DiffUiDataCallback<User> callback = new DiffUiDataCallback<>(old,users);
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
 
         // 调用基类方法进行界面更新

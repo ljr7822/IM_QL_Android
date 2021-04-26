@@ -10,7 +10,7 @@ import com.example.iwen.factory.data.helper.GroupHelper;
 import com.example.iwen.factory.data.helper.UserHelper;
 import com.example.iwen.factory.model.api.group.GroupCreateModel;
 import com.example.iwen.factory.model.card.GroupCard;
-import com.example.iwen.factory.model.db.UserSampleModel;
+import com.example.iwen.factory.model.db.view.UserSampleModel;
 import com.example.iwen.factory.net.UploadHelper;
 
 import net.qiujuer.genius.kit.handler.Run;

@@ -150,7 +150,7 @@ public interface RemoteService {
      * @param groupId 群id
      * @return List<GroupMemberCard>
      */
-    @GET("group/{groupId}/{member}")
+    @GET("group/{groupId}/members")
     Call<RspModel<List<GroupMemberCard>>> groupMembers(@Path("groupId") String groupId);
 
 
@@ -160,7 +160,7 @@ public interface RemoteService {
      * @param groupId 群id
      * @return List<GroupMemberCard>
      */
-    @POST("group/{groupId}/{member}")
+    @POST("group/{groupId}/member")
     Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Path("groupId") String groupId,
                                                          @Body GroupMemberAddModel memberAddModel);
 

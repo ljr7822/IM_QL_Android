@@ -10,7 +10,7 @@ import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.user.UserUpdateModel;
 import com.example.iwen.factory.model.card.UserCard;
 import com.example.iwen.factory.model.db.User;
-import com.example.iwen.factory.model.db.UserSampleModel;
+import com.example.iwen.factory.model.db.view.UserSampleModel;
 import com.example.iwen.factory.model.db.User_Table;
 import com.example.iwen.factory.net.Network;
 import com.example.iwen.factory.net.RemoteService;
