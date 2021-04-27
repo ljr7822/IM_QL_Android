@@ -272,3 +272,13 @@
     - 添加 GroupHelper里面的 关联查询用户和群的表，返回一个 MemberUserModel 表的集合 方法
     - 添加 GroupHelper里面的 从网络去刷新一个群的成员信息 方法
     - 添加 GroupHelper里面的 获取一个群的成员数量 方法
+    
+ - 第五十六次提交 2021.04.26
+     - 添加 群聊天的ChatGroupPresenter
+     - 添加 MessageGroupRepository
+     - 完善 ChatContact接口
+     - 添加公共布局 fragment_chat_common.xml
+     - 添加 lay_chat_header_user.xml
+     - 添加 lay_chat_header_group.xml
+     - 使用 替换布局进行替换
+    

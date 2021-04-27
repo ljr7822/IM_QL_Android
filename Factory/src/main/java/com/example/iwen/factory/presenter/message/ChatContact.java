@@ -4,6 +4,9 @@ import com.example.iwen.common.factory.presenter.BaseContract;
 import com.example.iwen.factory.model.db.Group;
 import com.example.iwen.factory.model.db.Message;
 import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.model.db.view.MemberUserModel;
+
+import java.util.List;
 
 /**
  * 聊天契约接口
@@ -43,6 +46,6 @@ public interface ChatContact {
         void showAdminOption(boolean isAdmin);
 
         // 初始化成员信息
-        //void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
+        void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
     }
 }

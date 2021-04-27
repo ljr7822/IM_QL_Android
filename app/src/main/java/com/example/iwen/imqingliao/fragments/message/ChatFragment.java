@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -72,7 +74,25 @@ public abstract class ChatFragment<InitModel>
     }
 
     @Override
+    protected final int getContentLayoutId() {
+        return R.layout.fragment_chat_common;
+    }
+
+    /**
+     * 给外部设置顶部布局id资源
+     */
+    @LayoutRes
+    protected abstract int getHeaderLayoutId();
+
+    @Override
     protected void initWidget(View view) {
+        // 拿到占位布局
+        ViewStub stub = view.findViewById(R.id.vs_view_stub);
+        // 替换顶部布局一定要发生在super之前
+        stub.setLayoutResource(getHeaderLayoutId());
+        stub.inflate();
+
+        // 在这里进行控件绑定
         super.initWidget(view);
         // 初始化bar
         initToolbar();
