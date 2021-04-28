@@ -19,5 +19,5 @@ public class MemberUserModel {
     @Column
     public String alias; // Member-alias
     @Column
-    public String avatar; // User-avatar
+    public String portrait; // User-avatar
 }

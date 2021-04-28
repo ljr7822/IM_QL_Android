@@ -44,7 +44,8 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContact.
     @Override
     protected void initWidget(View view) {
         super.initWidget(view);
-        Glide.with(getContext()).load(R.mipmap.c_img3)
+        Glide.with(getContext())
+                .load(R.drawable.default_banner_personal)
                 .centerCrop()
                 .into(new CustomViewTarget<CollapsingToolbarLayout,Drawable>(ctl_app_bar) {
                     @Override
