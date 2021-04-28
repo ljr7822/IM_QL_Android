@@ -273,19 +273,25 @@
     - 添加 GroupHelper里面的 从网络去刷新一个群的成员信息 方法
     - 添加 GroupHelper里面的 获取一个群的成员数量 方法
     
- - 第五十六次提交 2021.04.26
-     - 添加 群聊天的ChatGroupPresenter
-     - 添加 MessageGroupRepository
-     - 完善 ChatContact接口
-     - 添加公共布局 fragment_chat_common.xml
-     - 添加 lay_chat_header_user.xml
-     - 添加 lay_chat_header_group.xml
-     - 使用 替换布局进行替换
+- 第五十六次提交 2021.04.26
+    - 添加 群聊天的ChatGroupPresenter
+    - 添加 MessageGroupRepository
+    - 完善 ChatContact接口
+    - 添加公共布局 fragment_chat_common.xml
+    - 添加 lay_chat_header_user.xml
+    - 添加 lay_chat_header_group.xml
+    - 使用 替换布局进行替换
      
- - 第五十七次提交 2021.04.27
-     - 完善 群聊天的ChatGroupPresenter
-     - 添加 单独头像布局 lay_chat_group_avatar
-     - 完善 添加群成员头像逻辑
-     - 完善 显示群成员
-     - 修改 群成员跳转详情页无反应 关联查询错误
-     - 修改 头像不显示问题
+- 第五十七次提交 2021.04.27
+    - 完善 群聊天的ChatGroupPresenter
+    - 添加 单独头像布局 lay_chat_group_avatar
+    - 完善 添加群成员头像逻辑
+    - 完善 显示群成员
+    - 修改 群成员跳转详情页无反应 关联查询错误
+    - 修改 头像不显示问题
+     
+- 第五十八次提交 2021.04.28
+    - 完善 群聊天的ChatGroupPresenter
+    - 完善 群聊天的MessageGroupRepository
+    - 完善 群消息过滤器
+    - 完善 头像隐藏

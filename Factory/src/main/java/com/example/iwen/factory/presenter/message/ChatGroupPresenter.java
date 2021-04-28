@@ -45,9 +45,6 @@ public class ChatGroupPresenter extends ChatPresenter<ChatContact.GroupView> imp
             long moreCount = membersCount - models.size();
             // 显示顶部成员头像
             view.onInitGroupMembers(models, moreCount);
-
-            // 界面初始化
-
         }
     }
 }

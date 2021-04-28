@@ -21,6 +21,7 @@ import com.example.iwen.factory.presenter.message.ChatContact;
 import com.example.iwen.factory.presenter.message.ChatGroupPresenter;
 import com.example.iwen.imqingliao.R;
 import com.example.iwen.imqingliao.activities.PersonalActivity;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.List;
@@ -78,6 +79,41 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContac
 
                     }
                 });
+    }
+
+    // 进行高度的综合运算，透明我们的头像和Icon
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        super.onOffsetChanged(appBarLayout, verticalOffset);
+        View view = ll_members;
+        if (view == null) {
+            return;
+        }
+        if (verticalOffset == 0) {
+            // 完全展开
+            view.setVisibility(View.VISIBLE);
+            view.setScaleX(1);
+            view.setScaleY(1);
+            view.setAlpha(1);
+        } else {
+            // abs运算
+            verticalOffset = Math.abs(verticalOffset);
+            final int totalScrollRange = appBarLayout.getTotalScrollRange();
+            if (verticalOffset >= totalScrollRange) {
+                // 关闭状态
+                view.setVisibility(View.INVISIBLE);
+                view.setScaleX(0);
+                view.setScaleY(0);
+                view.setAlpha(0);
+            } else {
+                // 中间状态
+                float progress = 1 - (verticalOffset / (float) totalScrollRange);
+                view.setVisibility(View.VISIBLE);
+                view.setScaleX(progress);
+                view.setScaleY(progress);
+                view.setAlpha(progress);
+            }
+        }
     }
 
     /**
