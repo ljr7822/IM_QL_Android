@@ -20,6 +20,7 @@ import com.example.iwen.factory.model.db.view.MemberUserModel;
 import com.example.iwen.factory.presenter.message.ChatContact;
 import com.example.iwen.factory.presenter.message.ChatGroupPresenter;
 import com.example.iwen.imqingliao.R;
+import com.example.iwen.imqingliao.activities.GroupMemberActivity;
 import com.example.iwen.imqingliao.activities.PersonalActivity;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -145,7 +146,9 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContac
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     if (item.getItemId() == R.id.action_add) {
-                        // TODO:群成员添加操作
+                        // 添加新成员
+                        // mReceiverId就是群id
+                        GroupMemberActivity.showAdmin(getContext(), mReceiverId);
                         return true;
                     }
                     return false;
@@ -194,7 +197,9 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContac
             tv_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // TODO:显示成员列表
+                    // 显示成员列表
+                    // mReceiverId就是群id
+                    GroupMemberActivity.show(getContext(), mReceiverId);
                 }
             });
         } else {

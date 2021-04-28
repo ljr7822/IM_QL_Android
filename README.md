@@ -295,3 +295,12 @@
     - 完善 群聊天的MessageGroupRepository
     - 完善 群消息过滤器
     - 完善 头像隐藏
+    
+- 第五十九次提交 2021.04.29
+    - 完善 展示群成员列表
+    - 完善 添加新成员界面
+    - 添加 GroupMemberActivity
+    - 添加 GroupMembersPresenter
+    - 添加 GroupMembersContract
+    - 修改 查找群的主题
+    - 修改 查找联系人的主题
