@@ -35,7 +35,7 @@ public class MessageLayout extends LinearLayout {
 
     @Override
     protected boolean fitSystemWindows(Rect insets) {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             insets.left = 0;
             insets.right = 0;
             insets.top = 0;

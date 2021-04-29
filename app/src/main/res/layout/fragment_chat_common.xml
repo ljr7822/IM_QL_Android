@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".fragments.message.ChatUserFragment">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,9 +23,9 @@
             <!--顶部布局的占位-->
             <ViewStub
                 android:id="@+id/vs_view_stub"
-                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed|enterAlways" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -95,6 +95,20 @@
             android:src="@drawable/ic_submit"
             app:tint="@color/textPrimary" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_alpha_224"
+        android:visibility="gone">
+
+        <fragment
+            android:id="@+id/frag_panel"
+            class="com.example.iwen.imqingliao.fragments.panel.PanelFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </com.example.iwen.common.widget.MessageLayout>

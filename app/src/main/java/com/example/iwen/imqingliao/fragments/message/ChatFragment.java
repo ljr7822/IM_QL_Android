@@ -64,8 +64,18 @@ public abstract class ChatFragment<InitModel>
     CollapsingToolbarLayout ctl_app_bar;
     @BindView(R.id.edt_content)
     EditText edt_content;
+
     @BindView(R.id.iv_submit)
     ImageView iv_submit;
+
+    @BindView(R.id.iv_face)
+    View iv_face;
+
+    @BindView(R.id.iv_record)
+    View iv_record;
+
+    @BindView(R.id.lay_panel)
+    View mPanel;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -94,6 +104,7 @@ public abstract class ChatFragment<InitModel>
 
         // 在这里进行控件绑定
         super.initWidget(view);
+
         // 初始化bar
         initToolbar();
         initAppBar();
@@ -158,7 +169,9 @@ public abstract class ChatFragment<InitModel>
      */
     @OnClick(R.id.iv_face)
     void onFaceClick() {
-
+        // 打开隐藏软键盘
+        //mPanel.setVisibility(View.VISIBLE);
+        //Util.hideKeyboard(edt_content);
     }
 
     /**
@@ -166,7 +179,9 @@ public abstract class ChatFragment<InitModel>
      */
     @OnClick(R.id.iv_record)
     void onRecordClick() {
-
+        // 打开隐藏软键盘
+        //mPanelBoss.openPanel();
+        //mPanelFragment.showRecord();
     }
 
     /**
@@ -182,6 +197,7 @@ public abstract class ChatFragment<InitModel>
         } else {
             // 打开更多
             onMoreActionClick();
+            //mPanelFragment.showGallery();
         }
     }
 
@@ -189,7 +205,8 @@ public abstract class ChatFragment<InitModel>
      * 打开更多
      */
     private void onMoreActionClick() {
-
+        // 打开隐藏软键盘
+        //mPanelBoss.openPanel();
     }
 
     /**
