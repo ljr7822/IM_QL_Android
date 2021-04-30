@@ -3,6 +3,7 @@ package com.example.iwen.imqingliao.fragments.message;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.iwen.common.app.PresenterFragment;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.common.widget.SmoothInputLayout;
 import com.example.iwen.common.widget.adapter.TextWatcherAdapter;
 import com.example.iwen.common.widget.recycler.RecyclerAdapter;
 import com.example.iwen.factory.model.db.Message;
@@ -26,6 +28,7 @@ import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.factory.presenter.message.ChatContact;
 import com.example.iwen.imqingliao.R;
+import com.example.iwen.imqingliao.fragments.panel.PanelFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -47,7 +50,7 @@ import static com.example.iwen.imqingliao.activities.MessageActivity.KEY_RECEIVE
  */
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContact.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel> {
+        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel>, View.OnClickListener {
 
     // 接受者id
     protected String mReceiverId;
@@ -77,6 +80,13 @@ public abstract class ChatFragment<InitModel>
     @BindView(R.id.lay_panel)
     View mPanel;
 
+    @BindView(R.id.lay_content)
+    SmoothInputLayout lay_content;
+
+    //private ExpressionAdapter expressionAdapter;
+
+    private PanelFragment mPanelFragment;
+
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
@@ -105,10 +115,14 @@ public abstract class ChatFragment<InitModel>
         // 在这里进行控件绑定
         super.initWidget(view);
 
-        // 初始化bar
+        // 初始化
         initToolbar();
         initAppBar();
         initEditContent();
+        initSetOnClickListener();
+        // 获得面板的fragment
+        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+
         // RecyclerView基本设置
         rv_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_recycler.setAdapter(mAdapter = new Adapter());
@@ -165,37 +179,72 @@ public abstract class ChatFragment<InitModel>
     }
 
     /**
+     * 初始化点击事件：绑定
+     */
+    private void initSetOnClickListener() {
+        iv_face.setOnClickListener(this);
+        iv_record.setOnClickListener(this);
+        iv_submit.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            // 点击表情
+            case R.id.iv_face:
+                onFaceClick();
+                break;
+            // 点击语音
+            case R.id.iv_record:
+                onRecordClick();
+                break;
+            // 点击发送或者更多
+            case R.id.iv_submit:
+                onSubmitClick();
+                break;
+        }
+    }
+
+    /**
      * 表情点击
      */
-    @OnClick(R.id.iv_face)
-    void onFaceClick() {
+    //@OnClick(R.id.iv_face)
+    private void onFaceClick() {
         // 打开隐藏软键盘
         //mPanel.setVisibility(View.VISIBLE);
         //Util.hideKeyboard(edt_content);
+        Log.i("ljr", "点击了表情");
+        lay_content.showInputPane(true);
+        mPanelFragment.showFace();
     }
 
     /**
      * 语音点击
      */
-    @OnClick(R.id.iv_record)
-    void onRecordClick() {
+    //@OnClick(R.id.iv_record)
+    private void onRecordClick() {
         // 打开隐藏软键盘
         //mPanelBoss.openPanel();
         //mPanelFragment.showRecord();
+        Log.i("ljr", "点击了语音");
+        lay_content.showInputPane(true);
+        mPanelFragment.showRecord();
     }
 
     /**
      * 发送按钮
      */
-    @OnClick(R.id.iv_submit)
-    void onSubmitClick() {
+    //@OnClick(R.id.iv_submit)
+    private void onSubmitClick() {
         if (iv_submit.isActivated()) {
             // 发送
+            Log.i("ljr", "点击了发送");
             String content = edt_content.getText().toString().trim();
             edt_content.setText("");
             mPresenter.pushText(content);
         } else {
             // 打开更多
+            Log.i("ljr", "点击了更多");
             onMoreActionClick();
             //mPanelFragment.showGallery();
         }
@@ -207,10 +256,13 @@ public abstract class ChatFragment<InitModel>
     private void onMoreActionClick() {
         // 打开隐藏软键盘
         //mPanelBoss.openPanel();
+        lay_content.showInputPane(true);
+        mPanelFragment.showGallery();
     }
 
     /**
      * 复写获取RecyclerAdapter方法
+     *
      * @return 我们自己写的mAdapter
      */
     @Override
@@ -318,7 +370,7 @@ public abstract class ChatFragment<InitModel>
         // 重新发送信息
         @OnClick(R.id.iv_avatar)
         void onRePushClick() {
-            if (loading != null&&mPresenter.rePush(mData)) {
+            if (loading != null && mPresenter.rePush(mData)) {
                 // 必须是右边的才有可能重新发送
                 // 状态改变需要重新刷新当前界面的信息
                 updateData(mData);
