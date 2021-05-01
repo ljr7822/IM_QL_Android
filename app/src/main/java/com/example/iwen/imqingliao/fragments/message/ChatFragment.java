@@ -2,6 +2,8 @@ package com.example.iwen.imqingliao.fragments.message;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.iwen.common.app.PresenterFragment;
+import com.example.iwen.common.face.Face;
 import com.example.iwen.common.widget.PortraitView;
 import com.example.iwen.common.widget.SmoothInputLayout;
 import com.example.iwen.common.widget.adapter.TextWatcherAdapter;
@@ -32,6 +35,7 @@ import com.example.iwen.imqingliao.fragments.panel.PanelFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
 
@@ -400,11 +404,11 @@ public abstract class ChatFragment<InitModel>
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
-            // Spannable spannable = new SpannableString(message.getContent());
-            //解析表情
-            //Face.decode(tv_content, spannable, (int) Ui.dipToPx(getResources(), 20f));
-            //内容设置到布局
-            tv_content.setText(message.getContent());
+            Spannable spannable = new SpannableString(message.getContent());
+            // 解析表情
+            Face.decode(tv_content, spannable, (int) Ui.dipToPx(getResources(), 20f));
+            // 内容设置到布局
+            tv_content.setText(spannable);
         }
     }
 
