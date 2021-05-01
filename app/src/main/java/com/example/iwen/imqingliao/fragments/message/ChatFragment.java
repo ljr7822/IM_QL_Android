@@ -50,7 +50,7 @@ import static com.example.iwen.imqingliao.activities.MessageActivity.KEY_RECEIVE
  */
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContact.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel>, View.OnClickListener {
+        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel>, View.OnClickListener, PanelFragment.PanelCallBack {
 
     // 接受者id
     protected String mReceiverId;
@@ -122,6 +122,8 @@ public abstract class ChatFragment<InitModel>
         initSetOnClickListener();
         // 获得面板的fragment
         mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        // 初始化回调
+        mPanelFragment.setup(this);
 
         // RecyclerView基本设置
         rv_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -276,6 +278,14 @@ public abstract class ChatFragment<InitModel>
         // 消息来了后自动滚到最后一行
         if (mAdapter.getItemCount() > 0)
             rv_recycler.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+    }
+
+    /**
+     * 表情输入回调
+     */
+    @Override
+    public EditText getInputEditText() {
+        return edt_content;
     }
 
     /**
