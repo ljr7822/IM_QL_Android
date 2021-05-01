@@ -34,7 +34,7 @@ import java.util.Objects;
  */
 public class GalleryView extends RecyclerView {
     private static final int LOADER_ID = 0x0100;
-    private static final int MAX_IMAGE_COUNT = 3; // 最大选中图片大小
+    private static final int MAX_IMAGE_COUNT = 4; // 最大选中图片大小
     private static final int MIN_IMAGE_FILE_SIZE = 10 * 1024; // 最小的图片大小
     private Adapter mAdapter = new Adapter();
     private LoaderCallback mLoaderCallback = new LoaderCallback();

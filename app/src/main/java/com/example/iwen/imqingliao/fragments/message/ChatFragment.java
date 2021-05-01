@@ -39,6 +39,7 @@ import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
 
+import java.io.File;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -290,6 +291,27 @@ public abstract class ChatFragment<InitModel>
     @Override
     public EditText getInputEditText() {
         return edt_content;
+    }
+
+    /**
+     * 图片回调回来
+     *
+     * @param paths 路径
+     */
+    @Override
+    public void onSendGallery(String[] paths) {
+        mPresenter.pushImages(paths);
+    }
+
+    /**
+     * 语音回调回来
+     *
+     * @param file 文件
+     * @param time 时长
+     */
+    @Override
+    public void onRecordDone(File file, long time) {
+        mPresenter.pushAudio(file.getAbsolutePath(), time);
     }
 
     /**

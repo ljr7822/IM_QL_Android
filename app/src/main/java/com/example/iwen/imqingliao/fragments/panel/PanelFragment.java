@@ -1,11 +1,11 @@
 package com.example.iwen.imqingliao.fragments.panel;
 
-import android.content.Context;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,12 +17,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.common.face.Face;
 import com.example.iwen.common.tools.UiTool;
+import com.example.iwen.common.widget.GalleryView;
 import com.example.iwen.common.widget.recycler.RecyclerAdapter;
 import com.example.iwen.imqingliao.R;
 import com.google.android.material.tabs.TabLayout;
 
 import net.qiujuer.genius.ui.Ui;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,7 +32,9 @@ import java.util.List;
  * 底部面板实现
  */
 public class PanelFragment extends Fragment {
-
+    private View mFacePanel;
+    private View mGalleryPanel;
+    private View mRecordPanel;
     private PanelCallBack mCallBack;
 
     public PanelFragment() {
@@ -46,8 +50,8 @@ public class PanelFragment extends Fragment {
     protected void initWidget(View view) {
         super.initWidget(view);
         initFace(view);
-        initRecord(view);
         initGallery(view);
+        initRecord(view);
     }
 
     /**
@@ -65,9 +69,10 @@ public class PanelFragment extends Fragment {
      * @param root 界面view
      */
     private void initFace(View root) {
-        View facePanel = root.findViewById(R.id.lay_panel_face);
-        TabLayout tabLayout = facePanel.findViewById(R.id.tab);
-        View backspace = facePanel.findViewById(R.id.im_backspace);
+        //final View facePanel =  mFacePanel = root.findViewById(R.id.lay_panel_face);
+        mFacePanel = root.findViewById(R.id.lay_panel_face);
+        TabLayout tabLayout = mFacePanel.findViewById(R.id.tab);
+        View backspace = mFacePanel.findViewById(R.id.im_backspace);
         backspace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +87,7 @@ public class PanelFragment extends Fragment {
                 panelCallBack.getInputEditText().dispatchKeyEvent(event);
             }
         });
-        ViewPager viewPager = facePanel.findViewById(R.id.pager);
+        ViewPager viewPager = mFacePanel.findViewById(R.id.pager);
         tabLayout.setupWithViewPager(viewPager);
 
         // 每一个表情显示48dp
@@ -107,7 +112,6 @@ public class PanelFragment extends Fragment {
             @Override
             public Object instantiateItem(@NonNull ViewGroup container, int position) {
                 // 添加
-                Context context;
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 RecyclerView recyclerView = (RecyclerView) inflater.inflate(R.layout.lay_face_content, container, false);
                 recyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
@@ -148,17 +152,62 @@ public class PanelFragment extends Fragment {
         });
     }
 
+    /**
+     * 初始化语音
+     *
+     * @param root 界面view
+     */
     private void initRecord(View root) {
 
     }
 
+    /**
+     * 初始化图片
+     *
+     * @param root 界面view
+     */
     private void initGallery(View root) {
+        //mGalleryPanel = root.findViewById(R.id.lay_gallery_panel);
+        mGalleryPanel = root.findViewById(R.id.lay_panel_gallery);
+        GalleryView galleryView = mGalleryPanel.findViewById(R.id.view_gallery);
+        TextView selectedSize = mGalleryPanel.findViewById(R.id.txt_gallery_select_count);
 
+        galleryView.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
+            @Override
+            public void onSelectedCountChanged(int count) {
+                String resStr = getText(R.string.label_gallery_selected_size).toString();
+                selectedSize.setText(String.format(resStr, count));
+            }
+        });
+
+        // 点击事件
+        mGalleryPanel.findViewById(R.id.btn_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onGalleySendClick(galleryView, galleryView.getSelectedPath());
+            }
+        });
+    }
+
+    // 点击的时候触发，传回一个控件和选中的路径
+    private void onGalleySendClick(GalleryView galleryView, String[] paths) {
+        // 通知给聊天界面
+        // 清理状态
+        galleryView.clear();
+        // 删除逻辑
+        PanelCallBack callback = mCallBack;
+        if (callback == null) {
+            return;
+        }
+
+        callback.onSendGallery(paths);
     }
 
     // 显示表情
     public void showFace() {
-
+        mFacePanel.setVisibility(View.VISIBLE);
+        mGalleryPanel.setVisibility(View.GONE);
+        //mRecordPanel.setVisibility(View.GONE);
     }
 
     // 显示语音
@@ -168,12 +217,20 @@ public class PanelFragment extends Fragment {
 
     // 显示图片选择
     public void showGallery() {
-
+        mFacePanel.setVisibility(View.GONE);
+        mGalleryPanel.setVisibility(View.VISIBLE);
+        //mRecordPanel.setVisibility(View.GONE);
     }
 
     // 回调聊天界面的callback
     public interface PanelCallBack {
         // 拿到输入框
         EditText getInputEditText();
+
+        // 返回需要发送的图片
+        void onSendGallery(String[] paths);
+
+        // 返回录音文件和时常
+        void onRecordDone(File file, long time);
     }
 }
