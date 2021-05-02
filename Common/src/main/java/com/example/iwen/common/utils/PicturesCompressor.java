@@ -10,6 +10,8 @@ import com.example.iwen.common.app.Application;
 import java.io.File;
 
 /**
+ * 图片处理工具类
+ *
  * @author : Iwen大大怪
  * create : 2020/11/15 2:42
  */

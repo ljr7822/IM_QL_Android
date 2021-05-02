@@ -25,7 +25,7 @@ import java.util.Date;
 public class UploadHelper {
     private static final String TAG = "UploadHelper";
     // 与存储区域有关系
-    private static final String ENDPOINT = "http://oss-cn-beijing.aliyuncs.com";
+    public static final String ENDPOINT = "http://oss-cn-beijing.aliyuncs.com";
     // oss存储桶名字
     private static final String BUCKET_NAME = "imqingliao";
 

@@ -51,7 +51,21 @@ public class ChatPresenter<View extends ChatContact.View>
 
     @Override
     public void pushImages(String[] paths) {
-        // TODO 发送图片
+        // 发送图片
+        // 判断是否存在选择图片
+        if (paths == null || paths.length == 0){
+            return;
+        }
+        // 此时路径是本地的手机上的路径
+        for (String path : paths) {
+            // 构建一个新的消息
+            MsgCreateModel msgCreateModel = new MsgCreateModel.Builder()
+                    .receiver(receiverId, receiverType)
+                    .content(path, Message.TYPE_PIC)
+                    .build();
+            // 进行网络发送
+            MessageHelper.push(msgCreateModel);
+        }
     }
 
     /**
