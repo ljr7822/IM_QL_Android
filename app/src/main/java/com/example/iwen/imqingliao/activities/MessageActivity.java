@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 
 import com.example.iwen.common.app.Activity;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.common.factory.model.Author;
+import com.example.iwen.common.widget.SmoothInputLayout;
 import com.example.iwen.factory.model.db.Group;
 import com.example.iwen.factory.model.db.Message;
 import com.example.iwen.factory.model.db.Session;
@@ -76,6 +78,12 @@ public class MessageActivity extends Activity {
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_message;
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        SmoothInputLayout.hideInputWhenTouchOtherView(this,ev,null);
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override

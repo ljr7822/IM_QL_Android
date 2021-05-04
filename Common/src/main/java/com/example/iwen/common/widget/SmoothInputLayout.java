@@ -1,30 +1,38 @@
 package com.example.iwen.common.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
 import com.example.iwen.common.R;
 
+import java.util.List;
+
 /**
- * 表情输入面板的Layout
+ * 更多输入面板的Layout
+ *
  * @author iwen大大怪
- * Create to 2021/04/30 10:52
+ * @Create to 2021/04/30 10:52
  */
 public class SmoothInputLayout extends LinearLayout {
 
     private static final String TAG = "SmoothInputLayout";
-
+    // 默认键盘高度
     public static final int DEFAULT_KEYBOARD_HEIGHT = 387;
+    // 最小键盘高度
     public static final int MIN_KEYBOARD_HEIGHT = 20;
+    // Sp-Key
     private static final String SP_KEYBOARD = "keyboard";
     private static final String KEY_HEIGHT = "height";
     private int mMaxKeyboardHeight = Integer.MIN_VALUE;
@@ -33,29 +41,32 @@ public class SmoothInputLayout extends LinearLayout {
     private int mKeyboardHeight;
     private int mInputViewId;
     private View mInputView;
+    // 是否输入法已打开
     private boolean mKeyboardOpen = false;
     private boolean mKeyboardOpenOne = false;
     private int mInputPaneId;
+    // 特殊输入面板
     private View mInputPane;
     private OnVisibilityChangeListener mListener;
     private OnKeyboardChangeListener keyboardChangeListener;
+    // 自动保存键盘高度
     private boolean mAutoSaveKeyboardHeight;
     private KeyboardProcessor mKeyboardProcessor;
     private boolean tShowInputPane = false;
 
     // 构造函数会在new的时候调用
     public SmoothInputLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     // 在布局中使用
     public SmoothInputLayout(Context context, @Nullable AttributeSet attrs) {
-        this(context,attrs,0);
+        this(context, attrs, 0);
     }
 
     // 布局layout中调用,但是会有style
     public SmoothInputLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        this(context,attrs,defStyleAttr,0);
+        this(context, attrs, defStyleAttr, 0);
     }
 
     public SmoothInputLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -63,31 +74,24 @@ public class SmoothInputLayout extends LinearLayout {
         initView(attrs);
     }
 
+    // 初始化
     private void initView(AttributeSet attrs) {
         // 键盘默认高度
-        int defaultInputHeight = (int) (DEFAULT_KEYBOARD_HEIGHT *
-                getResources().getDisplayMetrics().density);
+        int defaultInputHeight = (int) (DEFAULT_KEYBOARD_HEIGHT * getResources().getDisplayMetrics().density);
         // 键盘最小高度
-        int minInputHeight = (int) (MIN_KEYBOARD_HEIGHT *
-                getResources().getDisplayMetrics().density);
+        int minInputHeight = (int) (MIN_KEYBOARD_HEIGHT * getResources().getDisplayMetrics().density);
         mInputViewId = NO_ID;
         mInputPaneId = NO_ID;
         boolean autoSave;
         // 获取自定义控件的属性
         // 使用 TypedArray 来获取 XML layout 中的属性值
-        TypedArray custom = getContext().obtainStyledAttributes(attrs,
-                R.styleable.SmoothInputLayout);
+        TypedArray custom = getContext().obtainStyledAttributes(attrs, R.styleable.SmoothInputLayout);
         // 获取指定资源id对应的尺寸
-        defaultInputHeight = custom.getDimensionPixelOffset(
-                R.styleable.SmoothInputLayout_silDefaultKeyboardHeight, defaultInputHeight);
-        minInputHeight = custom.getDimensionPixelOffset(
-                R.styleable.SmoothInputLayout_silMinKeyboardHeight, minInputHeight);
-        mInputViewId = custom.getResourceId(R.styleable.SmoothInputLayout_silInputView,
-                mInputViewId);
-        mInputPaneId = custom.getResourceId(R.styleable.SmoothInputLayout_silInputPane,
-                mInputPaneId);
-        autoSave = custom.getBoolean(R.styleable.SmoothInputLayout_silAutoSaveKeyboardHeight,
-                true);
+        defaultInputHeight = custom.getDimensionPixelOffset(R.styleable.SmoothInputLayout_silDefaultKeyboardHeight, defaultInputHeight);
+        minInputHeight = custom.getDimensionPixelOffset(R.styleable.SmoothInputLayout_silMinKeyboardHeight, minInputHeight);
+        mInputViewId = custom.getResourceId(R.styleable.SmoothInputLayout_silInputView, mInputViewId);
+        mInputPaneId = custom.getResourceId(R.styleable.SmoothInputLayout_silInputPane, mInputPaneId);
+        autoSave = custom.getBoolean(R.styleable.SmoothInputLayout_silAutoSaveKeyboardHeight, true);
         // 调用 recycle() 方法将 TypedArray 回收
         custom.recycle();
         // 设置默认系统输入面板高度
@@ -170,8 +174,9 @@ public class SmoothInputLayout extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if (keyboardChangeListener != null)
+        if (keyboardChangeListener != null) {
             keyboardChangeListener.onKeyboardChanged(mKeyboardOpen);
+        }
     }
 
     /**
@@ -199,10 +204,12 @@ public class SmoothInputLayout extends LinearLayout {
      * 更新子项高度
      */
     private void updateLayout() {
-        if (mInputPane == null)
+        if (mInputPane == null) {
             return;
-        if (mKeyboardHeight == 0)
+        }
+        if (mKeyboardHeight == 0) {
             mKeyboardHeight = getKeyboardHeight(mDefaultKeyboardHeight);
+        }
         ViewGroup.LayoutParams layoutParams = mInputPane.getLayoutParams();
         if (layoutParams != null) {
             layoutParams.height = mKeyboardHeight;
@@ -210,12 +217,18 @@ public class SmoothInputLayout extends LinearLayout {
         }
     }
 
+    /**
+     * 获取键盘高度
+     *
+     * @param defaultHeight 默认高度
+     * @return 键盘高度
+     */
     private int getKeyboardHeight(int defaultHeight) {
-        if (mAutoSaveKeyboardHeight)
+        if (mAutoSaveKeyboardHeight) {
             return getKeyboardSharedPreferences().getInt(KEY_HEIGHT, defaultHeight);
-        else
-            return mKeyboardProcessor != null ?
-                    mKeyboardProcessor.getSavedKeyboardHeight(defaultHeight) : defaultHeight;
+        } else {
+            return mKeyboardProcessor != null ? mKeyboardProcessor.getSavedKeyboardHeight(defaultHeight) : defaultHeight;
+        }
     }
 
     /**
@@ -224,8 +237,9 @@ public class SmoothInputLayout extends LinearLayout {
      * @param height 输入面板高度
      */
     public void setDefaultKeyboardHeight(int height) {
-        if (mDefaultKeyboardHeight != height)
+        if (mDefaultKeyboardHeight != height) {
             mDefaultKeyboardHeight = height;
+        }
     }
 
     /**
@@ -234,8 +248,9 @@ public class SmoothInputLayout extends LinearLayout {
      * @param height 输入面板高度
      */
     public void setMinKeyboardHeight(int height) {
-        if (mMinKeyboardHeight != height)
+        if (mMinKeyboardHeight != height) {
             mMinKeyboardHeight = height;
+        }
     }
 
     /**
@@ -244,8 +259,9 @@ public class SmoothInputLayout extends LinearLayout {
      * @param edit 输入框
      */
     public void setInputView(View edit) {
-        if (mInputView != edit)
+        if (mInputView != edit) {
             mInputView = edit;
+        }
     }
 
     /**
@@ -254,8 +270,9 @@ public class SmoothInputLayout extends LinearLayout {
      * @param pane 面板
      */
     public void setInputPane(View pane) {
-        if (mInputPane != pane)
+        if (mInputPane != pane) {
             mInputPane = pane;
+        }
     }
 
     /**
@@ -301,7 +318,6 @@ public class SmoothInputLayout extends LinearLayout {
      * @return 是否输入法已打开
      */
     public boolean isKeyBoardOpen() {
-
         return mKeyboardOpen;
     }
 
@@ -309,7 +325,7 @@ public class SmoothInputLayout extends LinearLayout {
         return mKeyboardOpenOne;
     }
 
-    public void setmKeyboardOpenOne(boolean mKeyboardOpenOne) {
+    public void setKeyboardOpenOne(boolean mKeyboardOpenOne) {
         this.mKeyboardOpenOne = mKeyboardOpenOne;
     }
 
@@ -332,8 +348,9 @@ public class SmoothInputLayout extends LinearLayout {
     public void closeInputPane() {
         if (isInputPaneOpen()) {
             mInputPane.setVisibility(GONE);
-            if (mListener != null)
+            if (mListener != null) {
                 mListener.onVisibilityChange(GONE);
+            }
         }
     }
 
@@ -343,21 +360,22 @@ public class SmoothInputLayout extends LinearLayout {
      * @param focus 是否让输入框拥有焦点
      */
     public void showInputPane(boolean focus) {
+        // 判断键盘是否打开
         if (isKeyBoardOpen()) {
             tShowInputPane = true;
-            InputMethodManager imm = ((InputMethodManager) (getContext()
-                    .getSystemService(Context.INPUT_METHOD_SERVICE)));
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
+            InputMethodManager InputMethodManager = ((InputMethodManager) (getContext().getSystemService(Context.INPUT_METHOD_SERVICE)));
+            if (InputMethodManager != null) {
+                // 请求从当前正在接受输入的窗口的上下文中隐藏软输入窗口。
+                InputMethodManager.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
-
         } else {
+            // 软键盘没有打开
             if (mInputPane != null && mInputPane.getVisibility() == GONE) {
                 updateLayout();
                 mInputPane.setVisibility(VISIBLE);
-                if (mListener != null)
+                if (mListener != null) {
                     mListener.onVisibilityChange(VISIBLE);
+                }
             }
         }
         if (focus) {
@@ -380,11 +398,9 @@ public class SmoothInputLayout extends LinearLayout {
      * @param clearFocus 是否清除输入框焦点
      */
     public void closeKeyboard(boolean clearFocus) {
-        InputMethodManager imm = ((InputMethodManager) (getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE)));
+        InputMethodManager imm = ((InputMethodManager) (getContext().getSystemService(Context.INPUT_METHOD_SERVICE)));
         if (imm != null) {
-            imm.hideSoftInputFromWindow(getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS);
+            imm.hideSoftInputFromWindow(getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
         if (clearFocus && mInputView != null) {
             setFocusable(true);
@@ -402,11 +418,82 @@ public class SmoothInputLayout extends LinearLayout {
         }
         mInputView.requestFocus();
         mInputView.requestFocusFromTouch();
-        InputMethodManager imm = ((InputMethodManager) (getContext()
-                .getSystemService(Context.INPUT_METHOD_SERVICE)));
+        InputMethodManager imm = ((InputMethodManager) (getContext().getSystemService(Context.INPUT_METHOD_SERVICE)));
         if (imm != null) {
             imm.showSoftInput(mInputView, InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    /**
+     * 当点击其他View时隐藏软键盘
+     *
+     * @param activity     Activity
+     * @param ev           MotionEvent
+     * @param excludeViews List<View>
+     */
+    public static void hideInputWhenTouchOtherView(Activity activity, MotionEvent ev, List<View> excludeViews) {
+        // 获取点击事件
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            if (excludeViews != null && !excludeViews.isEmpty()) {
+                for (int i = 0; i < excludeViews.size(); i++) {
+                    if (isTouchView(excludeViews.get(i), ev)) {
+                        return;
+                    }
+                }
+            }
+            // 获取当前焦点视图
+            View view = activity.getCurrentFocus();
+            if (isShouldHideInput(view, ev)) {
+                InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputMethodManager != null) {
+                    // 隐藏软键盘
+                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    // 其他面板
+                    //closeInputPane();
+                }
+            }
+        }
+    }
+
+    /**
+     * @param view 当前焦点视图
+     * @param ev   点击事件
+     * @return
+     */
+    private static boolean isShouldHideInput(View view, MotionEvent ev) {
+        if (view != null && (view instanceof EditText)) {
+            return !isTouchView(view, ev);
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否是焦点的view
+     *
+     * @param view 当前焦点视图
+     * @param ev   点击事件
+     * @return 默认true为是
+     */
+    private static boolean isTouchView(View view, MotionEvent ev) {
+        if (view == null || ev == null) {
+            return false;
+        }
+        int[] leftTop = {0, 0};
+        // 获取一个控件在其父窗口中的坐标位置
+        view.getLocationInWindow(leftTop);
+        // 获取当前位置的横坐标
+        int left = leftTop[0];
+        // 获取当前位置的纵坐标
+        int top = leftTop[1];
+        // 获取当前位置的bottom坐标
+        int bottom = top + view.getHeight();
+        // 获取当前位置的right坐标
+        int right = left + view.getWidth();
+        // 开始判断点击是否在当前view中
+        if (ev.getRawX() > left && ev.getRawX() < right && ev.getRawY() > top && ev.getRawY() < bottom) {
+            return true;
+        }
+        return false;
     }
 
     /**

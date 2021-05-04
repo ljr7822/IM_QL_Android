@@ -5,7 +5,6 @@ import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.EditText;
@@ -55,7 +54,9 @@ import static com.example.iwen.imqingliao.activities.MessageActivity.KEY_RECEIVE
  */
 public abstract class ChatFragment<InitModel>
         extends PresenterFragment<ChatContact.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContact.View<InitModel>, View.OnClickListener, PanelFragment.PanelCallBack {
+        implements AppBarLayout.OnOffsetChangedListener,
+        ChatContact.View<InitModel>, View.OnClickListener,
+        PanelFragment.PanelCallBack {
 
     // 接受者id
     protected String mReceiverId;
@@ -72,23 +73,21 @@ public abstract class ChatFragment<InitModel>
     CollapsingToolbarLayout ctl_app_bar;
     @BindView(R.id.edt_content)
     EditText edt_content;
-
+    // 发送按钮
     @BindView(R.id.iv_submit)
     ImageView iv_submit;
-
+    // 表情按钮
     @BindView(R.id.iv_face)
     View iv_face;
-
+    // 语音按钮
     @BindView(R.id.iv_record)
     View iv_record;
-
+    // Panel面板
     @BindView(R.id.lay_panel)
     View mPanel;
-
+    // SmoothInputLayout自定义控件
     @BindView(R.id.lay_content)
     SmoothInputLayout lay_content;
-
-    //private ExpressionAdapter expressionAdapter;
 
     private PanelFragment mPanelFragment;
 
@@ -176,7 +175,17 @@ public abstract class ChatFragment<InitModel>
                 iv_submit.setActivated(needSendMessage);
             }
         });
+        // 点击输入框时，折叠appbar
+        edt_content.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    abl_app_bar.setExpanded(false);
+                }
+            }
+        });
     }
+
 
     /**
      * 复写layout布局，解决出现的软键盘弹出问题
@@ -218,9 +227,8 @@ public abstract class ChatFragment<InitModel>
     //@OnClick(R.id.iv_face)
     private void onFaceClick() {
         // 打开隐藏软键盘
-        //mPanel.setVisibility(View.VISIBLE);
-        //Util.hideKeyboard(edt_content);
-        Log.i("ljr", "点击了表情");
+        // 顶部CollapsingToolbarLayout实现自动折叠
+        abl_app_bar.setExpanded(false);
         lay_content.showInputPane(true);
         mPanelFragment.showFace();
     }
@@ -231,9 +239,8 @@ public abstract class ChatFragment<InitModel>
     //@OnClick(R.id.iv_record)
     private void onRecordClick() {
         // 打开隐藏软键盘
-        //mPanelBoss.openPanel();
-        //mPanelFragment.showRecord();
-        Log.i("ljr", "点击了语音");
+        // 顶部CollapsingToolbarLayout实现自动折叠
+        abl_app_bar.setExpanded(false);
         lay_content.showInputPane(true);
         mPanelFragment.showRecord();
     }
@@ -245,15 +252,16 @@ public abstract class ChatFragment<InitModel>
     private void onSubmitClick() {
         if (iv_submit.isActivated()) {
             // 发送
-            Log.i("ljr", "点击了发送");
             String content = edt_content.getText().toString().trim();
             edt_content.setText("");
             mPresenter.pushText(content);
+            // 消息发送后自动定位到最后一行
+            if (mAdapter.getItemCount() > 0) {
+                rv_recycler.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+            }
         } else {
             // 打开更多
-            Log.i("ljr", "点击了更多");
             onMoreActionClick();
-            //mPanelFragment.showGallery();
         }
     }
 
@@ -262,7 +270,8 @@ public abstract class ChatFragment<InitModel>
      */
     private void onMoreActionClick() {
         // 打开隐藏软键盘
-        //mPanelBoss.openPanel();
+        // 顶部CollapsingToolbarLayout实现自动折叠
+        abl_app_bar.setExpanded(false);
         lay_content.showInputPane(true);
         mPanelFragment.showGallery();
     }
@@ -281,8 +290,9 @@ public abstract class ChatFragment<InitModel>
     public void onAdapterDataChanged() {
         // 界面没有占位布局，Recycler是一直显示的
         // 消息来了后自动滚到最后一行
-        if (mAdapter.getItemCount() > 0)
+        if (mAdapter.getItemCount() > 0) {
             rv_recycler.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+        }
     }
 
     /**
