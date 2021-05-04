@@ -80,9 +80,14 @@ public class MessageActivity extends Activity {
         return R.layout.activity_message;
     }
 
+    /**
+     * 重写dispatchTouchEvent()方法,进行事件分发,拦截点击事件,实现当用户点击其他地方时,软键盘隐藏
+     *
+     * @param ev MotionEvent
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        SmoothInputLayout.hideInputWhenTouchOtherView(this,ev,null);
+        SmoothInputLayout.hideInputWhenTouchOtherView(this, ev, null);
         return super.dispatchTouchEvent(ev);
     }
 
