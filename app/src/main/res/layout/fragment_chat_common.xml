@@ -114,7 +114,7 @@
 
             <fragment
                 android:id="@+id/frag_panel"
-                class="com.example.iwen.imqingliao.fragments.panel.PanelFragment"
+                class="com.example.iwen.LightChat.fragments.panel.PanelFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>

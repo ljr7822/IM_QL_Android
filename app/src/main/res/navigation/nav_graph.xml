@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.iwen.imqingliao.FirstFragment"
+        android:name="com.example.iwen.LightChat.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first" >
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.example.iwen.imqingliao.SecondFragment"
+        android:name="com.example.iwen.LightChat.SecondFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second" >
 
