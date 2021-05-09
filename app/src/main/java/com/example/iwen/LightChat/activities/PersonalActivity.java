@@ -12,15 +12,20 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.iwen.LightChat.R;
 import com.example.iwen.common.app.PresenterToolbarActivity;
 import com.example.iwen.common.widget.PortraitView;
+import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.model.db.User;
+import com.example.iwen.factory.persistence.Account;
 import com.example.iwen.factory.presenter.contace.PersonalContract;
 import com.example.iwen.factory.presenter.contace.PersonalPresenter;
-import com.example.iwen.LightChat.R;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
 
 import net.qiujuer.genius.res.Resource;
 import net.qiujuer.genius.ui.widget.Button;
@@ -28,6 +33,9 @@ import net.qiujuer.genius.ui.widget.Button;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 个人详情页面
+ */
 public class PersonalActivity
         extends PresenterToolbarActivity<PersonalContract.Presenter>
         implements PersonalContract.View {
@@ -48,6 +56,8 @@ public class PersonalActivity
     TextView mFollowing;
     @BindView(R.id.btn_say_hello)
     Button mSayHello;
+    @BindView(R.id.logoutView)
+    CardView mLogoutCard;
 
     // 关注
     private MenuItem mFollowItem;
@@ -162,6 +172,13 @@ public class PersonalActivity
         return userId;
     }
 
+    @Override
+    public void logoutSuccess() {
+        // 服务器退出登录成功后，将本地sp清空并跳转到登录界面
+        Account.setToken("");
+        Factory.app().finishAll();
+    }
+
     /**
      * 加载完成后展示用户信息
      *
@@ -177,6 +194,24 @@ public class PersonalActivity
         mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
         mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
         hideLoading();
+    }
+
+    // 退出登录
+    @OnClick(R.id.logoutView)
+    void logoutClick(){
+        // 先显示确认弹窗
+        new XPopup.Builder(this).asConfirm("退出登录", "退出登录后，将删除用户消息记录等信息，是否退出？",
+                new OnConfirmListener() {
+                    @Override
+                    public void onConfirm() {
+                        // 用户确定退出
+                        // 先进行网络请求，将token进行删除
+                        // 收到回调后，将本地保存的SP数据进行删除
+                        // 最后进行登录界面的跳转
+                        mPresenter.logout(userId);
+                    }
+                })
+                .show();
     }
 
     @Override

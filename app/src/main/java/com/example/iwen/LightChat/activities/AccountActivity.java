@@ -36,7 +36,9 @@ public class AccountActivity extends Activity implements AccountTrigger {
      * @param context 上下文
      */
     public static void show(Context context) {
-        context.startActivity(new Intent(context, AccountActivity.class));
+        Intent intent = new Intent(context, AccountActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     @Override

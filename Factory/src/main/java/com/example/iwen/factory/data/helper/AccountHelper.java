@@ -9,6 +9,8 @@ import com.example.iwen.factory.R;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
+import com.example.iwen.factory.model.api.account.LogoutModel;
+import com.example.iwen.factory.model.api.account.LogoutRspModel;
 import com.example.iwen.factory.model.api.account.RegisterModel;
 import com.example.iwen.factory.model.db.User;
 import com.example.iwen.factory.net.Network;
@@ -57,6 +59,34 @@ public class AccountHelper {
     }
 
     /**
+     * 退出登录
+     *
+     * @param model    LogoutModel
+     * @param callback DataSource.Callback<User>
+     */
+    public static void logout(LogoutModel model, final DataSource.Callback<LogoutRspModel> callback) {
+        RemoteService service = Network.mRemoteService();
+        Call<RspModel<LogoutRspModel>> call = service.accountLogout(model);
+        call.enqueue(new Callback<RspModel<LogoutRspModel>>() {
+            @Override
+            public void onResponse(Call<RspModel<LogoutRspModel>> call, Response<RspModel<LogoutRspModel>> response) {
+                RspModel<LogoutRspModel> rspModel = response.body();
+                if (rspModel.success()){
+                    LogoutRspModel logoutRspModel = new LogoutRspModel();
+                    logoutRspModel.setState(rspModel.getResult().getState());
+                    callback.onDataLoad(logoutRspModel);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<LogoutRspModel>> call, Throwable t) {
+                Log.e("ljr", "onFailure message: " + t);
+                callback.onDataNotAvailable(R.string.data_logout_error);
+            }
+        });
+    }
+
+    /**
      * 对设备id绑定
      *
      * @param callback Callback
@@ -94,7 +124,7 @@ public class AccountHelper {
                 // 获取我的信息
                 User user = accountRspModel.getUser();
                 // 使用自定義的存儲管理器進行存儲
-                DbHelper.save(User.class,user);
+                DbHelper.save(User.class, user);
                 // 进行数据库写入
                 // 方法1.直接保存
                 //user.save();

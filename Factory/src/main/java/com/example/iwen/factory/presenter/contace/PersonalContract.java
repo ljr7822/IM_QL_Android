@@ -10,13 +10,12 @@ import com.example.iwen.factory.model.db.User;
  * Create to 2021/02/13 0:05
  */
 public interface PersonalContract {
-    interface Presenter extends BaseContract.Presenter {
-        // 获取用户信息
-        User getUserPersonal();
-    }
 
     interface View extends BaseContract.View<Presenter> {
         String getUserId();
+
+        // 退出登录成功
+        void logoutSuccess();
 
         // 加载数据完成
         void onLoadDone(User user);
@@ -26,5 +25,13 @@ public interface PersonalContract {
 
         // 设置关注状态
         void setFollowStatus(boolean isFollow);
+    }
+
+    interface Presenter extends BaseContract.Presenter {
+        // 获取用户信息
+        User getUserPersonal();
+
+        // 发起一个退出登录
+        void logout(String userId);
     }
 }

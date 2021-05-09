@@ -3,6 +3,8 @@ package com.example.iwen.factory.net;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
+import com.example.iwen.factory.model.api.account.LogoutModel;
+import com.example.iwen.factory.model.api.account.LogoutRspModel;
 import com.example.iwen.factory.model.api.account.RegisterModel;
 import com.example.iwen.factory.model.api.group.GroupCreateModel;
 import com.example.iwen.factory.model.api.group.GroupMemberAddModel;
@@ -47,6 +49,15 @@ public interface RemoteService {
      */
     @POST("account/login")
     Call<RspModel<AccountRspModel>> accountLogin(@Body LoginModel model);
+
+    /**
+     * 网络请求一个退出登录接口
+     *
+     * @param model LogoutModel
+     * @return RspModel<LogoutRspModel>
+     */
+    @POST("account/logout")
+    Call<RspModel<LogoutRspModel>> accountLogout(@Body LogoutModel model);
 
     /**
      * 绑定设备id

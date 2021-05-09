@@ -61,7 +61,6 @@ dependencies {
     implementation "com.github.yalantis:ucrop:2.2.3"
     // 动态权限-对Android M或更高版本的基本系统权限逻辑
     implementation "pub.devrel:easypermissions:3.0.0"
-
     // 视图绑定
     implementation 'com.jakewharton:butterknife:10.2.3'
     implementation project(path: ':Factory')
@@ -75,6 +74,8 @@ dependencies {
     implementation "net.qiujuer.widget:airpanel:1.4.0"
     // 自定义Adapter
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    // 弹窗
+    implementation 'com.lxj:xpopup:2.2.1'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -174,8 +174,9 @@ public class Factory {
     /**
      * 收到账户退出的消息需要进行账户退出重新登录
      */
-    private void logout() {
+    public void logout() {
         // TODO 退出登录
+        Application.getInstance().finishAll();
     }
 
     /**

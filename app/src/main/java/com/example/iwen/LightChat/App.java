@@ -1,5 +1,8 @@
 package com.example.iwen.LightChat;
 
+import android.content.Context;
+
+import com.example.iwen.LightChat.activities.AccountActivity;
 import com.example.iwen.common.app.Application;
 import com.example.iwen.factory.Factory;
 import com.igexin.sdk.PushManager;
@@ -16,5 +19,16 @@ public class App extends Application {
         Factory.setup();
         // 推送初始化
         PushManager.getInstance().initialize(this);
+    }
+
+    /**
+     * 复写方法：退出登录后跳转到登录界面
+     *
+     * @param context 上下文
+     */
+    @Override
+    protected void showAccountView(Context context) {
+        // 进行登录界面的显示
+        AccountActivity.show(context);
     }
 }

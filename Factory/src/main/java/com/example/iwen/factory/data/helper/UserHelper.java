@@ -222,6 +222,7 @@ public class UserHelper {
         }
         return user;
     }
+
     /**
      * 搜索一个用户，优先网络查询，没有用然后再从本地缓存拉取
      *

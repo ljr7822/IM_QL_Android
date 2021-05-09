@@ -1,13 +1,22 @@
 package com.example.iwen.common.app;
 
+import android.app.Activity;
+import android.content.Context;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import net.qiujuer.genius.kit.handler.Run;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -17,11 +26,62 @@ import es.dmoral.toasty.Toasty;
  */
 public class Application extends android.app.Application {
     private static Application instance;
+    private List<Activity> activityList = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(@NonNull @NotNull Activity activity, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+                activityList.add(activity);
+            }
+
+            @Override
+            public void onActivityStarted(@NonNull @NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(@NonNull @NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(@NonNull @NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(@NonNull @NotNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull @NotNull Activity activity, @NonNull @NotNull Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(@NonNull @NotNull Activity activity) {
+                activityList.remove(activity);
+            }
+        });
+    }
+
+    // 退出所有Activity
+    public void finishAll(){
+        for (Activity activity : activityList) {
+            activity.finish();
+        }
+        showAccountView(this);
+    }
+
+    // 显示登录界面
+    protected void showAccountView(Context context){
+
     }
 
     /**

@@ -85,7 +85,6 @@ public class LaunchActivity extends Activity {
                 return;
             }
         }
-
         // 循环等待
         getWindow().getDecorView().postDelayed(this::waitPushReceiverId,500);
     }
@@ -110,7 +109,7 @@ public class LaunchActivity extends Activity {
      * 如果都有权限就跳转MainActivity，自己finish
      */
     private void realSkip(){
-        // TODO 权限检查，跳转
+        // 权限检查，跳转
         if (PermissionsFragment.haveAll(this, getSupportFragmentManager())) {
             if (Account.isLogin()){
                 MainActivity.show(this);
