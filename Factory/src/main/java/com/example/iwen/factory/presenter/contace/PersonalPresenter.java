@@ -81,8 +81,7 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
 
     @Override
     public void logout(String userId) {
-        // TODO 退出登录逻辑
-        // 尝试获取PushId
+        // 退出登录逻辑
         LogoutModel logoutModel = new LogoutModel(userId);
         // 发起网络请求
         AccountHelper.logout(logoutModel, this);

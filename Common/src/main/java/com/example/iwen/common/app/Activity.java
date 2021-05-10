@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
 
 /**
  * activity基类
- * author : Iwen大大怪
- * create : 2020/11/11 14:35
+ * @author : Iwen大大怪
+ * @create : 2020/11/11 14:35
  */
 public abstract class Activity extends AppCompatActivity {
 

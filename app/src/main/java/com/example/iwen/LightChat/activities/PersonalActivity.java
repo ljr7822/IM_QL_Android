@@ -2,66 +2,27 @@ package com.example.iwen.LightChat.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
-import androidx.core.graphics.drawable.DrawableCompat;
-
-import com.bumptech.glide.Glide;
 import com.example.iwen.LightChat.R;
-import com.example.iwen.common.app.PresenterToolbarActivity;
-import com.example.iwen.common.widget.PortraitView;
-import com.example.iwen.factory.Factory;
-import com.example.iwen.factory.model.db.User;
-import com.example.iwen.factory.persistence.Account;
-import com.example.iwen.factory.presenter.contace.PersonalContract;
-import com.example.iwen.factory.presenter.contace.PersonalPresenter;
-import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.interfaces.OnConfirmListener;
-
-import net.qiujuer.genius.res.Resource;
-import net.qiujuer.genius.ui.widget.Button;
-
-import butterknife.BindView;
-import butterknife.OnClick;
+import com.example.iwen.LightChat.fragments.personal.PersonalFragment;
+import com.example.iwen.common.app.Activity;
+import com.example.iwen.common.app.Fragment;
 
 /**
- * 个人详情页面
+ * 个人详情页面Activity
  */
 public class PersonalActivity
-        extends PresenterToolbarActivity<PersonalContract.Presenter>
-        implements PersonalContract.View {
+        extends Activity {
     private static final String BOUND_KEY_ID = "BOUND_KEY_ID";
     private String userId;
 
-    @BindView(R.id.im_header)
-    ImageView mHeader;
-    @BindView(R.id.im_portrait)
-    PortraitView mPortrait;
-    @BindView(R.id.txt_name)
-    TextView mName;
-    @BindView(R.id.txt_desc)
-    TextView mDesc;
-    @BindView(R.id.txt_follows)
-    TextView mFollows;
-    @BindView(R.id.txt_following)
-    TextView mFollowing;
-    @BindView(R.id.btn_say_hello)
-    Button mSayHello;
-    @BindView(R.id.logoutView)
-    CardView mLogoutCard;
-
-    // 关注
-    private MenuItem mFollowItem;
-    private boolean mIsFollowUser = false;
+    private Fragment mFragment;
+    // 基本信息Fragment
+    private PersonalFragment mPersonalFragment;
+    // 修改密码Fragment
+    private Fragment mChangePwdFragment;
 
     /**
      * show 方法
@@ -75,12 +36,6 @@ public class PersonalActivity
         context.startActivity(intent);
     }
 
-    /**
-     * 初始化参数
-     *
-     * @param bundle 参数bundle
-     * @return boolean
-     */
     @Override
     protected boolean initArgs(Bundle bundle) {
         userId = bundle.getString(BOUND_KEY_ID);
@@ -92,141 +47,15 @@ public class PersonalActivity
         return R.layout.activity_personal;
     }
 
-    /**
-     * 初始化布局，将title设置为空
-     */
     @Override
     protected void initWidget() {
         super.initWidget();
-        setTitle("");
-    }
-
-    /**
-     * 初始化数据，从网络拉取联系人信息
-     */
-    @Override
-    protected void initData() {
-        super.initData();
-        mPresenter.start();
-    }
-
-    /**
-     * 初始化菜单
-     *
-     * @param menu 菜单布局
-     * @return boolean
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.personal, menu);
-        mFollowItem = menu.findItem(R.id.action_follow);
-        // 更改关注菜单点击后的状态
-        changeFollowItemStatus();
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_follow) {
-            // TODO 进行关注操作
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * 发起聊天的点击事件
-     */
-    @OnClick(R.id.btn_say_hello)
-    void onSayHelloClick() {
-        User user = mPresenter.getUserPersonal();
-        if (user == null)
-            return;
-        MessageActivity.show(this, user);
-    }
-
-
-    /**
-     * 更改关注菜单点击后的状态
-     */
-    private void changeFollowItemStatus() {
-        if (mFollowItem == null)
-            return;
-        // 根据状态设置颜色
-        Drawable drawable = mIsFollowUser ?
-                getResources().getDrawable(R.drawable.ic_favorite) :
-                getResources().getDrawable(R.drawable.ic_favorite_border);
-        drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(drawable, Resource.Color.WHITE);
-        mFollowItem.setIcon(drawable);
-    }
-
-    /**
-     * 复写获取用户id的方法
-     *
-     * @return 用户id
-     */
-    @Override
-    public String getUserId() {
-        return userId;
-    }
-
-    @Override
-    public void logoutSuccess() {
-        // 服务器退出登录成功后，将本地sp清空并跳转到登录界面
-        Account.setToken("");
-        Factory.app().finishAll();
-    }
-
-    /**
-     * 加载完成后展示用户信息
-     *
-     * @param user 传进来的用户信息
-     */
-    @Override
-    public void onLoadDone(User user) {
-        if (user == null)
-            return;
-        mPortrait.setup(Glide.with(this), user);
-        mName.setText(user.getName());
-        mDesc.setText(user.getDesc());
-        mFollows.setText(String.format(getString(R.string.label_follows), user.getFollows()));
-        mFollowing.setText(String.format(getString(R.string.label_following), user.getFollowing()));
-        hideLoading();
-    }
-
-    // 退出登录
-    @OnClick(R.id.logoutView)
-    void logoutClick(){
-        // 先显示确认弹窗
-        new XPopup.Builder(this).asConfirm("退出登录", "退出登录后，将删除用户消息记录等信息，是否退出？",
-                new OnConfirmListener() {
-                    @Override
-                    public void onConfirm() {
-                        // 用户确定退出
-                        // 先进行网络请求，将token进行删除
-                        // 收到回调后，将本地保存的SP数据进行删除
-                        // 最后进行登录界面的跳转
-                        mPresenter.logout(userId);
-                    }
-                })
-                .show();
-    }
-
-    @Override
-    public void allowSayHello(boolean isAllow) {
-        mSayHello.setVisibility(isAllow ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void setFollowStatus(boolean isFollow) {
-        mIsFollowUser = isFollow;
-        changeFollowItemStatus();
-    }
-
-    @Override
-    protected PersonalContract.Presenter initPresenter() {
-        return new PersonalPresenter(this);
+        Fragment fragment;
+        fragment = new PersonalFragment();
+        // 从Activity传递参数到Fragment中去
+        Bundle bundle = new Bundle();
+        bundle.putString(BOUND_KEY_ID, userId);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.lay_personal_container, fragment).commit();
     }
 }

@@ -11,6 +11,16 @@
     <string name="label_permission_submit">授权</string>
     <string name="label_permission_ok">授权成功！</string>
 
+    <string name="label_password_old">原密码</string>
+    <string name="label_password_new">新密码</string>
+    <string name="label_password_new2">确认密码</string>
+
+    <string name="label_password_in_old">请输入原密码</string>
+    <string name="label_password_in_new">请输入新密码</string>
+    <string name="label_password_in_new2">请输入确认密码</string>
+
+    <string name="label_password_submit">确认修改</string>
+
     <string name="label_update_info_tips">仅差一步了</string>
     <string name="label_login_welcome">欢迎回来！</string>
     <string name="label_submit">提交</string>

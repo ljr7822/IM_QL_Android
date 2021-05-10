@@ -186,7 +186,6 @@ public abstract class ChatFragment<InitModel>
         });
     }
 
-
     /**
      * 复写layout布局，解决出现的软键盘弹出问题
      */

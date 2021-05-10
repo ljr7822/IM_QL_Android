@@ -8,6 +8,7 @@ import com.example.iwen.factory.Factory;
 import com.example.iwen.factory.R;
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
+import com.example.iwen.factory.model.api.account.ChangePwdModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
 import com.example.iwen.factory.model.api.account.LogoutModel;
 import com.example.iwen.factory.model.api.account.LogoutRspModel;
@@ -71,7 +72,7 @@ public class AccountHelper {
             @Override
             public void onResponse(Call<RspModel<LogoutRspModel>> call, Response<RspModel<LogoutRspModel>> response) {
                 RspModel<LogoutRspModel> rspModel = response.body();
-                if (rspModel.success()){
+                if (rspModel.success()) {
                     LogoutRspModel logoutRspModel = new LogoutRspModel();
                     logoutRspModel.setState(rspModel.getResult().getState());
                     callback.onDataLoad(logoutRspModel);
@@ -84,6 +85,21 @@ public class AccountHelper {
                 callback.onDataNotAvailable(R.string.data_logout_error);
             }
         });
+    }
+
+    /**
+     * 修改密码接口
+     *
+     * @param model    ChangePwdModel
+     * @param callback DataSource.Callback<User>
+     */
+    public static void changePwd(ChangePwdModel model, final DataSource.Callback<User> callback) {
+        // 调用Retrofit对我们的网络请求接口做代理
+        RemoteService service = Network.mRemoteService();
+        // 得到一个call进行注册
+        Call<RspModel<AccountRspModel>> call = service.changePassword(model);
+        // 进行异步请求
+        call.enqueue(new AccountRspCallback(callback));
     }
 
     /**

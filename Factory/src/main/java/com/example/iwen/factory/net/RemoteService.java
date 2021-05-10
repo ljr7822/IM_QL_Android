@@ -2,6 +2,7 @@ package com.example.iwen.factory.net;
 
 import com.example.iwen.factory.model.api.RspModel;
 import com.example.iwen.factory.model.api.account.AccountRspModel;
+import com.example.iwen.factory.model.api.account.ChangePwdModel;
 import com.example.iwen.factory.model.api.account.LoginModel;
 import com.example.iwen.factory.model.api.account.LogoutModel;
 import com.example.iwen.factory.model.api.account.LogoutRspModel;
@@ -58,6 +59,15 @@ public interface RemoteService {
      */
     @POST("account/logout")
     Call<RspModel<LogoutRspModel>> accountLogout(@Body LogoutModel model);
+
+    /**
+     * 网络请求一个修改密码接口
+     *
+     * @param model ChangePwdModel
+     * @return RspModel<AccountRspModel>
+     */
+    @POST("account/changepwd")
+    Call<RspModel<AccountRspModel>> changePassword(@Body ChangePwdModel model);
 
     /**
      * 绑定设备id

@@ -30,7 +30,7 @@
         android:protectionLevel="normal" />
 
     <application
-        android:name="com.example.iwen.LightChat.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
@@ -41,28 +41,32 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
-            android:name="com.example.iwen.LightChat.activities.GroupMemberActivity"
+            android:name=".activities.ChangeDataActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransStatusBar"/>
+        <activity
+            android:name=".activities.GroupMemberActivity"
             android:label="@string/title_member_list"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.GroupCreateActivity"
+            android:name=".activities.GroupCreateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Group.Create" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.PersonalActivity"
+            android:name=".activities.PersonalActivity"
             android:label="PersonalActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.MessageActivity"
+            android:name=".activities.MessageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_message"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Message"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.SearchActivity"
+            android:name=".activities.SearchActivity"
             android:label="@string/title_search"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.TransStatusBar" /> <!-- 配置的第三方参数属性 -->
@@ -83,7 +87,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:process=":pushservice" /> <!-- 个推广播注册 -->
         <receiver
-            android:name="com.example.iwen.LightChat.MessageReceiver"
+            android:name=".MessageReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="1000">
@@ -114,10 +118,10 @@
             android:taskAffinity="com.igexin.sdk.PushActivityTask"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.UserActivity"
+            android:name=".activities.UserActivity"
             android:theme="@style/AppTheme.TransStatusBar" />
         <activity
-            android:name="com.example.iwen.LightChat.LaunchActivity"
+            android:name=".LaunchActivity"
             android:label="@string/title_activity_launch"
             android:theme="@style/AppTheme.TransStatusBar">
             <intent-filter>
@@ -127,7 +131,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.iwen.LightChat.activities.AccountActivity"
+            android:name=".activities.AccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Account" />
         <activity
@@ -135,7 +139,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.iwen.LightChat.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main" />
     </application>
