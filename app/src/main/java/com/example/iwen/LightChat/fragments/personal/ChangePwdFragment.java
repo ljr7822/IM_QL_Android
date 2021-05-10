@@ -9,8 +9,8 @@ import com.example.iwen.common.app.Application;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.common.app.PresenterFragment;
 import com.example.iwen.factory.persistence.Account;
-import com.example.iwen.factory.presenter.user.ChangePwdContract;
-import com.example.iwen.factory.presenter.user.ChangePwdPresenter;
+import com.example.iwen.factory.presenter.personal.ChangePwdContract;
+import com.example.iwen.factory.presenter.personal.ChangePwdPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;

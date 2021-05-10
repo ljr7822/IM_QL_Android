@@ -1,4 +1,4 @@
-package com.example.iwen.factory.presenter.user;
+package com.example.iwen.factory.presenter.personal;
 
 import com.example.iwen.common.factory.presenter.BaseContract;
 

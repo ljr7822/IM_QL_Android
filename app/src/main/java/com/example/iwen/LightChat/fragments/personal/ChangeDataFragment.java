@@ -1,65 +1,49 @@
 package com.example.iwen.LightChat.fragments.personal;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.fragment.app.Fragment;
-
 import com.example.iwen.LightChat.R;
+import com.example.iwen.LightChat.activities.PersonalActivity;
+import com.example.iwen.common.app.PresenterFragment;
+import com.example.iwen.factory.persistence.Account;
+import com.example.iwen.factory.presenter.personal.ChangeDataContract;
+import com.example.iwen.factory.presenter.personal.ChangeDataPresenter;
+
+import butterknife.OnClick;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChangeDataFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * 修改个人信息
  */
-public class ChangeDataFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class ChangeDataFragment extends PresenterFragment<ChangeDataContract.Presenter>
+        implements ChangeDataContract.View{
 
     public ChangeDataFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangeDataFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChangeDataFragment newInstance(String param1, String param2) {
-        ChangeDataFragment fragment = new ChangeDataFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected int getContentLayoutId() {
+        return R.layout.fragment_change_data;
+    }
+
+    // 初始化Presenter
+    @Override
+    protected ChangeDataContract.Presenter initPresenter() {
+        return new ChangeDataPresenter(this);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public void changeNameSuccess() {
+        // 修改昵称成功
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_change_data, container, false);
+    public void changeDescSuccess() {
+        // 修改个性签名成功
+    }
+
+    // 返回按钮
+    @OnClick(R.id.im_back)
+    void backClick(){
+        PersonalActivity.show(getContext(), Account.getUserId());
     }
 }

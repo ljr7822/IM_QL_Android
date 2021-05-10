@@ -13,8 +13,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.bumptech.glide.Glide;
 import com.example.iwen.LightChat.R;
-import com.example.iwen.LightChat.activities.ChangeDataActivity;
 import com.example.iwen.LightChat.activities.MessageActivity;
+import com.example.iwen.common.app.Application;
 import com.example.iwen.common.app.Fragment;
 import com.example.iwen.common.app.PresenterFragment;
 import com.example.iwen.common.widget.PortraitView;
@@ -130,6 +130,9 @@ public class PersonalFragment
     @Override
     public void allowSayHello(boolean isAllow) {
         mSayHello.setVisibility(isAllow ? View.VISIBLE : View.GONE);
+        mLogoutCard.setVisibility(isAllow ? View.GONE : View.VISIBLE);
+        mChangePwdCard.setVisibility(isAllow ? View.GONE : View.VISIBLE);
+        mChangeDataCard.setVisibility(isAllow ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -160,6 +163,7 @@ public class PersonalFragment
     void onSayHelloClick() {
         User user = mPresenter.getUserPersonal();
         if (user == null) {
+            Application.showToast("呀，错误啦！");
             return;
         }
         MessageActivity.show(getContext(), user);
@@ -187,21 +191,21 @@ public class PersonalFragment
     @OnClick(R.id.ChangePwdView)
     void changePwdClick(){
         // 跳转到ChangePwdFragment
-        // TODO 修改密码
-        TriggerChangeDataFrag();
+        // 修改密码
+        TriggerChangeDataFrag(new ChangePwdFragment());
     }
 
     // 修改个人资料
     @OnClick(R.id.ChangeDataView)
     void changeDataClick(){
         // 跳转到ChangePwdFragment
-        ChangeDataActivity.show(getContext());
+        TriggerChangeDataFrag(new ChangeDataFragment());
     }
 
-    // 跳转到修改密码界面
-    private void TriggerChangeDataFrag(){
+    // 跳转到指定界面
+    private void TriggerChangeDataFrag(Fragment fragment){
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        mFragment = new ChangePwdFragment();
+        mFragment = fragment;
         fm.beginTransaction().replace(R.id.lay_personal_container,mFragment).commit();
     }
 }

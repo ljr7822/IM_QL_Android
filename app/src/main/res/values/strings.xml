@@ -22,5 +22,6 @@
     <string name="resetPassword">重置密码</string>
     <string name="tipRePwdTitle">注意：</string>
     <string name="tipRePwd">1,系统规定，用户密码最短应为6个数字或字母，最长为16个数字或字母；2,系统要求输入旧密码是为了防止他人在用户不安全离开计算机时修改用户的密码； 3,新密码必须输入两遍，当两遍输入相同时，新密码才有效，这是为了避免用户误设连自己都不知道的密码。</string>
+    <string name="reData">修改资料</string>
 
 </resources>
